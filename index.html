@@ -1,0 +1,1847 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Face Your Power — 10-Week Practice Tracker</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0A0D1E;
+    --bg-grad:#0D1230;
+    --panel:#12163076;
+    --panel-solid:#131834;
+    --panel-alt:#191F42;
+    --border:#272E56;
+    --border-soft:#1D2344;
+    --violet:#8C6CEA;
+    --violet-deep:#5B3FB0;
+    --violet-soft:#4A3B85;
+    --violet-light:#CBBBFA;
+    --ink:#F3F1EA;
+    --ink-dim:#A6ABCB;
+    --ink-faint:#B9AEEC;
+    --phase-foundation:#5B6089;
+    --phase-prepare:#8C6CEA;
+    --phase-perform:#6C4FC7;
+    --phase-pursue:#432E86;
+    --field-bg:#FFFFFF;
+    --field-text:#20223A;
+    --field-border:#D9D4EC;
+    --field-placeholder:#8B8FB0;
+    --radius:16px;
+    --radius-sm:10px;
+    --shadow:0 20px 60px -20px rgba(0,0,0,.6);
+  }
+  *{box-sizing:border-box;}
+  html{-webkit-text-size-adjust:100%;}
+  body{
+    margin:0;
+    font-family:'Outfit',system-ui,-apple-system,sans-serif;
+    background:
+      radial-gradient(1100px 500px at 8% -10%, #1B2354 0%, transparent 60%),
+      radial-gradient(900px 500px at 100% 0%, #241947 0%, transparent 55%),
+      linear-gradient(180deg,var(--bg) 0%, #080A18 100%);
+    color:var(--ink);
+    min-height:100vh;
+    line-height:1.5;
+  }
+  h1,h2,h3,h4{margin:0;font-weight:600;letter-spacing:-.01em;}
+  p{margin:0;}
+  button{font-family:inherit;}
+  ::selection{background:var(--violet-soft);color:var(--ink);}
+  a{color:var(--violet-light);}
+
+  .app{max-width:920px;margin:0 auto;padding:0 18px 100px;}
+
+  /* ---------- Header ---------- */
+  header.topbar{
+    padding:34px 4px 20px;
+    display:flex;align-items:flex-start;justify-content:space-between;gap:16px;
+  }
+  .brand{display:flex;gap:14px;align-items:center;}
+  .mark{width:40px;height:40px;flex:none;}
+  .wordmark{font-size:15px;font-weight:700;letter-spacing:.14em;color:var(--ink);}
+  .wordmark small{display:block;font-size:11.5px;font-weight:400;letter-spacing:.03em;color:var(--ink-dim);margin-top:3px;}
+  .settings-btn{
+    background:transparent;border:1px solid var(--border);color:var(--ink-dim);
+    border-radius:999px;width:38px;height:38px;display:flex;align-items:center;justify-content:center;
+    cursor:pointer;transition:border-color .15s, color .15s;
+  }
+  .settings-btn:hover{color:var(--ink);border-color:var(--violet);}
+  .settings-btn svg{width:17px;height:17px;}
+
+  /* ---------- Tabs ---------- */
+  nav.tabs{
+    display:flex;gap:6px;overflow-x:auto;padding:4px 2px 14px;
+    -ms-overflow-style:none;scrollbar-width:none;position:sticky;top:0;z-index:20;
+    background:linear-gradient(180deg, #0A0D1E 78%, transparent);
+    padding-top:10px;margin-top:-6px;
+  }
+  nav.tabs::-webkit-scrollbar{display:none;}
+  .tab-btn{
+    flex:none;
+    background:var(--panel-solid);border:1px solid var(--border-soft);
+    color:var(--ink-dim);
+    padding:10px 16px;border-radius:999px;font-size:13.5px;font-weight:500;
+    cursor:pointer;white-space:nowrap;transition:all .15s;
+  }
+  .tab-btn:hover{color:var(--ink);}
+  .tab-btn.active{
+    background:linear-gradient(135deg,var(--violet) 0%, var(--violet-deep) 100%);
+    color:#fff;border-color:transparent;
+  }
+
+  .view{display:none;animation:fade .35s ease;}
+  .view.active{display:block;}
+  @keyframes fade{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
+
+  /* ---------- Generic building blocks ---------- */
+  .card{
+    background:var(--panel-solid);
+    border:1px solid var(--border-soft);
+    border-radius:var(--radius);
+    padding:22px;
+    margin-bottom:16px;
+  }
+  .card h3{font-size:16px;margin-bottom:4px;}
+  .muted{color:var(--ink-dim);font-size:13.5px;}
+  .eyebrow{color:var(--violet-light);font-size:12px;font-weight:600;letter-spacing:.06em;margin-bottom:6px;}
+
+  label{display:block;font-size:12.5px;color:var(--ink-dim);margin:14px 0 7px;font-weight:500;overflow-wrap:break-word;}
+  label:first-child{margin-top:0;}
+  input[type=text],input[type=date],textarea,select{
+    width:100%;max-width:100%;background:var(--field-bg);border:1px solid var(--field-border);
+    color:var(--field-text);border-radius:var(--radius-sm);padding:11px 12px;
+    font-family:inherit;font-size:14.5px;margin-bottom:6px;transition:border-color .15s, box-shadow .15s;
+    overflow-wrap:break-word;box-sizing:border-box;
+  }
+  input::placeholder,textarea::placeholder{color:var(--field-placeholder);overflow-wrap:break-word;}
+  input:focus,textarea:focus,select:focus{outline:none;border-color:var(--violet);box-shadow:0 0 0 3px rgba(140,108,234,.18);}
+  textarea{resize:vertical;min-height:64px;}
+  select{color-scheme:light;font-size:13px;}
+  .field-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+  @media(max-width:520px){.field-row{grid-template-columns:1fr;}}
+  .card, .card *{overflow-wrap:break-word;word-break:break-word;}
+
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:8px;
+    background:linear-gradient(135deg,var(--violet) 0%, var(--violet-deep) 100%);
+    color:#fff;border:none;padding:12px 22px;border-radius:999px;
+    font-size:14px;font-weight:600;cursor:pointer;transition:filter .15s, transform .1s;
+  }
+  .btn:hover{filter:brightness(1.08);}
+  .btn:active{transform:scale(.98);}
+  form .btn[type="submit"]{margin-top:16px;}
+  .btn.ghost{
+    background:transparent;border:1px solid var(--border);color:var(--ink-dim);
+  }
+  .btn.ghost:hover{color:var(--ink);border-color:var(--violet);}
+  .btn.small{padding:7px 14px;font-size:12.5px;}
+  .btn.danger{background:transparent;border:1px solid #4A2A3E;color:#D98BA6;}
+
+  .entry-list{display:flex;flex-direction:column;gap:10px;margin-top:14px;}
+  .entry{
+    background:var(--panel-alt);border:1px solid var(--border);border-radius:var(--radius-sm);
+    padding:13px 15px;
+  }
+  .entry-top{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin-bottom:4px;cursor:pointer;}
+  .entry-detail{display:none;margin-top:8px;padding-top:8px;border-top:1px solid var(--border);}
+  .entry.open .entry-detail{display:block;}
+  .entry-chev{display:inline-block;font-size:10px;color:var(--ink-faint);margin-left:6px;transition:transform .2s;}
+  .entry.open .entry-chev{transform:rotate(180deg);}
+  .entry-summary{display:flex;align-items:baseline;gap:8px;min-width:0;overflow:hidden;}
+  .entry-summary .entry-tag{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  .entry-right{display:flex;align-items:center;gap:10px;flex-shrink:0;}
+  .method-grid{display:grid;grid-template-columns:36px repeat(3,1fr);gap:6px;}
+  .method-grid .mg-head{font-size:9.5px;color:var(--violet-light);font-weight:700;text-align:center;letter-spacing:.03em;padding-bottom:2px;}
+  .method-grid .mg-row-label{font-size:11px;color:var(--violet-light);font-weight:700;display:flex;align-items:center;justify-content:center;}
+  .method-grid .mg-cell{background:var(--panel-alt);border:1px solid var(--border);border-radius:8px;padding:10px 4px;font-size:12px;color:var(--ink-faint);text-align:center;font-weight:600;}
+  .method-grid .mg-cell.done{background:rgba(140,108,234,.25);border-color:var(--violet);color:var(--ink);}
+  .info-list{list-style:none;margin:12px 0 0;padding:0;display:flex;flex-direction:column;gap:7px;}
+  .info-list li{font-size:13.5px;color:var(--ink-dim);padding-left:17px;position:relative;line-height:1.4;}
+  .info-list li::before{content:'→';position:absolute;left:0;top:0;color:var(--violet-light);font-weight:700;}
+  .info-list strong{color:var(--ink);font-weight:600;}
+  .tab-guide{margin-top:14px;}
+  .entry-date{font-size:12px;color:var(--violet-light);font-weight:600;white-space:nowrap;flex-shrink:0;}
+  .entry-tag{font-size:11px;color:var(--ink-faint);}
+  .entry-body{font-size:14px;color:var(--ink);white-space:pre-wrap;}
+  .entry-actions{display:flex;gap:12px;}
+  .entry-del,.entry-edit{background:none;border:none;color:var(--ink-faint);cursor:pointer;font-size:12px;padding:2px 4px;}
+  .entry-del:hover{color:#D98BA6;}
+  .entry-edit:hover{color:var(--violet-light);}
+  .empty-state{color:var(--ink-faint);font-size:13.5px;padding:18px 4px;text-align:center;}
+  .edit-form{margin-top:8px;}
+  .edit-form label{margin-top:2px;}
+  .edit-actions{display:flex;gap:10px;margin-top:2px;}
+
+  /* ---------- Overview hero ---------- */
+  .hero{
+    border:1px solid var(--border-soft);border-radius:20px;
+    background:linear-gradient(160deg, #171B42 0%, #10122B 100%);
+    padding:28px 22px 22px;margin-bottom:18px;position:relative;overflow:hidden;
+  }
+  .hero-kicker{color:var(--violet-light);font-size:12px;font-weight:600;letter-spacing:.08em;margin-bottom:8px;}
+  .hero h2{font-size:22px;line-height:1.3;max-width:520px;margin-bottom:4px;}
+  .hero .sub{color:var(--ink-dim);font-size:14px;margin-top:8px;max-width:480px;}
+
+  .arc-wrap{margin-top:10px;overflow-x:auto;padding-bottom:6px;}
+  .arc{display:flex;align-items:flex-end;gap:0;min-width:560px;position:relative;height:70px;}
+  .arc-node{flex:1;display:flex;flex-direction:column;align-items:center;position:relative;cursor:pointer;background:none;border:none;padding:0;}
+  .dot{
+    width:22px;height:22px;border-radius:50%;border:2px solid var(--border);
+    background:var(--panel-alt);z-index:1;transition:all .2s;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .arc-node.done .dot{background:var(--phase-color,var(--violet));border-color:var(--phase-color,var(--violet));box-shadow:0 0 0 4px color-mix(in srgb, var(--phase-color,var(--violet)) 25%, transparent);}
+  .arc-node.current .dot{border-color:var(--violet-light);transform:scale(1.25);}
+  .arc-node.future .dot{opacity:.45;}
+  .wk-label{margin-top:10px;font-size:10.5px;color:var(--ink-faint);font-weight:500;}
+  .arc-node.current .wk-label{color:var(--ink);font-weight:700;}
+  .phase-tick{position:absolute;top:-16px;font-size:9.5px;letter-spacing:.06em;color:var(--ink-faint);text-transform:uppercase;}
+
+  .focus-panel{
+    margin-top:20px;background:var(--panel-alt);border:1px solid var(--border);
+    border-radius:var(--radius-sm);padding:16px 18px;display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;
+  }
+  .focus-panel .ftitle{font-size:13px;color:var(--ink-dim);}
+  .focus-panel .fmod{font-size:16.5px;font-weight:600;margin-top:2px;}
+
+  .stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:16px 0 22px;}
+  @media(max-width:760px){.stat-grid{grid-template-columns:repeat(2,1fr);}}
+  @media(max-width:560px){.stat-grid{grid-template-columns:repeat(2,1fr);}}
+  .stat{background:var(--panel-solid);border:1px solid var(--border-soft);border-radius:var(--radius-sm);padding:16px;}
+  .stat .num{font-size:26px;font-weight:700;color:var(--violet-light);}
+  .stat .lbl{font-size:12px;color:var(--ink-dim);margin-top:2px;}
+
+  .tally-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--border-soft);font-size:13.5px;}
+  .tally-row:last-child{border-bottom:none;}
+  .tally-row .name{color:var(--ink);}
+  .tally-row .phase-chip{font-size:10px;color:var(--ink-faint);margin-left:8px;}
+  .tally-row .count{font-weight:700;color:var(--violet-light);min-width:26px;text-align:right;}
+
+  /* ---------- Accordion (Live Practice) ---------- */
+  .acc{border:1px solid var(--border);border-radius:var(--radius-sm);margin-bottom:10px;overflow:hidden;background:var(--panel-alt);}
+  .acc-head{
+    display:flex;justify-content:space-between;align-items:center;padding:14px 16px;cursor:pointer;user-select:none;
+    width:100%;border:0;background:transparent;color:inherit;text-align:left;font-family:inherit;
+  }
+  .acc-head:focus-visible{outline:2px solid var(--violet-light);outline-offset:-3px;}
+  .acc-head .t{font-size:14px;font-weight:600;}
+  .acc-head .st{font-size:12px;color:var(--ink-faint);margin-top:2px;}
+  .acc-head .chev{transition:transform .2s;color:var(--ink-faint);}
+  .acc.open .chev{transform:rotate(180deg);}
+  .acc-body{padding:0 16px 16px;display:none;}
+  .acc.open .acc-body{display:block;}
+  .acc-body p{font-size:13px;color:var(--ink-dim);line-height:1.45;margin:0 0 10px;}
+  .acc-body p:last-of-type{margin-bottom:12px;}
+  .hint strong,.notice strong{display:block;color:var(--violet-light);font-size:10px;letter-spacing:.05em;margin-bottom:3px;text-transform:uppercase;}
+  .step{display:flex;gap:6px;}
+  .step .num{color:var(--violet-light);font-weight:700;flex-shrink:0;}
+
+  /* ---------- Reflection module cards ---------- */
+  .refl-card{margin-bottom:12px;}
+  .refl-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;}
+  .refl-head .badge{font-size:10.5px;padding:3px 9px;border-radius:999px;color:#fff;}
+  .cycle-map{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:18px;}
+  .cycle-step{position:relative;background:var(--panel-alt);border:1px solid var(--border);border-radius:12px;padding:12px 10px;text-align:center;}
+  .cycle-step:not(:last-child)::after{content:'→';position:absolute;right:-10px;top:50%;transform:translateY(-50%);color:var(--violet-light);z-index:2;font-weight:700;}
+  .cycle-step strong{display:block;font-size:12px;letter-spacing:.04em;}
+  .cycle-step span{display:block;color:var(--ink-faint);font-size:10.5px;margin-top:3px;}
+  .engine-band{margin-top:10px;padding:14px 16px;border-radius:12px;background:linear-gradient(135deg,rgba(140,108,234,.18),rgba(91,63,176,.08));border:1px solid var(--violet-soft);}
+  .engine-band .engine-title{font-size:13px;font-weight:700;color:var(--violet-light);letter-spacing:.04em;}
+  .engine-band p{font-size:12.5px;color:var(--ink-dim);margin-top:3px;}
+  .loop-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px 12px;margin-top:14px;}
+  .loop-field label{color:var(--violet-light);font-weight:600;}
+  .loop-field textarea{min-height:82px;margin-bottom:0;}
+  .transition-card{border-color:var(--violet-soft);background:linear-gradient(160deg,#171B3A 0%,var(--panel-solid) 100%);}
+  .transition-arrow{font-size:12px;color:var(--violet-light);letter-spacing:.06em;font-weight:700;margin-bottom:5px;}
+  .principle{border-left:3px solid var(--violet);padding-left:13px;margin-top:16px;color:var(--ink-dim);font-size:13.5px;}
+  .choice-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px;}
+  .completion{font-size:10.5px;color:var(--ink-dim);border:1px solid var(--border);border-radius:999px;padding:3px 8px;margin-left:auto;margin-right:12px;white-space:nowrap;}
+  .completion.done{color:#D9D0FF;border-color:var(--violet);background:rgba(140,108,234,.14);}
+  .engine-acc{background:var(--panel-solid);border-color:var(--border-soft);margin-bottom:12px;}
+  .engine-acc .acc-body{padding-top:2px;}
+  .quick-note{font-size:13px;color:var(--ink-faint);margin-top:8px;line-height:1.4;}
+  .step-guide{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:2px 0 16px;padding:12px;border-radius:10px;background:rgba(140,108,234,.08);border:1px solid var(--border);}
+  .step-guide div{font-size:11.5px;color:var(--ink-dim);}
+  .step-guide strong{display:block;color:var(--violet-light);font-size:10px;letter-spacing:.05em;margin-bottom:3px;}
+  .field-help{display:block;color:var(--ink-faint);font-size:11.5px;line-height:1.35;margin:-8px 0 12px;}
+  .deep-flow{display:flex;gap:7px;flex-wrap:wrap;margin-top:15px;}
+  .deep-flow span{font-size:11px;border:1px solid var(--border);background:var(--panel-alt);padding:6px 9px;border-radius:999px;color:var(--ink-dim);}
+  @media(max-width:620px){.step-guide{grid-template-columns:1fr;}}
+  @media(max-width:620px){.cycle-map{grid-template-columns:1fr 1fr;}.loop-grid{grid-template-columns:1fr;}.cycle-step:nth-child(2)::after{display:none;}}
+
+  /* ---------- Multi-select process cards ---------- */
+  .check-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:8px 0 16px;}
+  .check-option{display:flex;align-items:flex-start;gap:10px;background:var(--panel-alt);border:1px solid var(--border);border-radius:12px;padding:12px;cursor:pointer;margin:0;color:var(--ink);}
+  .check-option:hover{border-color:var(--violet-soft);}
+  .check-option input{margin:3px 0 0;accent-color:var(--violet);flex:none;}
+  .check-option strong{display:block;font-size:13px;color:var(--violet-light);}
+  .check-option span{display:block;font-size:11.5px;color:var(--ink-dim);font-weight:400;margin-top:2px;line-height:1.35;}
+  @media(max-width:520px){.check-grid{grid-template-columns:1fr;}}
+
+  /* ---------- Table (Moment Log) ---------- */
+  .mlog-entry{background:var(--panel-alt);border:1px solid var(--border);border-radius:var(--radius-sm);padding:14px 16px;margin-bottom:10px;}
+  .mlog-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px 18px;font-size:13px;margin-top:8px;}
+  @media(max-width:520px){.mlog-grid{grid-template-columns:1fr;}}
+  .mlog-grid div span{display:block;color:var(--ink-faint);font-size:10.5px;text-transform:uppercase;letter-spacing:.04em;margin-top:6px;}
+
+  /* ---------- Modal ---------- */
+  .modal-bg{
+    position:fixed;inset:0;background:rgba(6,7,18,.72);backdrop-filter:blur(3px);
+    display:none;align-items:center;justify-content:center;z-index:50;padding:20px;
+  }
+  .modal-bg.open{display:flex;}
+  .modal{
+    background:var(--panel-solid);border:1px solid var(--border-soft);border-radius:var(--radius);
+    padding:24px;max-width:380px;width:100%;
+  }
+  .modal h3{margin-bottom:6px;}
+  .modal .muted{margin-bottom:16px;display:block;}
+  .modal-actions{display:flex;gap:8px;margin-top:6px;justify-content:flex-end;flex-wrap:wrap;}
+
+  .quick-actions{display:flex;flex-wrap:wrap;gap:10px;margin:20px 0 8px;}
+  .quick-actions .btn{padding:11px 17px;}
+  .foot-note{text-align:center;color:var(--ink-faint);font-size:12px;margin-top:34px;letter-spacing:.02em;}
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation:none !important;transition:none !important;}
+  }
+</style>
+</head>
+<body>
+<div class="app">
+
+  <header class="topbar">
+    <div class="brand">
+      <svg class="mark" viewBox="0 0 48 48" fill="none">
+        <path d="M24 24C24 24 22 8 12 8C4 8 3 18 9 21C14 23.5 21 24 24 24Z" fill="#8C6CEA" fill-opacity=".85"/>
+        <path d="M24 24C24 24 26 8 36 8C44 8 45 18 39 21C34 23.5 27 24 24 24Z" fill="#CBBBFA" fill-opacity=".75"/>
+        <path d="M24 24C24 24 22 41 13 41C6 41 5 32 11 29C15.5 26.8 21 24.5 24 24Z" fill="#5B3FB0" fill-opacity=".9"/>
+        <path d="M24 24C24 24 26 41 35 41C42 41 43 32 37 29C32.5 26.8 27 24.5 24 24Z" fill="#8C6CEA" fill-opacity=".9"/>
+        <line x1="24" y1="10" x2="24" y2="40" stroke="#0A0D1E" stroke-width="2"/>
+      </svg>
+      <div class="wordmark">FACE YOUR POWER
+        <small>10-Wochen Practice Tracker</small>
+      </div>
+    </div>
+    <button class="settings-btn" id="btnSettings" title="Einstellungen" aria-label="Einstellungen">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 11-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 11-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 11-2.83-2.83l.06-.06A1.65 1.65 0 004.6 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 112.83-2.83l.06.06A1.65 1.65 0 009 4.6a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09A1.65 1.65 0 0015 4.6a1.65 1.65 0 001.82-.33l.06-.06a2 2 0 112.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
+    </button>
+  </header>
+
+  <nav class="tabs" id="tabs">
+    <button class="tab-btn active" data-view="overview">Übersicht</button>
+    <button class="tab-btn" data-view="momentlog">Kurzer Moment</button>
+    <button class="tab-btn" data-view="modulelog">Übung</button>
+    <button class="tab-btn" data-view="regbridge">Regulation</button>
+    <button class="tab-btn" data-view="coretools">Core Tools</button>
+    <button class="tab-btn" data-view="livepractice">Tiefenreflexion</button>
+  </nav>
+
+  <main>
+
+    <!-- ========== OVERVIEW ========== -->
+    <section id="overview" class="view active">
+      <div class="hero">
+        <div class="hero-kicker">SEE. FREE. GO.</div>
+        <h2>Face Your Power ist eine mentale Leistungsmethode für Spitzensportler:innen. Das ist dein persönliches Trainingslog. Trainiere deinen Kopf wie du deinen Körper trainierst.</h2>
+        <ul class="info-list">
+          <li><strong>Kurzer Moment</strong> — während oder direkt nach dem Training festhalten.</li>
+          <li><strong>Übung</strong> — logge dein Wochenmodul, ein echter Versuch nach dem anderen.</li>
+          <li><strong>Regulation</strong> — Reset-Tools für dein Nervensystem, jederzeit abrufbar.</li>
+          <li><strong>Core Tools</strong> — deine 8 Tools zum Denken, Planen, Lernen und Kommunizieren.</li>
+          <li><strong>Tiefenreflexion</strong> — für einen schwierigen Moment oder ein wiederkehrendes Muster.</li>
+        </ul>
+        <div class="cycle-map" aria-label="Performance Cycle">
+          <div class="cycle-step"><strong>AWARENESS</strong><span>Wahrnehmen</span></div>
+          <div class="cycle-step"><strong>REGULATION</strong><span>Reset</span></div>
+          <div class="cycle-step"><strong>CHOICE</strong><span>Steuern</span></div>
+          <div class="cycle-step"><strong>PERFORMANCE</strong><span>Handeln</span></div>
+        </div>
+
+        <div class="hero-kicker" style="margin-top:22px;margin-bottom:0;">DEINE 10 WOCHEN</div>
+        <div class="arc-wrap">
+          <div class="arc" id="arc"></div>
+        </div>
+
+        <div class="focus-panel" id="focusPanel"></div>
+      </div>
+
+      <div class="stat-grid" id="statGrid"></div>
+
+      <div class="card">
+        <h3>Your 3x3 Grid</h3>
+        <p class="muted">SEE, FREE, GO — über Prepare, Perform, Pursue. Eine Zahl zeigt geloggte Übungen.</p>
+        <div id="methodGrid" style="margin-top:12px;"></div>
+      </div>
+
+      <div class="card">
+        <h3>Modul-Konstanz</h3>
+        <p class="muted">Aktualisiert sich automatisch mit jedem Eintrag.</p>
+        <div id="tallyList" style="margin-top:10px;"></div>
+      </div>
+    </section>
+
+        <!-- ========== PRACTICE ========== -->
+    <section id="modulelog" class="view">
+      <div class="card">
+        <div class="eyebrow">SEE &times; FREE &times; GO &mdash; ÜBER PREPARE, PERFORM, PURSUE</div>
+        <h3>Übung</h3>
+        <p class="muted">Wähle die Übung aus dem, was du diese Woche gelernt hast, und logge einen echten Versuch. Kurze Sätze reichen.</p>
+        <div class="step-guide tab-guide">
+          <div><strong>WAS IST HIER</strong>Deine wöchentliche Modulübung — ein echter Versuch, geloggt.</div>
+          <div><strong>ZIEL</strong>Das Gelernte in einen echten Trainingsmoment verwandeln.</div>
+          <div><strong>WIE OFT</strong>Einmal pro Versuch — ein paar Mal pro Woche.</div>
+        </div>
+        <form id="formModuleLog" style="margin-top:18px;">
+          <div class="field-row">
+            <div><label for="mlDate">Datum</label><input type="date" id="mlDate" required></div>
+            <div><label for="mlModule">Modul</label>
+              <select id="mlModule" required></select>
+            </div>
+          </div>
+          <label for="mlContext">Wann bzw. in welcher Situation hast du die Übung eingesetzt?</label>
+          <select id="mlContext">
+            <option value="">Situation wählen</option>
+            <option>Training</option>
+            <option>Wettkampf</option>
+            <option>Regeneration / zuhause</option>
+            <option>Alltag</option>
+            <option>Sonstiges</option>
+          </select>
+          <label for="mlAttempt">Welche Übung hast du gemacht?</label>
+          <textarea id="mlAttempt" placeholder="Eine kurze, konkrete Beschreibung deines tatsächlichen Versuchs." required></textarea>
+          <label for="mlReps">Wiederholungen</label><input type="text" id="mlReps" placeholder="1" inputmode="numeric">
+          <label for="mlObservation">Was hast du bemerkt?</label>
+          <textarea id="mlObservation" placeholder="Was ist passiert? Was war hilfreich oder schwierig?"></textarea>
+          <label for="mlNext">Was testest du als Nächstes?</label>
+          <input type="text" id="mlNext" placeholder="Ein konkretes nächstes Experiment.">
+          <label for="mlCoreTool">Welches Core Tool hat das unterstützt? <span style="color:var(--ink-faint);font-weight:400;">(optional)</span></label>
+          <select id="mlCoreTool"></select>
+          <p class="quick-note">Willst du diese Einheit vertiefen? Die Learning Engine findest du unter Core Tools. Oder geh zum Tab Tiefenreflexion.</p>
+          <button class="btn" type="submit">Übung speichern</button>
+        </form>
+      </div>
+      <div class="card">
+        <h3>Deine Übungseinheiten</h3>
+        <p class="muted">Jede gespeicherte Übung zählt, egal wie klein.</p>
+        <div class="entry-list" id="mlList"></div>
+      </div>
+    </section>
+
+    <!-- ========== REGULATION BRIDGE ========== -->
+    <section id="regbridge" class="view">
+      <div class="card">
+        <div class="eyebrow">REGULATION BRIDGE &mdash; ZWISCHEN PREPARE UND PERFORM, DURCHGEHEND ÜBER ALLE 10 WOCHEN GEÜBT</div>
+        <h3>Setze deinen Zustand zurück. Kehre zur Leistung zurück.</h3>
+        <p class="muted">Du musst dich nicht völlig ruhig fühlen. Du musst deinen Zustand bemerken, ein Tool wählen, es einsetzen und zur nächsten sinnvollen Handlung zurückkehren. Das ist Core Tool 1 von 8.</p>
+        <div class="step-guide tab-guide">
+          <div><strong>WAS IST HIER</strong>6 Reset-Tools für dein Nervensystem, jederzeit abrufbar.</div>
+          <div><strong>ZIEL</strong>Deinen Zustand bemerken, zurücksetzen, zur nächsten Handlung zurückkehren.</div>
+          <div><strong>WIE OFT</strong>Ein einfacher Reset ab Tag 1 — die volle Toolbox ab Woche 4.</div>
+        </div>
+      </div>
+      <div class="card">
+        <h3>Wähle ein Tool</h3>
+        <p class="muted">Öffne ein Tool für die Kurzversion und die vollständigen Schritte.</p>
+        <div id="regGuides" style="margin-top:10px;"></div>
+      </div>
+      <div class="card">
+        <h3>Regulation-Übung loggen</h3>
+        <p class="muted">Logge jedes Tool einzeln und bewerte, wie hilfreich es heute war. Mit der Zeit zeigt dir das, welcher Reset in welcher Situation am besten wirkt.</p>
+        <form id="formRegBridge" style="margin-top:18px;">
+          <div class="field-row">
+            <div><label for="rbDate">Datum</label><input type="date" id="rbDate" required></div>
+            <div><label for="rbExercise">Regulation-Tool</label><select id="rbExercise" required></select></div>
+          </div>
+          <label for="rbSituation">Wann bzw. in welcher Situation hast du es eingesetzt?</label>
+          <select id="rbSituation">
+            <option value="">Situation wählen</option>
+            <option>Training</option>
+            <option>Wettkampf</option>
+            <option>Regeneration / zuhause</option>
+            <option>Alltag</option>
+            <option>Sonstiges</option>
+          </select>
+          <label for="rbRating">Wie hilfreich war es heute?</label>
+          <select id="rbRating" required><option value="">Bewertung wählen</option><option value="1">1 &mdash; Keine spürbare Wirkung</option><option value="2">2 &mdash; Kleine Wirkung</option><option value="3">3 &mdash; Etwas hilfreich</option><option value="4">4 &mdash; Deutlich hilfreich</option><option value="5">5 &mdash; Starke Wirkung</option></select>
+          <label for="rbNote">Was hast du bemerkt?</label><input type="text" id="rbNote" placeholder="Eine kurze Beobachtung reicht.">
+          <button class="btn" type="submit">Diese Übung loggen</button>
+        </form>
+      </div>
+      <div class="card">
+        <h3>Dein Log</h3>
+        <div class="entry-list" id="rbList"></div>
+      </div>
+      <div class="card">
+        <h3>Deine Regulation-Toolbox</h3>
+        <p class="muted">Vergleiche Häufigkeit und durchschnittliche Wirksamkeit. Mehr Einträge machen das Muster zuverlässiger.</p>
+        <div id="rbInsights" style="margin-top:10px;"></div>
+      </div>
+    </section>
+
+    <!-- ========== CORE TOOLS ========== -->
+    <section id="coretools" class="view">
+      <div class="card">
+        <div class="eyebrow">ÜBER ALLE PHASEN &mdash; SEE, FREE, GO</div>
+        <h3>Core Toolkit</h3>
+        <p class="muted">Deine acht Tools. Sie wirken über jede Phase hinweg — nutze das, was zum Moment passt.</p>
+        <div class="step-guide tab-guide">
+          <div><strong>WAS IST HIER</strong>Regulation (eigener Tab), 5 Denk- & Planungstools, Learning Engine und Communication Loop.</div>
+          <div><strong>ZIEL</strong>Tiefer gehen, wenn ein Moment oder Modul dir etwas Lernenswertes gibt.</div>
+          <div><strong>WIE OFT</strong>Nach Bedarf — nicht nach jedem Eintrag.</div>
+        </div>
+        <ul class="info-list">
+          <li><strong>Kick-off</strong> — die Learning Engine, ab Tag eins verfügbar.</li>
+          <li><strong>Woche 2</strong> — Stelle Bessere Fragen & Annahmen-Check.</li>
+          <li><strong>Perform-Wochen</strong> — der Communication Loop (SAFE/PACE/STOP/CANT).</li>
+          <li><strong>Pursue-Wochen</strong> — Jahresplanung, Entscheidungskompass & Plan den nächsten Schritt.</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Deine 8 Core Tools</h3>
+        <div id="coreGuides" style="margin-top:8px;"></div>
+      </div>
+
+      <div class="card">
+        <div class="eyebrow">CORE TOOL 7 VON 8 &mdash; EXPERIENCE &rarr; REFLECT &rarr; LEARN &rarr; ADAPT</div>
+        <h3>Learning Engine</h3>
+        <p class="muted">Nutze das, wenn eine Erfahrung dir etwas Lernenswertes gibt, oder wenn ein Modul endet &mdash; nicht nach jedem einzelnen Eintrag. Ein kurzer Satz pro Frage reicht.</p>
+        <form id="formLearning" style="margin-top:18px;">
+          <div class="field-row">
+            <div><label for="elDate">Datum</label><input type="date" id="elDate" required></div>
+            <div><label for="elModule">Worum geht es dabei?</label><select id="elModule"></select></div>
+          </div>
+          <div class="loop-grid" id="learningFields"></div>
+          <button class="btn" type="submit">Learning-Engine-Reflexion speichern</button>
+        </form>
+      </div>
+      <div class="card">
+        <h3>Deine Learning-Engine-Einträge</h3>
+        <div class="entry-list" id="elList"></div>
+      </div>
+
+      <div class="card">
+        <div class="eyebrow">CORE TOOL 8 VON 8 &mdash; SAFE &middot; PACE &middot; STOP &middot; CANT</div>
+        <h3>Communication Loop</h3>
+        <p class="muted">Nutze das nach einem Trainingsblock, Workshop, Wettkampf oder einer bedeutsamen Interaktion. Wähle jeden Prozess, den du bemerkt hast. Falls sich die Sequenz wiederholt, speichere einen weiteren Check für den nächsten Moment oder die nächste Runde.</p>
+        <p class="principle"><strong>Du kannst nur ändern, was du sehen kannst.</strong> Bemerke, was das Lernen vorangebracht hat, was gefehlt hat und was dich oder die Gruppe zurückgeworfen haben könnte.</p>
+
+        <form id="formCommunication" style="margin-top:18px;">
+          <div class="field-row">
+            <div><label for="clDate">Datum</label><input type="date" id="clDate" required></div>
+            <div><label for="clContext">Kontext</label>
+              <select id="clContext" required>
+                <option>Trainingseinheit</option><option>Trainingsblock</option><option>Wettkampf</option><option>Workshop</option><option>Team-Meeting</option><option>Coach-Gespräch</option><option>Sonstiges</option>
+              </select>
+            </div>
+          </div>
+          <div class="field-row">
+            <div><label for="clMoment">Moment oder Runde <span style="color:var(--ink-faint);font-weight:400;">(optional)</span></label><input type="text" id="clMoment" placeholder="z. B. Übung 2, nach dem Fehler"></div>
+            <div><label for="clSource">Wo ist es aufgetreten?</label>
+              <select id="clSource"><option value="">Keine Auswahl</option><option>Selbstgespräch</option><option>Coach-Kommunikation</option><option>Teamkolleg:innen-Kommunikation</option><option>Team-Umfeld</option><option>Mehrere Quellen</option><option>Sonstiges</option></select>
+            </div>
+          </div>
+
+          <label>Welche Prozesse hast du bemerkt? <span style="color:var(--ink-faint);font-weight:400;">Alle Zutreffenden auswählen</span></label>
+          <div class="check-grid" id="clProcesses">
+            <label class="check-option"><input type="checkbox" name="clProcess" value="SAFE"><span><strong>SAFE</strong>See, Ask, Feel, Express</span></label>
+            <label class="check-option"><input type="checkbox" name="clProcess" value="PACE"><span><strong>PACE</strong>Playful, Accepting, Curious, Empathetic</span></label>
+            <label class="check-option"><input type="checkbox" name="clProcess" value="STOP"><span><strong>STOP</strong>Stop, Triangulate, Organize, Present</span></label>
+            <label class="check-option"><input type="checkbox" name="clProcess" value="CANT"><span><strong>CANT</strong>Condemn, Authoritarian, Negate, Threaten</span></label>
+          </div>
+
+          <label for="clEvent">Was ist passiert, bzw. was wurde gesagt oder getan?</label>
+          <textarea id="clEvent" placeholder="Halte den beobachtbaren Moment, Worte oder Verhalten fest, ohne es zu bewerten."></textarea>
+          <label for="clMissing">Was hat gefehlt?</label>
+          <textarea id="clMissing" placeholder="Welcher Prozess, welche Unterstützung, Information, Grenze oder Perspektive hat gefehlt?"></textarea>
+          <label for="clFeel">Wie hat sich das für mich angefühlt?</label>
+          <textarea id="clFeel" placeholder="Benenne die Emotion, Körperreaktion, Energie oder das Sicherheitsgefühl, das du bemerkt hast."></textarea>
+          <label for="clEffect">Welche Wirkung hatte das auf Lernen oder Leistung?</label>
+          <textarea id="clEffect" placeholder="Was hat sich bei Fokus, Selbstvertrauen, Offenheit, Entscheidungen, Teamarbeit oder Ausführung verändert?"></textarea>
+          <div class="field-row">
+            <div><label for="clNeed">Was habe ich gebraucht?</label>
+              <select id="clNeed"><option value="">Keine Auswahl</option><option>Mehr Sicherheit</option><option>Mehr Unterstützung</option><option>Mehr Klarheit</option><option>Mehr Raum</option><option>Mehr Herausforderung</option><option>Weniger Druck</option><option>Andere Sprache</option><option>Die Balance stimmte</option></select>
+            </div>
+            <div><label for="clFit">Wie hilfreich war die Kommunikation?</label>
+              <select id="clFit"><option value="">Nicht bewertet</option><option value="1">1 &mdash; Hat gegen mich gewirkt</option><option value="2">2 &mdash; Größtenteils unhilfreich</option><option value="3">3 &mdash; Gemischt oder neutral</option><option value="4">4 &mdash; Hilfreich</option><option value="5">5 &mdash; Hat die Leistung stark unterstützt</option></select>
+            </div>
+          </div>
+          <label for="clNext">Was testen oder kommunizieren wir als Nächstes?</label>
+          <input type="text" id="clNext" placeholder="Ein konkreter Satz, eine Grenze oder Änderung.">
+          <button class="btn" type="submit">Communication Check speichern</button>
+        </form>
+      </div>
+      <div class="card">
+        <h3>Deine Communication Checks</h3>
+        <p class="muted">Mehrere Einträge am selben Tag können zeigen, wie sich der Prozess innerhalb einer Session oder eines Workshops verändert hat.</p>
+        <div class="entry-list" id="clList"></div>
+      </div>
+    </section>
+
+    <!-- ========== LIVE PRACTICE ========== -->
+    <section id="livepractice" class="view">
+      <div class="card">
+        <div class="eyebrow">SEE, WAS PASSIERT. FREE, WAS IM WEG STEHT. GO MIT DEM, WAS DU BRAUCHST.</div>
+        <h3>Tiefenreflexion</h3>
+        <p class="muted">Nutze das nach einer wichtigen Leistung, einem schwierigen Moment oder einem wiederkehrenden Muster.</p>
+        <div class="step-guide tab-guide">
+          <div><strong>WAS IST HIER</strong>Eine geführte 6-Schritte-Reflexion für einen Moment.</div>
+          <div><strong>ZIEL</strong>Von Fakten → Muster → nächster Handlung.</div>
+          <div><strong>WIE OFT</strong>Nach einem großen Moment oder wiederkehrendem Muster — innerhalb von 24h.</div>
+        </div>
+        <div class="deep-flow"><span>1 Kontext</span><span>2 Zustand</span><span>3 Schlüsselmoment</span><span>4 SEE</span><span>5 FREE</span><span>6 GO</span></div>
+        <p class="principle"><strong>Warum diese Reihenfolge?</strong> Erst festhalten, was passiert ist. Dann verstehen, was es beeinflusst hat. Erst danach entscheiden, was du loslässt und was du als Nächstes trainierst.</p>
+      </div>
+
+      <form id="formLive">
+        <div id="liveAccordion"></div>
+        <button class="btn" type="submit">Tiefenreflexion speichern</button>
+      </form>
+
+      <div class="card" style="margin-top:22px;">
+        <h3>Vergangene Einheiten</h3>
+        <div class="entry-list" id="liveList"></div>
+      </div>
+    </section>
+
+    <!-- ========== MOMENT LOG ========== -->
+    <section id="momentlog" class="view">
+      <div class="card">
+        <div class="eyebrow">KURZER MOMENT</div>
+        <h3>Festhalten und weitermachen</h3>
+        <p class="muted">30–60 Sekunden während oder kurz nach dem Training. Nur, was jetzt hilfreich ist.</p>
+        <div class="step-guide tab-guide">
+          <div><strong>WAS IST HIER</strong>Eine 5-Fragen-Erfassung für den Moment.</div>
+          <div><strong>ZIEL</strong>Festhalten, bevor es verblasst.</div>
+          <div><strong>WIE OFT</strong>Während oder direkt nach dem Training, jederzeit.</div>
+        </div>
+        <form id="formMoment" style="margin-top:18px;">
+          <div class="field-row">
+            <div><label for="mmDate">Datum</label><input type="date" id="mmDate" required></div>
+            <div><label for="mmStage">Phase</label>
+              <select id="mmStage">
+                <option>Prepare</option><option>Perform</option><option>Pursue</option>
+              </select>
+            </div>
+          </div>
+          <label for="mmSituation">1. Was ist passiert?</label><input type="text" id="mmSituation" placeholder="Der konkrete Moment oder Auslöser.">
+          <label for="mmNotice">2. Was habe ich an mir bemerkt?</label><input type="text" id="mmNotice" placeholder="Emotion, Gedanke oder Körperempfindung.">
+          <label for="mmReaction">3. Was habe ich getan?</label><input type="text" id="mmReaction" placeholder="Meine unmittelbare Reaktion.">
+          <label for="mmPerformance">4. Wie war die Wirkung auf meine Leistung?</label><input type="text" id="mmPerformance" placeholder="Fokus, Selbstvertrauen, Energie oder Entscheidung.">
+          <label for="mmResponse">5. Was brauche oder wähle ich als Nächstes?</label><input type="text" id="mmResponse" placeholder="Eine hilfreiche Reaktion, ein Anker oder eine Handlung.">
+          <p class="quick-note">Willst du diese Einheit vertiefen? Die Learning Engine findest du unter Core Tools. Oder geh zum Tab Tiefenreflexion.</p>
+          <button class="btn" type="submit">Kurzen Moment speichern</button>
+        </form>
+      </div>
+      <div class="card">
+        <h3>Deine Momente</h3>
+        <div id="mmList"></div>
+      </div>
+    </section>
+
+  </main>
+
+  <p class="foot-note">Trainiere deinen Kopf. Kenne deine Muster. Face Your Power. — Deine Einträge bleiben in diesem Browser, außer du exportierst und teilst sie bewusst.</p>
+</div>
+
+<!-- Settings modal -->
+<div class="modal-bg" id="modalBg">
+  <div class="modal">
+    <h3>Dein Trainings-Startdatum</h3>
+    <span class="muted">Lege den Start von Modul-Woche 1 nach dem Kick-off fest. Eine Änderung des Datums passt nur die Wochenanzeige an; gespeicherte Einträge bleiben unberührt.</span>
+    <label for="startDateInput">Startdatum</label>
+    <input type="date" id="startDateInput">
+    <div class="modal-actions">
+      <button class="btn ghost small" id="btnExport">Als JSON exportieren</button>
+      <button class="btn ghost small" id="btnExportXlsx">Als Excel exportieren</button>
+      <button class="btn danger small" id="btnReset">Alle Daten zurücksetzen</button>
+      <button class="btn small" id="btnSaveStart">Speichern</button>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ---------------- Data model ---------------- */
+  var MODULES = [
+    {id:'see-prepare',  phase:'prepare', name:'SEE × Prepare'},
+    {id:'free-prepare', phase:'prepare', name:'FREE × Prepare'},
+    {id:'go-prepare',   phase:'prepare', name:'GO × Prepare'},
+    {id:'see-perform',  phase:'perform', name:'SEE × Perform'},
+    {id:'free-perform', phase:'perform', name:'FREE × Perform'},
+    {id:'go-perform',   phase:'perform', name:'GO × Perform'},
+    {id:'see-pursue',   phase:'pursue',  name:'SEE × Pursue'},
+    {id:'free-pursue',  phase:'pursue',  name:'FREE × Pursue'},
+    {id:'go-pursue',    phase:'pursue',  name:'GO × Pursue'}
+  ];
+
+  // Kick-off takes place before week 1. Weekly materials provide the module instructions.
+  var WEEKS = [
+    {n:1, phase:'prepare', title:'Prepare', focus:'SEE × Prepare', moduleId:'see-prepare'},
+    {n:2, phase:'prepare', title:'Prepare', focus:'FREE × Prepare', moduleId:'free-prepare'},
+    {n:3, phase:'prepare', title:'Prepare', focus:'GO × Prepare', moduleId:'go-prepare'},
+    {n:4, phase:'foundation', title:'Regulation Bridge', focus:'Regulation Bridge', moduleId:null},
+    {n:5, phase:'perform', title:'Perform', focus:'SEE × Perform', moduleId:'see-perform'},
+    {n:6, phase:'perform', title:'Perform', focus:'FREE × Perform', moduleId:'free-perform'},
+    {n:7, phase:'perform', title:'Perform', focus:'GO × Perform', moduleId:'go-perform'},
+    {n:8, phase:'pursue', title:'Pursue', focus:'SEE × Pursue', moduleId:'see-pursue'},
+    {n:9, phase:'pursue', title:'Pursue', focus:'FREE × Pursue', moduleId:'free-pursue'},
+    {n:10, phase:'pursue', title:'Pursue', focus:'GO × Pursue', moduleId:'go-pursue'}
+  ];
+
+  var PHASE_COLOR = {foundation:'#5B6089', prepare:'#8C6CEA', perform:'#6C4FC7', pursue:'#432E86'};
+  var PHASE_LABEL = {foundation:'Foundation', prepare:'Prepare', perform:'Perform', pursue:'Pursue'};
+  var REGULATION_TOOLS = ['Stress Reset','Fast Reset','Orienting Reset','Tension → Release','Reset + Anchor','Hum, Swallow & Return'];
+  var REG_GUIDES = {
+    'Stress Reset':{sub:'Langsam werden und zurücksetzen',when:'Tägliche Praxis und vor dem Wettkampf.',quick:'Stress benennen → Ruhig atmen, ca. 5 Sekunden ein und 5 Sekunden aus → Wiederholen für etwa eine Minute → Nächste Handlung wählen.',steps:['Benenne deinen Stress und bewerte ihn von 1 bis 10.','Atme 2–3 Minuten lang sanft und in einem angenehmen Tempo durch die Nase.','Übe täglich in den Wochen 1–2, dann verkürze es schrittweise.','Probiere bis Woche 4 eine 60–90-Sekunden-Version.','Lenke deine Aufmerksamkeit zurück zur nächsten Handlung.']},
+    'Fast Reset':{sub:'Ein Atemzug nach dem anderen — Physiologischer Seufzer',when:'Nach einem Fehler, zwischen Versuchen oder während einer Pause.',quick:'Einatmen → Kleinen zusätzlichen Atemzug einatmen → Langsam ausatmen → 2–3 Mal wiederholen → Nächste Handlung.',steps:['Atme angenehm durch die Nase ein.','Füge einen zweiten, kleineren Atemzug hinzu.','Atme in einem angenehmen, längeren Zug aus.','Wiederhole 2–3 Mal; kehre bei Schwindel zur normalen Atmung zurück.','Frage dich, was deine nächste Handlung ist, und tue sie.']},
+    'Orienting Reset':{sub:'Zurück in die Gegenwart',when:'Grübeln oder Tunnelblick.',quick:'Schauen → Hören → Fühlen → Zurückkehren.',steps:['Halte für ein paar Sekunden inne.','Nimm drei Dinge wahr, die du sehen kannst.','Nimm zwei Geräusche wahr.','Spüre deine Füße auf dem Boden.','Atme einmal angenehm und kehre zur Aufgabe zurück.']},
+    'Tension → Release':{sub:'Lass los, was du nicht brauchst',when:'Unnötige Anspannung vor der Leistung oder während einer Pause.',quick:'Scannen → Loslassen → Behalten, was du brauchst → Los.',steps:['Scanne Kiefer, Schultern, Hände, Bauch und Beine.','Lass die Anspannung los, die der nächsten Aufgabe nicht hilft.','Behalte die Energie und Muskelspannung, die du für deinen Sport brauchst.','Atme angenehm und kehre zur nächsten Handlung zurück.']},
+    'Reset + Anchor':{sub:'Verbinde deine Regulation mit deiner Leistung',when:'Sobald du einen persönlichen Anker in GO × Prepare trainiert hast.',quick:'Ausatmen → Körper spüren → Anker nutzen → Zustand aktivieren → Los.',steps:['Atme einmal angenehm und lass unnötige Anspannung los.','Spüre deine Füße und deine Haltung.','Nutze den persönlichen Anker, den du bereits trainiert hast.','Verbinde dich wieder mit einem hilfreichen Leistungszustand.','Handle, ohne auf das perfekte Gefühl zu warten.']},
+    'Hum, Swallow & Return':{sub:'Finde deine Mitte',when:'Vor dem Wettkampf, zwischen Versuchen, oder wann immer du einen Moment zum Summen hast.',quick:'Einatmen → Summend ausatmen → Normal schlucken → Blick nach oben → Nächste Handlung.',steps:['Finde deine Position; löse Kiefer und Schultern.','Atme leicht durch die Nase ein.','Summe beim Ausatmen ein sanftes „mmm“ — ohne zu pressen.','Schlucke normal, wenn das Summen endet; ein Schluck Wasser ist optional.','Blicke zu deiner Aufgabe und wähle die nächste Handlung.']}
+  };
+  var CORE_TOOLS = ['Regulation Toolbox','Stelle Bessere Fragen','Annahmen-Check','Entscheidungskompass','Jahresplanung','Plan den nächsten Schritt','Learning Engine','Kommunikations-Loop'];
+  var CORE_TOOL_GUIDES = [
+    {name:'Regulation Toolbox',tagline:'Steuere deinen emotionalen Zustand',when:'Deine Aktivierung ist zu hoch oder zu niedrig, Anspannung beeinflusst deine Bewegung, nach einem Fehler, oder um dich wieder mit einem hilfreichen Leistungszustand zu verbinden.',what:'Bemerken → Wählen → Regulieren → Zurückkehren. Nutze das Tool, ohne ein perfektes Gefühl zu erzwingen. Das Ziel ist nicht immer Ruhe — das Ziel ist der richtige Zustand für die Aufgabe. Tools: Stress Reset, Fast Reset, Orienting Reset, Tension → Release, Reset + Anchor, Hum, Swallow & Return. Logge es im Regulation-Tab.',jump:'regbridge',jumpLabel:'Regulation-Tab öffnen'},
+    {name:'Stelle Bessere Fragen',tagline:'Lenke deine Aufmerksamkeit',when:'Du steckst in problemfokussiertem Denken fest, Reflexion wird zu Selbstkritik, du spielst einen Fehler immer wieder durch, oder du fühlst dich machtlos.',what:'Bemerke die Frage, die du dir gerade stellst, und wohin sie führt. Stelle dann eine hilfreichere — „Was liegt in meiner Kontrolle?“, „Was kann ich daraus lernen?“, „Was ist eine hilfreiche Handlung, die ich jetzt tun kann?“ — und handle nach der Antwort. Eine bessere Frage verändert, wohin deine Aufmerksamkeit geht.'},
+    {name:'Annahmen-Check',tagline:'Prüfe, was du für eine Tatsache hältst',when:'Eine Interpretation fühlt sich wie die einzige Wahrheit an, du sagst ein negatives Ergebnis voraus, oder dieselbe Überzeugung beeinflusst immer wieder deine Leistung.',what:'Benenne die Annahme. Prüfe die Belege dafür und dagegen. Frage, was sonst noch wahr sein könnte, und wähle eine neue Perspektive, die du in der Realität testest. Stelle Bessere Fragen verändert deine Aufmerksamkeit — Annahmen-Check prüft, ob deine Schlussfolgerung wahr ist.'},
+    {name:'Entscheidungskompass',tagline:'Erforsche, wie eine Entscheidung innerlich repräsentiert wird',when:'Du wählst zwischen zwei Optionen, fühlst dich in einer Entscheidung blockiert, oder eine Option wirkt logisch, fühlt sich aber nicht stimmig an.',what:'Erinnere dich an eine Entscheidung, mit der du zufrieden bist, und eine, die du bereut hast — bemerke Bild, Distanz, Helligkeit, Klarheit, Bewegung und Körperempfindungen. Erforsche dann die aktuelle Option und prüfe Fakten, Konsequenzen und Werte. Deine innere Reaktion ist Information, kein Befehl.'},
+    {name:'Jahresplanung',tagline:'Plane dein Jahr',when:'Zu Beginn einer Saison oder eines Trainingsjahres, nach einem Saisonrückblick, oder wenn deine wöchentlichen Handlungen sich nicht zu einer größeren Richtung summieren.',what:'Bewerte acht Lebensbereiche von 1–10, vervollständige „In 12 Monaten möchte ich …“, wähle zwei oder drei Schwerpunkte, benenne für jeden den nächsten Schritt, und überprüfe das vierteljährlich. Das gibt die Richtung für Plan den nächsten Schritt vor und ergänzt SEE × Pursue. Vollständige Übung in deinem Workbook.'},
+    {name:'Plan den nächsten Schritt',tagline:'Verwandle Richtung in Handlung',when:'Ein Ziel fühlt sich zu groß an, du weißt, was du willst, aber nicht, wo du anfangen sollst, oder deine wöchentlichen Handlungen passen nicht zu deinen Prioritäten.',what:'Verbinde dich wieder mit der Richtung, benenne den nächsten Meilenstein, bringe ihn in diese Woche, und wähle die kleinste hilfreiche Handlung — was, wann, wo, welche Unterstützung. Überprüfe es am Ende der Woche. Plane nicht alles — plane den nächsten hilfreichen Schritt.'},
+    {name:'Learning Engine',tagline:'Verwandle Erfahrung in Anpassung',when:'Nach einer wichtigen Einheit oder einem Wettkampf, wenn etwas funktioniert hat (oder nicht), oder wenn du ein Modul abgeschlossen hast.',what:'EXPERIENCE → REFLECT → LEARN → ADAPT. Sechs Fragen: Ziele, Herausforderungen, Lösungen, Überraschungen, Wie fühle ich mich, Nächster Schritt. Ein Ergebnis ist Information, kein Urteil. Ein kurzer Satz pro Frage reicht. Trag es weiter unten auf dieser Seite ein.'},
+    {name:'Kommunikations-Loop',tagline:'Verwandle Kommunikation in Lernen',when:'Während des Trainings, zwischen Versuchen, in einem Coach-Gespräch, oder nach einer bedeutsamen Team-Interaktion.',what:'SAFE → PACE → STOP → PACE → STOP → PACE → SAFE. Bemerke CANT, wann immer es auftaucht, und untersuche seine Wirkung. Kommunikation prägt, was im nächsten Versuch möglich wird. Logge einen Check weiter unten auf dieser Seite.'}
+  ];
+
+  var ENGINE_STEPS = [
+    {id:'goal', stage:'EXPERIENCE', label:'1. ZIELE', question:'Worauf war ich aus?', placeholder:'Was wollte ich erreichen, erleben oder verbessern?'},
+    {id:'difficulties', stage:'REFLECT', label:'2. HERAUSFORDERUNGEN', question:'Was hat mich herausgefordert?', placeholder:'Was stand im Weg, hat mich gestört oder die Situation schwieriger gemacht — ohne es zu bewerten?'},
+    {id:'solutions', stage:'LEARN', label:'3. LÖSUNGEN', question:'Was hat geholfen oder könnte helfen?', placeholder:'Was hat funktioniert? Was habe ich gut gemacht? Welche Unterstützung, Strategie oder Reaktion könnte hilfreich sein?'},
+    {id:'surprises', stage:'REFLECT', label:'4. ÜBERRASCHUNGEN', question:'Was habe ich entdeckt?', placeholder:'Was war unerwartet, anders oder aufschlussreich — positiv, schwierig oder neutral?'},
+    {id:'feel', stage:'REFLECT', label:'5. WIE FÜHLE ICH MICH?', question:'Was passiert gerade in mir?', placeholder:'Benenne deine Emotionen, Körperempfindungen und dein Energie- bzw. Aktivierungsniveau. Was braucht vielleicht Regulation, bevor du weitermachst?'},
+    {id:'next', stage:'ADAPT', label:'6. NÄCHSTER SCHRITT', question:'Was möchte ich als Nächstes ausprobieren?', placeholder:'Wähle eine konkrete Handlung, einen Anker, eine Reaktion oder Anpassung für den nächsten Versuch.'}
+  ];
+
+  var LIVE_SECTIONS = [
+    {id:'context', title:'1. DIE ERFAHRUNG BESCHREIBEN', sub:'Erst die Fakten festhalten, bevor du sie interpretierst',
+      when:'Direkt nach der Einheit oder innerhalb von 24 Stunden ausfüllen.',
+      why:'Kontext beeinflusst Zustand und Leistung. Ihn zuerst festzuhalten verhindert vage Erinnerungen wie „Ich war einfach schlecht.“',
+      later:'Du kannst vergleichen, ob dich bestimmte Umgebungen, Trainingsarten oder Wettkampfbedingungen wiederholt beeinflussen.', fields:[
+      {id:'date', label:'Datum', type:'date', ph:'', help:'Ordnet die Erfahrung genau in deine Trainingszeitlinie ein.'},
+      {id:'type', label:'Trainings- oder Wettkampfart', type:'text', ph:'z. B. Techniktraining, Wettkampf, Finale', help:'Ermöglicht später den Vergleich ähnlicher Belastungsarten.'},
+      {id:'where', label:'Wo und unter welchen Bedingungen?', type:'text', ph:'Ort, Wetter, Publikum, Reise, Regeneration', help:'Erfasst äußere Faktoren, die sonst vergessen werden könnten.'}
+    ]},
+    {id:'state-snapshot', title:'2. ZUSTANDS-SCHNAPPSCHUSS — Verbinde dich wieder mit deinem inneren Zustand', sub:'Erinnere dich, was in dir vorging, bevor du analysierst, warum',
+      when:'Ausfüllen, solange die Erinnerung an den Schlüsselmoment noch klar ist.',
+      why:'Emotionen, Gedanken, Körperempfindungen und Aktivierung beeinflussen Entscheidungen. Sie vor der Analyse festzuhalten hält die Reflexion ehrlich.',
+      later:'Du kannst deine persönlichen Frühwarnsignale erkennen und die Zustände, die mit deinen stärksten Leistungen verbunden sind.', fields:[
+      {id:'emotion', label:'Emotion', type:'text', ph:'Welche Emotion war vorhanden?', help:'Benennt das emotionale Signal, statt die ganze Leistung zu bewerten.'},
+      {id:'thought', label:'Gedanke oder innerer Dialog', type:'text', ph:'Was habe ich mir selbst gesagt?', help:'Macht automatisches Selbstgespräch sichtbar.'},
+      {id:'body', label:'Körperempfindung', type:'text', ph:'Wo und wie habe ich es körperlich gespürt?', help:'Hilft, körperliche Signale zu erkennen, die vor Leistungsänderungen auftreten.'},
+      {id:'activation', label:'Energie oder Aktivierung', type:'text', ph:'Zu niedrig, hilfreich, oder zu hoch? Wie hat es sich angefühlt?', help:'Zeigt, ob dein Aktivierungsniveau zur Aufgabe passte.'}
+    ]},
+    {id:'key-moment', title:'3. SCHLÜSSELMOMENT — Eine konkrete Sequenz rekonstruieren', sub:'Wähle einen Moment, nicht die ganze Einheit',
+      when:'Nach dem Zustands-Schnappschuss ausfüllen. Konzentriere dich auf den lehrreichsten Moment.',
+      why:'Eine konkrete Sequenz lässt sich trainieren. Ein pauschales Etikett wie „gut“ oder „schlecht“ nicht.',
+      later:'Du kannst Auslöser → Reaktion → Leistungswirkung über mehrere Einheiten hinweg vergleichen.', fields:[
+      {id:'situation', label:'Was genau ist passiert?', type:'textarea', ph:'Beschreibe den beobachtbaren Moment, als würdest du einen kurzen Videoclip ansehen.', help:'Trennt Fakten von Interpretation.'},
+      {id:'reaction', label:'Was habe ich unmittelbar danach getan?', type:'text', ph:'Meine Entscheidung, mein Verhalten oder meine technische Reaktion.', help:'Verbindet das Ereignis mit deiner tatsächlichen Reaktion.'},
+      {id:'performance', label:'Was hat sich an meiner Leistung verändert?', type:'text', ph:'Fokus, Selbstvertrauen, Timing, Technik, Energie oder Entscheidungsfindung.', help:'Zeigt, warum dieser Moment für die Leistung wichtig ist.'}
+    ]},
+    {id:'see', title:'4. SEE — Das Muster erkennen', sub:'Vom einzelnen Moment zu dem übergehen, was sich wiederholen könnte',
+      when:'Erst ausfüllen, nachdem Fakten, Zustand und Reaktion beschrieben sind.',
+      why:'Zu frühes Analysieren begünstigt Vermutungen. Jetzt hast du genug Information, um nach einem Muster zu suchen.',
+      later:'Wiederkehrende Auslöser, Gedanken und Reaktionen werden sichtbar, statt sich zufällig anzufühlen.', fields:[
+      {id:'trigger2', label:'Was hat die Veränderung ausgelöst?', type:'text', ph:'Was ist unmittelbar bevor sich mein Zustand oder meine Leistung veränderte, passiert?', help:'Identifiziert den Auslöser, der die Sequenz startet.'},
+      {id:'automatic', label:'Was war meine automatische Reaktion?', type:'text', ph:'Ein Gedanke, eine Überzeugung, eine Emotion, ein Impuls oder ein Verhalten.', help:'Zeigt, was dein Autopilot gerade tut.'},
+      {id:'pattern', label:'Ist das ein wiederkehrendes Muster?', type:'text', ph:'Erstes Mal, gelegentlich, oder vertraut? Wo tritt es sonst noch auf?', help:'Unterscheidet ein einmaliges Ereignis von etwas, das sich zu trainieren lohnt.'},
+      {id:'impact', label:'Was kostet mich dieses Muster — oder was bringt es mir?', type:'text', ph:'Wie wirkt es sich auf Leistung, Regeneration, Selbstvertrauen oder Beziehungen aus?', help:'Klärt, ob es sich lohnt, das Muster zu verändern oder zu stärken.'}
+    ]},
+    {id:'free', title:'5. FREE — Raum für eine andere Reaktion schaffen', sub:'Trenne, was du beeinflussen kannst, von dem, was du nicht mittragen musst',
+      when:'Erst ausfüllen, wenn das Muster klar ist, und bevor du die nächste Handlung wählst.',
+      why:'Du kannst keine hilfreiche neue Wahl treffen, solange du noch gegen ein unkontrollierbares Ergebnis, einen Gegner, einen Fehler oder eine Emotion ankämpfst.',
+      later:'Du kannst erkennen, welche Regulation-Tools und Umdeutungen dir zuverlässig helfen, dich zu erholen und die Wahl zurückzugewinnen.', fields:[
+      {id:'control', label:'Was liegt jetzt in meiner Kontrolle?', type:'text', ph:'Meine Aufmerksamkeit, Atmung, Vorbereitung, Kommunikation, Entscheidung oder Handlung.', help:'Lenkt Energie auf etwas Trainierbares.'},
+      {id:'release', label:'Was muss ich nicht weitertragen?', type:'text', ph:'Ein Ergebnis, ein Fehler, eine Erwartung, eine Bewertung oder ein unkontrollierbarer Faktor.', help:'Verhindert, dass der vergangene Moment den nächsten besetzt.'},
+      {id:'exercise', label:'Was hat mir geholfen — oder könnte mir helfen, mich zu regulieren?', type:'text', ph:'Ein Regulation-Bridge-Tool, Atmung, Bewegung, ein Anker, ein Reset oder eine unterstützende Person.', help:'Baut deine persönliche, erfahrungsbasierte Reset-Toolbox auf.'},
+      {id:'reframe', label:'Was ist eine hilfreichere Interpretation?', type:'text', ph:'Was könnte dieser Moment sonst noch bedeuten?', help:'Schafft Flexibilität, ohne zu leugnen, was passiert ist.'}
+    ]},
+    {id:'go', title:'6. GO — Das nächste Experiment gestalten', sub:'Ende mit einer Reaktion, die du üben kannst, nicht mit dem Versprechen „es besser zu machen“',
+      when:'Am Ende der Reflexion ausfüllen und vor der nächsten relevanten Übung noch einmal durchgehen.',
+      why:'Reflexion erzeugt nur dann Lernen, wenn sie verändert, was du bemerkst, übst oder als Nächstes wählst.',
+      later:'Du kannst prüfen, ob die neue Reaktion funktioniert hat, sie verfeinern und Selbstvertrauen aus Erfahrung aufbauen.', fields:[
+      {id:'response', label:'Wie möchte ich beim nächsten Mal reagieren?', type:'text', ph:'Beschreibe eine beobachtbare Reaktion oder Entscheidung.', help:'Verwandelt Erkenntnis in Verhalten.'},
+      {id:'state', label:'Welcher Zustand würde diese Reaktion unterstützen?', type:'text', ph:'Ruhig, kämpferisch, verspielt, fokussiert, geduldig, energiegeladen …', help:'Verbindet das Verhalten mit dem inneren Zustand, den du brauchst.'},
+      {id:'cue', label:'Welcher Anker wird mich daran erinnern?', type:'text', ph:'Ein Wort, eine Geste, ein Atemzug, ein Bild oder eine Körperhaltung.', help:'Macht die Reaktion unter Druck leichter zugänglich.'},
+      {id:'next', label:'Wo und wann werde ich es testen?', type:'text', ph:'Benenne die nächste konkrete Trainingssituation.', help:'Schafft ein klares Experiment, das du danach bewerten kannst.'}
+    ]}
+  ];
+
+
+  /* ---------------- State ---------------- */
+  var STORE_KEY = 'fyp_tracker_v1';
+  var state = loadState();
+
+  function defaultState(){
+    return { startDate:null, regBridge:[], moduleLog:[], communicationLog:[], learningLog:[], reflections:{}, learningModules:{}, learningTransitions:{}, livePractice:[], momentLog:[] };
+  }
+  function loadState(){
+    try{
+      var raw = localStorage.getItem(STORE_KEY);
+      if(!raw) return defaultState();
+      var parsed = JSON.parse(raw);
+      var d = defaultState();
+      for(var k in d){ if(parsed[k] !== undefined) d[k] = parsed[k]; }
+      return d;
+    }catch(e){ return defaultState(); }
+  }
+  function saveState(){
+    try{ localStorage.setItem(STORE_KEY, JSON.stringify(state)); }catch(e){}
+  }
+
+  function uid(){ return Date.now().toString(36) + Math.random().toString(36).slice(2,7); }
+  function todayStr(){ return new Date().toISOString().slice(0,10); }
+  function fmtDate(s){
+    if(!s) return '';
+    var d = new Date(s+'T00:00:00');
+    if(isNaN(d)) return s;
+    return d.toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'});
+  }
+  function daysBetween(a,b){
+    var A = new Date(a+'T00:00:00'), B = new Date(b+'T00:00:00');
+    return Math.floor((B-A)/86400000);
+  }
+  function weekOfDate(dateStr){
+    if(!state.startDate || !dateStr) return null;
+    var diff = daysBetween(state.startDate, dateStr);
+    if(diff < 0) return null;
+    var w = Math.floor(diff/7)+1;
+    return w >= 1 && w <= 10 ? w : (w>10?10:null);
+  }
+  function currentWeek(){
+    if(!state.startDate) return null;
+    var w = weekOfDate(todayStr());
+    if(w===null){
+      var diff = daysBetween(state.startDate, todayStr());
+      if(diff<0) return null;
+      return 10;
+    }
+    return w;
+  }
+  function weekHasEntries(n){
+    var all = []
+      .concat(state.regBridge.map(function(e){return e.date;}))
+      .concat(state.moduleLog.map(function(e){return e.date;}))
+      .concat(state.communicationLog.map(function(e){return e.date;}))
+      .concat(state.livePractice.map(function(e){return e.date;}))
+      .concat(state.momentLog.map(function(e){return e.date;}));
+    for(var i=0;i<all.length;i++){ if(weekOfDate(all[i])===n) return true; }
+    return false;
+  }
+
+  /* ---------------- Nav ---------------- */
+  var tabBtns = document.querySelectorAll('.tab-btn');
+  tabBtns.forEach(function(btn){
+    btn.addEventListener('click', function(){ showView(btn.getAttribute('data-view')); });
+  });
+  function showView(id){
+    document.querySelectorAll('.view').forEach(function(v){ v.classList.toggle('active', v.id===id); });
+    tabBtns.forEach(function(b){ b.classList.toggle('active', b.getAttribute('data-view')===id); });
+    window.scrollTo({top:0,behavior:'smooth'});
+  }
+  function setAccordionOpen(acc, open){
+    if(!acc) return;
+    acc.classList.toggle('open',open);
+    var head=acc.querySelector('.acc-head');
+    if(head) head.setAttribute('aria-expanded',open?'true':'false');
+  }
+  function openLiveSection(index){
+    showView('livepractice');
+    var cards=document.querySelectorAll('#liveAccordion .acc');
+    cards.forEach(function(card){setAccordionOpen(card,false);});
+    var target=index==='last'?cards[cards.length-1]:cards[index];
+    if(target){setAccordionOpen(target,true);target.scrollIntoView({behavior:'smooth',block:'start'});}
+  }
+
+  document.querySelectorAll('[data-jump]').forEach(function(btn){btn.addEventListener('click',function(){showView(btn.getAttribute('data-jump'));});});
+
+  /* ---------------- Overview render ---------------- */
+  function renderOverview(){
+    var cw = currentWeek();
+    var arc = document.getElementById('arc');
+    arc.innerHTML = '';
+    WEEKS.forEach(function(w){
+      var node = document.createElement('button');
+      node.type='button';
+      node.className = 'arc-node';
+      if(cw!==null){
+        if(w.n < cw) node.classList.add('done');
+        else if(w.n === cw) node.classList.add('current');
+        else node.classList.add('future');
+      }
+      if(weekHasEntries(w.n)) node.classList.add('done');
+      node.style.setProperty('--phase-color', PHASE_COLOR[w.phase]);
+      node.innerHTML =
+        (w.n===1?'<span class="phase-tick">Prepare</span>':'') +
+        (w.n===4?'<span class="phase-tick">Bridge</span>':'') +
+        (w.n===5?'<span class="phase-tick">Perform</span>':'') +
+        (w.n===8?'<span class="phase-tick">Pursue</span>':'') +
+        '<div class="dot"></div><div class="wk-label">W'+w.n+'</div>';
+      node.addEventListener('click', function(){ renderFocus(w.n); });
+      arc.appendChild(node);
+    });
+    renderFocus(cw || 1);
+    renderStats();
+    renderTally();
+    renderMethodGrid();
+  }
+
+  function renderMethodGrid(){
+    var grid = document.getElementById('methodGrid');
+    if(!grid) return;
+    var phases = ['prepare','perform','pursue'];
+    var rows = ['see','free','go'];
+    var rowLabel = {see:'SEE', free:'FREE', go:'GO'};
+    var phaseLabel = {prepare:'PREPARE', perform:'PERFORM', pursue:'PURSUE'};
+    var html = '<div class="mg-head"></div>' + phases.map(function(p){ return '<div class="mg-head">'+phaseLabel[p]+'</div>'; }).join('');
+    rows.forEach(function(r){
+      html += '<div class="mg-row-label">'+rowLabel[r]+'</div>';
+      phases.forEach(function(p){
+        var mod = MODULES.filter(function(m){ return m.id===(r+'-'+p); })[0];
+        var count = mod ? state.moduleLog.filter(function(e){ return e.module===mod.id; }).length : 0;
+        html += '<div class="mg-cell'+(count>0?' done':'')+'" title="'+(mod?mod.name:'')+'">'+(count>0?count:'—')+'</div>';
+      });
+    });
+    grid.innerHTML = '<div class="method-grid">'+html+'</div>';
+  }
+
+  function renderFocus(n){
+    var w = WEEKS[n-1];
+    var panel = document.getElementById('focusPanel');
+    panel.innerHTML =
+      '<div><div class="ftitle">Woche '+w.n+' — '+PHASE_LABEL[w.phase]+'</div><div class="fmod">'+w.focus+'</div></div>' +
+      (w.moduleId ? '<button class="btn small" id="jumpModule">Übung loggen</button>' : '<button class="btn ghost small" id="jumpReflect">Regulation loggen</button>');
+    var jm = document.getElementById('jumpModule');
+    if(jm) jm.addEventListener('click', function(){
+      showView('modulelog');
+      document.getElementById('mlModule').value = w.moduleId;
+    });
+    var jr = document.getElementById('jumpReflect');
+    if(jr) jr.addEventListener('click', function(){ showView('regbridge'); });
+  }
+
+  function renderStats(){
+    var cw = currentWeek();
+    var grid = document.getElementById('statGrid');
+    grid.innerHTML =
+      stat(state.regBridge.length, 'Regulation-Übungen') +
+      stat(state.moduleLog.length, 'Übungseinheiten') +
+      stat(state.learningLog.length, 'Learning-Engine-Reflexionen') +
+      stat(cw ? ('Woche '+cw+' / 10') : '—', cw ? 'Aktuelle Woche' : 'Startdatum festlegen');
+  }
+  function stat(num,lbl){
+    return '<div class="stat"><div class="num">'+num+'</div><div class="lbl">'+lbl+'</div></div>';
+  }
+
+  function renderTally(){
+    var el = document.getElementById('tallyList');
+    var html = '';
+    MODULES.forEach(function(m){
+      var count = state.moduleLog.filter(function(e){ return e.module===m.id; }).length;
+      html += '<div class="tally-row"><span class="name">'+m.name+'<span class="phase-chip">'+PHASE_LABEL[m.phase]+'</span></span><span class="count">'+count+'</span></div>';
+    });
+    html += '<div class="tally-row"><span class="name">Regulation Bridge<span class="phase-chip">Core tool</span></span><span class="count">'+state.regBridge.length+'</span></div>';
+    html += '<div class="tally-row"><span class="name">Learning Engine<span class="phase-chip">Core tool</span></span><span class="count">'+state.learningLog.length+'</span></div>';
+    html += '<div class="tally-row"><span class="name">Communication Checks<span class="phase-chip">Core Tool</span></span><span class="count">'+state.communicationLog.length+'</span></div>';
+    el.innerHTML = html;
+  }
+
+  /* ---------------- Shared: field schemas for saved-entry editing ---------------- */
+  var editing = null; // {bucket, id} of the entry currently being edited, or null
+
+  var REGBRIDGE_FIELDS = [
+    {id:'date', label:'Datum', type:'date'},
+    {id:'exercise', label:'Regulation-Tool', type:'select', options:REGULATION_TOOLS},
+    {id:'situation', label:'Situation', type:'select', options:['','Training','Wettkampf','Regeneration / zuhause','Alltag','Sonstiges']},
+    {id:'rating', label:'Wie hilfreich war es heute? (1–5)', type:'select', options:['1','2','3','4','5']},
+    {id:'note', label:'Wie es lief', type:'text'}
+  ];
+  var MODULELOG_FIELDS = [
+    {id:'date', label:'Datum', type:'date'},
+    {id:'module', label:'Modul', type:'select', options:MODULES},
+    {id:'context', label:'Situation', type:'select', options:['','Training','Wettkampf','Regeneration / zuhause','Alltag','Sonstiges']},
+    {id:'attempt', label:'Welche Übung hast du gemacht?', type:'textarea'},
+    {id:'reps', label:'Wiederholungen', type:'text'},
+    {id:'observation', label:'Was hast du bemerkt?', type:'textarea'},
+    {id:'next', label:'Was testest du als Nächstes?', type:'text'},
+    {id:'coreTool', label:'Genutztes Core Tool', type:'select', options:[''].concat(CORE_TOOLS)}
+  ];
+  var LEARNINGLOG_FIELDS = [
+    {id:'date', label:'Datum', type:'date'}
+  ].concat(ENGINE_STEPS.map(function(s){return {id:s.id,label:s.label+' — '+s.question,type:'textarea'};}));
+  var COMMLOG_FIELDS = [
+    {id:'date', label:'Datum', type:'date'},
+    {id:'context', label:'Kontext', type:'select', options:['Trainingseinheit / -block','Wettkampf','Workshop','Team-Meeting','Coach-Gespräch','Sonstiges']},
+    {id:'moment', label:'Moment / Runde (optional)', type:'text'},
+    {id:'source', label:'Wo ist es aufgetreten?', type:'select', options:['Selbstgespräch','Coach-Kommunikation','Teamkolleg:innen-Kommunikation','Team-Umfeld','Sonstiges']},
+    {id:'processes', label:'Welche Prozesse hast du bemerkt? Alle Zutreffenden auswählen.', type:'multicheck', options:['SAFE','PACE','STOP','CANT']},
+    {id:'event', label:'Was ist passiert oder wurde gesagt?', type:'textarea'},
+    {id:'missing', label:'Was hat gefehlt?', type:'textarea'},
+    {id:'feel', label:'Wie hat sich das für mich angefühlt?', type:'textarea'},
+    {id:'effect', label:'Welche Wirkung hatte das auf Lernen oder Leistung?', type:'textarea'},
+    {id:'need', label:'Was habe ich gebraucht?', type:'select', options:['','Mehr Sicherheit','Mehr Unterstützung','Mehr Klarheit','Mehr Raum','Mehr Herausforderung','Weniger Druck','Andere Sprache','Die Balance stimmte']},
+    {id:'fit', label:'Wie hilfreich war die Kommunikation? (1–5)', type:'select', options:['','1','2','3','4','5']},
+    {id:'next', label:'Was testen oder kommunizieren wir als Nächstes?', type:'text'}
+  ];
+  var MOMENTLOG_FIELDS = [
+    {id:'date', label:'Datum', type:'date'},
+    {id:'stage', label:'Phase', type:'select', options:['Prepare','Perform','Pursue']},
+    {id:'situation', label:'Was ist passiert?', type:'text'},
+    {id:'notice', label:'Was habe ich an mir bemerkt?', type:'text'},
+    {id:'reaction', label:'Was habe ich getan?', type:'text'},
+    {id:'performance', label:'Wie war die Wirkung auf meine Leistung?', type:'text'},
+    {id:'response', label:'Was brauche oder wähle ich als Nächstes?', type:'text'}
+  ];
+  var LIVE_FLAT_FIELDS = [];
+  LIVE_SECTIONS.forEach(function(sec){
+    var prefix = sec.title.replace(/^\d+\.\s*/, '');
+    sec.fields.forEach(function(f){
+      LIVE_FLAT_FIELDS.push({id:f.id, label: f.id==='date' ? f.label : (prefix+': '+f.label), type:f.type});
+    });
+  });
+
+  function fieldControlHtml(prefix, f, value){
+    value = value==null ? '' : value;
+    var elId = prefix+'-'+f.id;
+    if(f.type==='multicheck'){
+      var selected=Array.isArray(value)?value:String(value||'').split(',').map(function(v){return v.trim();}).filter(Boolean);
+      return '<label>'+f.label+'</label><div class="check-grid">'+f.options.map(function(o,i){
+        var id=elId+'-'+i;
+        return '<label class="check-option" for="'+id+'"><input type="checkbox" id="'+id+'" data-key="'+f.id+'" value="'+o+'"'+(selected.indexOf(o)>=0?' checked':'')+'> '+o+'</label>';
+      }).join('')+'</div>';
+    }
+    if(f.type==='textarea'){
+      return '<label for="'+elId+'">'+f.label+'</label><textarea id="'+elId+'" data-key="'+f.id+'">'+esc(value)+'</textarea>';
+    }
+    if(f.type==='select'){
+      var opts = f.options.map(function(o){
+        var val = (typeof o==='string') ? o : o.id;
+        var lbl = (typeof o==='string') ? o : o.name;
+        return '<option value="'+val+'"'+(val===value?' selected':'')+'>'+lbl+'</option>';
+      }).join('');
+      return '<label for="'+elId+'">'+f.label+'</label><select id="'+elId+'" data-key="'+f.id+'">'+opts+'</select>';
+    }
+    var type = f.type==='date' ? 'date' : 'text';
+    return '<label for="'+elId+'">'+f.label+'</label><input type="'+type+'" id="'+elId+'" data-key="'+f.id+'" value="'+esc(value)+'">';
+  }
+  function buildEditForm(bucket, entry, schema){
+    var html = schema.map(function(f){ return fieldControlHtml('edit-'+bucket+'-'+entry.id, f, entry[f.id]); }).join('');
+    return '<div class="edit-form" data-bucket="'+bucket+'" data-id="'+entry.id+'">'+html+
+      '<div class="edit-actions"><button type="button" class="btn small save-edit">Speichern</button><button type="button" class="btn ghost small cancel-edit">Abbrechen</button></div></div>';
+  }
+  function actionBtns(bucket,id){
+    return '<span class="entry-actions"><button type="button" class="entry-del" data-bucket="'+bucket+'" data-id="'+id+'">löschen</button><button type="button" class="entry-edit" data-bucket="'+bucket+'" data-id="'+id+'">bearbeiten</button></span>';
+  }
+  function entryTop(bucket, id, dateHtml, tagHtml){
+    return '<div class="entry-top"><span class="entry-summary"><span class="entry-date">'+dateHtml+'</span>'+(tagHtml?'<span class="entry-tag">'+tagHtml+'</span>':'')+'</span><span class="entry-right">'+actionBtns(bucket,id)+'<span class="entry-chev">▾</span></span></div>';
+  }
+  function entryDetail(html){
+    return html ? '<div class="entry-detail">'+html+'</div>' : '';
+  }
+  function rerenderBucket(bucket){
+    if(bucket==='regBridge') renderRegBridge();
+    else if(bucket==='moduleLog') renderModuleLog();
+    else if(bucket==='communicationLog') renderCommunicationLog();
+    else if(bucket==='livePractice') renderLiveList();
+    else if(bucket==='momentLog') renderMomentLog();
+    else if(bucket==='learningLog') renderLearningLog();
+  }
+  function wireEntryActions(container, bucket){
+    container.querySelectorAll('.entry-edit').forEach(function(btn){
+      btn.onclick = function(){ editing = {bucket:bucket, id:btn.getAttribute('data-id')}; rerenderBucket(bucket); };
+    });
+    container.querySelectorAll('.entry-del').forEach(function(btn){
+      btn.onclick = function(){
+        if(!confirm('Diesen Eintrag löschen? Das kann nicht rückgängig gemacht werden.')) return;
+        var id = btn.getAttribute('data-id');
+        state[bucket] = state[bucket].filter(function(e){ return e.id !== id; });
+        if(editing && editing.bucket===bucket && editing.id===id) editing = null;
+        saveState();
+        rerenderBucket(bucket); renderOverview();
+      };
+    });
+    container.querySelectorAll('.save-edit').forEach(function(btn){
+      btn.onclick = function(){
+        var form = btn.closest('.edit-form');
+        var id = form.getAttribute('data-id');
+        var entry = state[bucket].filter(function(e){ return e.id===id; })[0];
+        if(entry){
+          var checkboxValues={};
+          form.querySelectorAll('[data-key]').forEach(function(input){
+            var key=input.getAttribute('data-key');
+            if(input.type==='checkbox'){
+              if(!checkboxValues[key]) checkboxValues[key]=[];
+              if(input.checked) checkboxValues[key].push(input.value);
+            }else entry[key] = input.value.trim();
+          });
+          for(var key in checkboxValues) entry[key]=checkboxValues[key];
+          saveState();
+        }
+        editing = null;
+        rerenderBucket(bucket); renderOverview();
+      };
+    });
+    container.querySelectorAll('.cancel-edit').forEach(function(btn){
+      btn.onclick = function(){ editing = null; rerenderBucket(bucket); };
+    });
+    container.querySelectorAll('.entry-top').forEach(function(top){
+      top.addEventListener('click', function(ev){
+        if(ev.target.closest('.entry-actions')) return;
+        var entry = top.closest('.entry');
+        if(entry) entry.classList.toggle('open');
+      });
+    });
+  }
+  function isEditing(bucket,id){ return !!(editing && editing.bucket===bucket && editing.id===id); }
+  function esc(s){
+    if(!s) return '';
+    return String(s).replace(/[&<>"']/g, function(c){
+      return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];
+    });
+  }
+
+  /* ---------------- Regulation Bridge ---------------- */
+  document.getElementById('regGuides').innerHTML = REGULATION_TOOLS.map(function(tool,i){
+    var g = REG_GUIDES[tool] || {sub:'',when:'',quick:'',steps:[]};
+    return '<div class="acc" data-reg="'+i+'">' +
+      '<button type="button" class="acc-head" aria-expanded="false"><div><div class="t">'+esc(tool)+'</div><div class="st">'+esc(g.sub)+'</div></div><span class="chev">▾</span></button>' +
+      '<div class="acc-body"><p class="hint"><strong>Wann</strong>'+esc(g.when)+'</p><p class="notice"><strong>Kurzversion</strong>'+esc(g.quick)+'</p>' +
+      g.steps.map(function(st,j){ return '<p class="step"><span class="num">'+(j+1)+'.</span><span>'+esc(st)+'</span></p>'; }).join('') +
+      '<button type="button" class="btn small" data-usetool="'+esc(tool)+'">Dieses Tool loggen</button></div></div>';
+  }).join('');
+  wireAccordions(document.getElementById('regGuides'));
+  document.getElementById('regGuides').querySelectorAll('[data-usetool]').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      document.getElementById('rbExercise').value = btn.getAttribute('data-usetool');
+      document.getElementById('rbExercise').scrollIntoView({behavior:'smooth'});
+    });
+  });
+  var formRB = document.getElementById('formRegBridge');
+  document.getElementById('rbExercise').innerHTML=REGULATION_TOOLS.map(function(tool){return '<option value="'+tool+'">'+tool+'</option>';}).join('');
+  document.getElementById('rbDate').value = todayStr();
+  formRB.addEventListener('submit', function(e){
+    e.preventDefault();
+    state.regBridge.unshift({id:uid(),date:document.getElementById('rbDate').value,exercise:document.getElementById('rbExercise').value,situation:document.getElementById('rbSituation').value,rating:document.getElementById('rbRating').value,note:document.getElementById('rbNote').value.trim()});
+    saveState();
+    document.getElementById('rbNote').value='';
+    document.getElementById('rbRating').value='';
+    document.getElementById('rbSituation').value='';
+    document.getElementById('rbDate').value = todayStr();
+    renderRegBridge(); renderOverview();
+  });
+  function renderRegBridge(){
+    var list = document.getElementById('rbList');
+    if(!state.regBridge.length){ list.innerHTML = '<div class="empty-state">Noch keine Einträge. Logge oben deine erste Regulation-Übung.</div>'; }
+    else{
+      list.innerHTML = state.regBridge.map(function(e){
+        if(isEditing('regBridge', e.id)) return '<div class="entry">'+buildEditForm('regBridge', e, REGBRIDGE_FIELDS)+'</div>';
+        return '<div class="entry">'+entryTop('regBridge', e.id, fmtDate(e.date), esc(e.exercise||'Regulation')+(e.situation?' · '+esc(e.situation):'')+(e.rating?' · '+esc(e.rating)+'/5':''))+
+          entryDetail(e.note?'<div class="entry-body">'+esc(e.note)+'</div>':'') + '</div>';
+      }).join('');
+      wireEntryActions(list, 'regBridge');
+    }
+    var insights=document.getElementById('rbInsights');
+    insights.innerHTML=REGULATION_TOOLS.map(function(tool){
+      var entries=state.regBridge.filter(function(e){return e.exercise===tool;});
+      var ratings=entries.map(function(e){return Number(e.rating);}).filter(function(n){return n>0;});
+      var avg=ratings.length?(ratings.reduce(function(a,b){return a+b;},0)/ratings.length).toFixed(1):'—';
+      return '<div class="tally-row"><span class="name">'+esc(tool)+'</span><span class="count">'+entries.length+'× · '+avg+'/5</span></div>';
+    }).join('');
+  }
+
+  /* ---------------- Practice ---------------- */
+  var mlSelect = document.getElementById('mlModule');
+  mlSelect.innerHTML = MODULES.map(function(m){ return '<option value="'+m.id+'">'+m.name+'</option>'; }).join('');
+  var coreToolSelect=document.getElementById('mlCoreTool');
+  coreToolSelect.innerHTML='<option value="">Keine Auswahl</option>'+CORE_TOOLS.map(function(tool){return '<option value="'+tool+'">'+tool+'</option>';}).join('');
+  document.getElementById('mlDate').value = todayStr();
+  document.getElementById('formModuleLog').addEventListener('submit', function(e){
+    e.preventDefault();
+    var entry={
+      id:uid(),
+      date:document.getElementById('mlDate').value,
+      module:document.getElementById('mlModule').value,
+      context:document.getElementById('mlContext').value,
+      attempt:document.getElementById('mlAttempt').value.trim(),
+      reps:document.getElementById('mlReps').value.trim() || '1',
+      observation:document.getElementById('mlObservation').value.trim(),
+      next:document.getElementById('mlNext').value.trim(),
+      coreTool:document.getElementById('mlCoreTool').value
+    };
+    state.moduleLog.unshift(entry);
+    saveState();
+    document.getElementById('mlContext').value='';
+    document.getElementById('mlAttempt').value='';
+    document.getElementById('mlReps').value='';
+    document.getElementById('mlObservation').value='';
+    document.getElementById('mlNext').value='';
+    document.getElementById('mlCoreTool').value='';
+    document.getElementById('mlDate').value = todayStr();
+    renderModuleLog(); renderOverview();
+  });
+  function moduleName(id){ var m=MODULES.filter(function(x){return x.id===id;})[0]; return m?m.name:id; }
+  function renderModuleLog(){
+    var list = document.getElementById('mlList');
+    if(!state.moduleLog.length){ list.innerHTML = '<div class="empty-state">Noch keine Einträge. Logge oben deine erste Übung.</div>'; return; }
+    list.innerHTML = state.moduleLog.map(function(e){
+      if(isEditing('moduleLog', e.id)) return '<div class="entry">'+buildEditForm('moduleLog', e, MODULELOG_FIELDS)+'</div>';
+      return '<div class="entry">'+entryTop('moduleLog', e.id, fmtDate(e.date), moduleName(e.module)+(e.context?' · '+esc(e.context):'')+' · '+esc(e.reps)+' Wdh.'+(e.coreTool?' · '+esc(e.coreTool):''))+
+        entryDetail(
+          (e.attempt?'<div class="entry-body">'+esc(e.attempt)+'</div>':'') +
+          '<div class="mlog-grid">'+field('Was ich bemerkt habe',e.observation)+field('Nächstes Experiment',e.next)+'</div>'
+        ) + '</div>';
+    }).join('');
+    wireEntryActions(list, 'moduleLog');
+  }
+
+  /* ---------------- Core Tools & Learning Engine ---------------- */
+  document.getElementById('coreGuides').innerHTML = CORE_TOOL_GUIDES.map(function(t,i){
+    var jumpBtn = t.jump ? '<button type="button" class="btn small" data-jump="'+t.jump+'" style="margin-top:10px;">'+esc(t.jumpLabel||'Open tab')+'</button>' : '';
+    return '<div class="acc"><button type="button" class="acc-head" aria-expanded="false"><div><div class="t">'+esc(t.name)+'</div><div class="st">'+(i+1)+'/8 · '+esc(t.tagline)+'</div></div><span class="chev">▾</span></button><div class="acc-body"><p class="hint"><strong>Wann nutzen</strong>'+esc(t.when)+'</p><p>'+esc(t.what)+'</p>'+jumpBtn+'</div></div>';
+  }).join('');
+  wireAccordions(document.getElementById('coreGuides'));
+  document.getElementById('coreGuides').querySelectorAll('[data-jump]').forEach(function(btn){
+    btn.addEventListener('click', function(ev){ ev.stopPropagation(); showView(btn.getAttribute('data-jump')); });
+  });
+
+  var elModuleSelect = document.getElementById('elModule');
+  elModuleSelect.innerHTML = '<option value="">Allgemeine Reflexion</option>' + MODULES.map(function(m){ return '<option value="'+m.id+'">'+m.name+'</option>'; }).join('') + '<option value="regulation-bridge">Regulation Bridge</option>';
+  document.getElementById('learningFields').innerHTML = ENGINE_STEPS.map(function(step){
+    return '<div class="loop-field"><label for="el-'+step.id+'">'+step.label+' — '+step.question+'</label><textarea id="el-'+step.id+'" placeholder="'+step.placeholder+'"></textarea></div>';
+  }).join('');
+  document.getElementById('elDate').value = todayStr();
+  document.getElementById('formLearning').addEventListener('submit', function(e){
+    e.preventDefault();
+    var entry = { id:uid(), date:document.getElementById('elDate').value, module:elModuleSelect.value };
+    ENGINE_STEPS.forEach(function(step){ entry[step.id]=document.getElementById('el-'+step.id).value.trim(); });
+    state.learningLog.unshift(entry);
+    saveState();
+    ENGINE_STEPS.forEach(function(step){ document.getElementById('el-'+step.id).value=''; });
+    elModuleSelect.value='';
+    document.getElementById('elDate').value = todayStr();
+    renderLearningLog(); renderOverview();
+  });
+  function learningSubject(id){ if(!id) return 'Allgemeine Reflexion'; if(id==='regulation-bridge') return 'Regulation Bridge'; return moduleName(id); }
+  function renderLearningLog(){
+    var list = document.getElementById('elList');
+    if(!state.learningLog.length){ list.innerHTML = '<div class="empty-state">Noch keine Learning-Engine-Reflexionen.</div>'; return; }
+    list.innerHTML = state.learningLog.map(function(e){
+      if(isEditing('learningLog', e.id)) return '<div class="entry">'+buildEditForm('learningLog', e, LEARNINGLOG_FIELDS)+'</div>';
+      return '<div class="entry">'+entryTop('learningLog', e.id, fmtDate(e.date), esc(learningSubject(e.module)))+
+        entryDetail('<div class="mlog-grid">'+field('Ziele',e.goal)+field('Herausforderungen',e.difficulties)+field('Lösungen',e.solutions)+field('Überraschungen',e.surprises)+field('Wie fühle ich mich?',e.feel)+field('Nächster Schritt',e.next)+'</div>') + '</div>';
+    }).join('');
+    wireEntryActions(list, 'learningLog');
+  }
+
+  /* ---------------- Communication & Learning ---------------- */
+  document.getElementById('clDate').value=todayStr();
+  document.getElementById('formCommunication').addEventListener('submit',function(e){
+    e.preventDefault();
+    var processes=Array.prototype.map.call(document.querySelectorAll('input[name="clProcess"]:checked'),function(input){return input.value;});
+    if(!processes.length){alert('Wähle mindestens einen Prozess, den du bemerkt hast.');return;}
+    state.communicationLog.unshift({
+      id:uid(), date:document.getElementById('clDate').value||todayStr(), context:document.getElementById('clContext').value,
+      moment:document.getElementById('clMoment').value.trim(), source:document.getElementById('clSource').value, processes:processes,
+      event:document.getElementById('clEvent').value.trim(), missing:document.getElementById('clMissing').value.trim(),
+      feel:document.getElementById('clFeel').value.trim(), effect:document.getElementById('clEffect').value.trim(),
+      need:document.getElementById('clNeed').value, fit:document.getElementById('clFit').value, next:document.getElementById('clNext').value.trim()
+    });
+    saveState();
+    ['clMoment','clEvent','clMissing','clFeel','clEffect','clNext'].forEach(function(id){document.getElementById(id).value='';});
+    ['clNeed','clFit'].forEach(function(id){document.getElementById(id).value='';});
+    document.querySelectorAll('input[name="clProcess"]').forEach(function(input){input.checked=false;});
+    document.getElementById('clDate').value=todayStr();
+    renderCommunicationLog();renderOverview();
+  });
+  function renderCommunicationLog(){
+    var list=document.getElementById('clList');
+    if(!state.communicationLog.length){list.innerHTML='<div class="empty-state">Noch keine Communication Checks gespeichert.</div>';return;}
+    list.innerHTML=state.communicationLog.map(function(e){
+      if(isEditing('communicationLog',e.id)) return '<div class="entry">'+buildEditForm('communicationLog',e,COMMLOG_FIELDS)+'</div>';
+      var processes=Array.isArray(e.processes)?e.processes.join(' + '):(e.processes||'');
+      var tag=[e.context,processes,e.moment].filter(Boolean).map(esc).join(' · ');
+      return '<div class="entry">'+entryTop('communicationLog', e.id, fmtDate(e.date), tag)+
+        entryDetail('<div class="mlog-grid">'+field('Wo es aufgetreten ist',e.source)+field('Was passiert ist',e.event)+field('Was gefehlt hat',e.missing)+field('Wie es sich angefühlt hat',e.feel)+field('Wirkung auf Lernen / Leistung',e.effect)+field('Was ich gebraucht habe',e.need)+field('Nächstes Experiment',e.next)+'</div>') + '</div>';
+    }).join('');
+    wireEntryActions(list,'communicationLog');
+  }
+
+  /* ---------------- Live Practice ---------------- */
+  function renderLiveAccordion(){
+    var el = document.getElementById('liveAccordion');
+    el.innerHTML = LIVE_SECTIONS.map(function(sec, idx){
+      var fieldsHtml = sec.fields.map(function(f){
+        var tag = f.type==='textarea' ? 'textarea' : (f.type==='date' ? 'input type="date"' : 'input type="text"');
+        var close = f.type==='textarea' ? '</textarea>' : '';
+        var ph = f.type==='date' ? '' : ' placeholder="'+f.ph+'"';
+        return '<label for="live-'+f.id+'">'+f.label+'</label><'+tag+' id="live-'+f.id+'"'+ph+'>'+close+(f.help?'<span class="field-help"><br>Warum das festhalten? '+f.help+'</span>':'');
+      }).join('');
+      return '<div class="acc'+(idx===0?' open':'')+'" data-idx="'+idx+'">' +
+        '<button type="button" class="acc-head" aria-expanded="'+(idx===0?'true':'false')+'"><div><div class="t">'+sec.title+'</div><div class="st">'+sec.sub+'</div></div><span class="chev">▾</span></button>' +
+        '<div class="acc-body"><div class="step-guide"><div><strong>WANN</strong>'+sec.when+'</div><div><strong>WARUM JETZT</strong>'+sec.why+'</div><div><strong>SPÄTER HILFREICH</strong>'+sec.later+'</div></div>'+fieldsHtml+'</div></div>';
+    }).join('');
+    wireAccordions(el);
+    var dateField = document.getElementById('live-date');
+    if(dateField && !dateField.value) dateField.value = todayStr();
+  }
+  function wireAccordions(container){
+    container.querySelectorAll('.acc-head').forEach(function(h){
+      h.addEventListener('click',function(){setAccordionOpen(h.parentElement,!h.parentElement.classList.contains('open'));});
+    });
+  }
+  document.getElementById('formLive').addEventListener('submit', function(e){
+    e.preventDefault();
+    var entry = {id:uid(), ts:Date.now()};
+    LIVE_SECTIONS.forEach(function(sec){
+      sec.fields.forEach(function(f){
+        var el = document.getElementById('live-'+f.id);
+        entry[f.id] = el ? el.value.trim() : '';
+      });
+    });
+    if(!entry.date) entry.date = todayStr();
+    state.livePractice.unshift(entry);
+    saveState();
+    LIVE_SECTIONS.forEach(function(sec){
+      sec.fields.forEach(function(f){
+        var el = document.getElementById('live-'+f.id);
+        if(el) el.value = (f.id==='date') ? todayStr() : '';
+      });
+    });
+    document.querySelectorAll('#liveAccordion .acc').forEach(function(a,i){ setAccordionOpen(a,i===0); });
+    renderLiveList(); renderOverview();
+    window.scrollTo({top:document.getElementById('livepractice').offsetTop,behavior:'smooth'});
+  });
+  function renderLiveList(){
+    var list = document.getElementById('liveList');
+    if(!state.livePractice.length){ list.innerHTML = '<div class="empty-state">Noch keine Einheiten gespeichert.</div>'; return; }
+    list.innerHTML = state.livePractice.map(function(e){
+      if(isEditing('livePractice', e.id)) return '<div class="entry">'+buildEditForm('livePractice', e, LIVE_FLAT_FIELDS)+'</div>';
+      var snapshot=[e.emotion,e.thought,e.body,e.activation].filter(Boolean).join(' · ');
+      var pattern=[e.trigger2,e.automatic,e.pattern].filter(Boolean).join(' · ');
+      var tag=[e.type,e.exercise].filter(Boolean).map(esc).join(' · ');
+      return '<div class="entry">'+entryTop('livePractice', e.id, fmtDate(e.date), tag)+
+        entryDetail('<div class="mlog-grid">'+field('Schlüsselmoment',e.situation)+field('Zustands-Schnappschuss',snapshot)+field('Muster / Auslöser',pattern)+field('Regulation-Tool',e.exercise)+field('Nächste Reaktion',e.response)+field('Nächstes Experiment',e.next)+'</div>') + '</div>';
+    }).join('');
+    wireEntryActions(list, 'livePractice');
+  }
+
+  /* ---------------- Moment Log ---------------- */
+  document.getElementById('mmDate').value = todayStr();
+  document.getElementById('formMoment').addEventListener('submit', function(e){
+    e.preventDefault();
+    var entry = {
+      id:uid(),
+      date:document.getElementById('mmDate').value,
+      stage:document.getElementById('mmStage').value,
+      situation:document.getElementById('mmSituation').value.trim(),
+      notice:document.getElementById('mmNotice').value.trim(),
+      reaction:document.getElementById('mmReaction').value.trim(),
+      performance:document.getElementById('mmPerformance').value.trim(),
+      response:document.getElementById('mmResponse').value.trim()
+    };
+    state.momentLog.unshift(entry);
+    saveState();
+    ['mmSituation','mmNotice','mmReaction','mmPerformance','mmResponse'].forEach(function(id){
+      document.getElementById(id).value='';
+    });
+    document.getElementById('mmDate').value = todayStr();
+    renderMomentLog(); renderOverview();
+  });
+  function renderMomentLog(){
+    var list = document.getElementById('mmList');
+    if(!state.momentLog.length){ list.innerHTML = '<div class="empty-state">Noch keine Momente festgehalten.</div>'; return; }
+    list.innerHTML = state.momentLog.map(function(e){
+      if(isEditing('momentLog', e.id)) return '<div class="mlog-entry">'+buildEditForm('momentLog', e, MOMENTLOG_FIELDS)+'</div>';
+      return '<div class="entry mlog-entry">'+entryTop('momentLog', e.id, fmtDate(e.date), esc(e.stage))+
+        entryDetail(
+          (e.situation?'<div class="entry-body">'+esc(e.situation)+'</div>':'') +
+          '<div class="mlog-grid">' +
+            field('Was ich bemerkt habe', e.notice || [e.emotion,e.thought,e.body].filter(Boolean).join(' · ')) + field('Was ich getan habe', e.reaction) +
+            field('Wirkung auf Leistung', e.performance) + field('Was ich als Nächstes brauche', e.response) +
+          '</div>'
+        ) + '</div>';
+    }).join('');
+    wireEntryActions(list, 'momentLog');
+  }
+  function field(label,val){ if(!val) return ''; return '<div><span>'+label+'</span>'+esc(val)+'</div>'; }
+
+  /* ---------------- Settings modal ---------------- */
+  var modalBg = document.getElementById('modalBg');
+  document.getElementById('btnSettings').addEventListener('click', function(){
+    document.getElementById('startDateInput').value = state.startDate || '';
+    modalBg.classList.add('open');
+  });
+  modalBg.addEventListener('click', function(e){ if(e.target===modalBg) modalBg.classList.remove('open'); });
+  document.getElementById('btnSaveStart').addEventListener('click', function(){
+    var v = document.getElementById('startDateInput').value;
+    state.startDate = v || null;
+    saveState();
+    modalBg.classList.remove('open');
+    renderOverview();
+  });
+  document.getElementById('btnExport').addEventListener('click', function(){
+    var blob = new Blob([JSON.stringify(state,null,2)], {type:'application/json'});
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url; a.download = 'face-your-power-tracker-export.json';
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  });
+  document.getElementById('btnReset').addEventListener('click', function(){
+    if(confirm('Das löscht jeden geloggten Eintrag auf diesem Gerät. Das kann nicht rückgängig gemacht werden. Fortfahren?')){
+      state = defaultState();
+      saveState();
+      modalBg.classList.remove('open');
+      renderAll();
+    }
+  });
+
+  /* ---------------- Excel export (styled, documentation-ready) ---------------- */
+  document.getElementById('btnExportXlsx').addEventListener('click', function(){
+    var btn = this;
+    var original = btn.textContent;
+    btn.textContent = 'Wird vorbereitet…';
+    btn.disabled = true;
+    ensureExcelJS(function(ok){
+      if(!ok){ btn.textContent = original; btn.disabled = false; return; }
+      buildWorkbook().then(function(){
+        btn.textContent = original;
+        btn.disabled = false;
+      }).catch(function(){
+        alert('Export fehlgeschlagen. Bitte versuche es erneut.');
+        btn.textContent = original;
+        btn.disabled = false;
+      });
+    });
+  });
+
+  function ensureExcelJS(cb){
+    if(window.ExcelJS){ cb(true); return; }
+    var s = document.createElement('script');
+    s.src = 'https://cdn.jsdelivr.net/npm/exceljs@4.4.0/dist/exceljs.min.js';
+    s.onload = function(){ cb(true); };
+    s.onerror = function(){
+      alert('Das Excel-Export-Tool konnte nicht geladen werden. Prüfe deine Internetverbindung und versuche es erneut.');
+      cb(false);
+    };
+    document.head.appendChild(s);
+  }
+
+  var XLS_VIOLET   = 'FF8C6CEA';
+  var XLS_VIOLET_D = 'FF5B3FB0';
+  var XLS_TINT     = 'FFEDE6FB';
+  var XLS_TINT_SOFT= 'FFF8F6FD';
+  var XLS_ZEBRA    = 'FFF3EEFC';
+  var XLS_INK      = 'FF262A45';
+  var XLS_INK_DIM  = 'FF6E7399';
+  var XLS_BORDER   = 'FFE7E2F5';
+
+  function colLetter(n){
+    var s='';
+    while(n>0){ var m=(n-1)%26; s=String.fromCharCode(65+m)+s; n=Math.floor((n-1)/26); }
+    return s;
+  }
+
+  function sheetBand(ws, colCount, title, subtitle){
+    ws.mergeCells(1,1,1,colCount);
+    var t = ws.getCell(1,1);
+    t.value = title;
+    t.font = {name:'Calibri', size:13, bold:true, color:{argb:'FF2C2158'}};
+    t.alignment = {vertical:'middle'};
+    t.fill = {type:'pattern', pattern:'solid', fgColor:{argb:XLS_TINT}};
+    ws.getRow(1).height = 24;
+
+    ws.mergeCells(2,1,2,colCount);
+    var s = ws.getCell(2,1);
+    s.value = subtitle;
+    s.font = {name:'Calibri', size:10, italic:true, color:{argb:XLS_INK_DIM}};
+    s.fill = {type:'pattern', pattern:'solid', fgColor:{argb:XLS_TINT_SOFT}};
+    ws.getRow(2).height = 17;
+  }
+
+  function dataSheet(wb, name, title, subtitle, headers, colDefs, rows, opts){
+    opts = opts || {};
+    var ws = wb.addWorksheet(name, {views:[{showGridLines:false}]});
+    sheetBand(ws, headers.length, title, subtitle);
+    var headerRow = 3;
+    headers.forEach(function(h,i){
+      var c = ws.getCell(headerRow, i+1);
+      c.value = h;
+      c.font = {name:'Calibri', size:10.5, bold:true, color:{argb:'FFFFFFFF'}};
+      c.fill = {type:'pattern', pattern:'solid', fgColor:{argb:XLS_VIOLET}};
+      c.alignment = {vertical:'middle', wrapText:true};
+      c.border = {bottom:{style:'thin', color:{argb:XLS_VIOLET_D}}};
+    });
+    ws.getRow(headerRow).height = 24;
+    colDefs.forEach(function(cd,i){ ws.getColumn(i+1).width = cd.width; });
+    ws.views = [{state:'frozen', xSplit: opts.freezeCol?1:0, ySplit:headerRow, showGridLines:false}];
+
+    if(!rows.length){
+      var er = ws.getCell(headerRow+1,1);
+      er.value = 'Noch keine Einträge geloggt.';
+      er.font = {italic:true, color:{argb:XLS_INK_DIM}};
+      return ws;
+    }
+    rows.forEach(function(rowArr, idx){
+      var r = headerRow + 1 + idx;
+      var longestWrap=0;
+      rowArr.forEach(function(val, c){
+        var cell = ws.getCell(r, c+1);
+        var def = colDefs[c] || {};
+        if(def.type==='date' && val){
+          cell.value = new Date(val+'T00:00:00');
+          cell.numFmt = 'dd mmm yyyy';
+        } else {
+          cell.value = val || '';
+        }
+        cell.alignment = {vertical:'top', wrapText: def.type==='wrap'};
+        if(def.type==='wrap') longestWrap=Math.max(longestWrap,String(val||'').length);
+        cell.font = {name:'Calibri', size:10.5, color:{argb:XLS_INK}};
+        cell.border = {bottom:{style:'hair', color:{argb:XLS_BORDER}}};
+        if(idx % 2 === 1) cell.fill = {type:'pattern', pattern:'solid', fgColor:{argb:XLS_ZEBRA}};
+      });
+      ws.getRow(r).height=Math.min(78,Math.max(18,18+Math.ceil(longestWrap/55)*11));
+    });
+    ws.autoFilter = colLetter(1)+headerRow+':'+colLetter(headers.length)+headerRow;
+    return ws;
+  }
+
+  function buildWorkbook(){
+    var wb = new ExcelJS.Workbook();
+    wb.creator = 'Face Your Power';
+    wb.created = new Date();
+
+    /* --- Athlete Dashboard --- */
+    var dash = wb.addWorksheet('Athleten-Dashboard', {views:[{showGridLines:false}]});
+    dash.mergeCells('A1:H2');
+    var dashTitle=dash.getCell('A1');
+    dashTitle.value='FACE YOUR POWER — ATHLETEN-DASHBOARD';
+    dashTitle.font={name:'Calibri',size:20,bold:true,color:{argb:'FF2C2158'}};
+    dashTitle.fill={type:'pattern',pattern:'solid',fgColor:{argb:XLS_TINT}};
+    dashTitle.alignment={vertical:'middle'};
+    dash.mergeCells('A3:H3');
+    var dashSub=dash.getCell('A3');
+    dashSub.value='Dein persönliches 10-Wochen-Bild des mentalen Trainings — Muster sind Information, keine Bewertung.';
+    dashSub.font={name:'Calibri',size:10.5,italic:true,color:{argb:XLS_INK_DIM}};
+    dashSub.fill={type:'pattern',pattern:'solid',fgColor:{argb:XLS_TINT_SOFT}};
+
+    var totalReps=state.moduleLog.reduce(function(sum,e){var n=parseFloat(e.reps);return sum+(isNaN(n)?0:n);},0);
+    var allRegRatings=state.regBridge.map(function(e){return Number(e.rating);}).filter(function(n){return n>0;});
+    var regAverage=allRegRatings.length?(allRegRatings.reduce(function(a,b){return a+b;},0)/allRegRatings.length).toFixed(1):'—';
+    var allLogged=state.regBridge.length+state.moduleLog.length+state.communicationLog.length+state.livePractice.length+state.momentLog.length+state.learningLog.length;
+    var metrics=[
+      ['GELOGGTE MOMENTE GESAMT',allLogged],['ÜBUNGSEINTRÄGE',state.moduleLog.length],['WIEDERHOLUNGEN',totalReps],
+      ['TIEFENREFLEXIONEN',state.livePractice.length],['COMMUNICATION CHECKS',state.communicationLog.length],['REGULATION Ø',regAverage==='—'?'—':regAverage+' / 5']
+    ];
+    metrics.forEach(function(m,i){
+      var row=i<3?5:8, col=(i%3)*3+1;
+      dash.mergeCells(row,col,row,col+1);dash.mergeCells(row+1,col,row+1,col+1);
+      var label=dash.getCell(row,col),value=dash.getCell(row+1,col);
+      label.value=m[0];label.font={name:'Calibri',size:9,bold:true,color:{argb:XLS_INK_DIM}};
+      label.fill={type:'pattern',pattern:'solid',fgColor:{argb:XLS_TINT_SOFT}};
+      label.alignment={horizontal:'center',vertical:'middle'};
+      value.value=m[1];value.font={name:'Calibri',size:18,bold:true,color:{argb:'FF2C2158'}};
+      value.fill={type:'pattern',pattern:'solid',fgColor:{argb:XLS_TINT}};
+      value.alignment={horizontal:'center',vertical:'middle'};
+      dash.getRow(row).height=18;dash.getRow(row+1).height=28;
+    });
+
+    function dashSection(row,title,endCol){
+      dash.mergeCells(row,1,row,endCol||8);
+      var c=dash.getCell(row,1);c.value=title;c.font={name:'Calibri',size:12,bold:true,color:{argb:'FF2C2158'}};
+      c.fill={type:'pattern',pattern:'solid',fgColor:{argb:XLS_TINT}};dash.getRow(row).height=20;
+    }
+    function dashHeader(row,labels){
+      labels.forEach(function(h,i){var c=dash.getCell(row,i+1);c.value=h;c.font={name:'Calibri',size:9.5,bold:true,color:{argb:'FFFFFFFF'}};c.fill={type:'pattern',pattern:'solid',fgColor:{argb:XLS_VIOLET}};c.alignment={wrapText:true,vertical:'middle'};});
+      dash.getRow(row).height=26;
+    }
+    function dashDataRow(row,values,zebra){
+      values.forEach(function(v,i){var c=dash.getCell(row,i+1);c.value=v;c.font={name:'Calibri',size:10,color:{argb:XLS_INK}};c.border={bottom:{style:'hair',color:{argb:XLS_BORDER}}};c.alignment={vertical:'top',wrapText:i===values.length-1};if(zebra)c.fill={type:'pattern',pattern:'solid',fgColor:{argb:XLS_ZEBRA}};});
+    }
+
+    dashSection(11,'Wochenaktivität');
+    dashHeader(12,['Woche','Phase','Übung','Wdh.','Regulation','Communication','Tiefe','Kurz']);
+    WEEKS.forEach(function(w,idx){
+      function countWeek(entries){return entries.filter(function(e){return weekOfDate(e.date)===w.n;}).length;}
+      var weekModules=state.moduleLog.filter(function(e){return weekOfDate(e.date)===w.n;});
+      var weekReps=weekModules.reduce(function(sum,e){var n=parseFloat(e.reps);return sum+(isNaN(n)?0:n);},0);
+      dashDataRow(13+idx,['Woche '+w.n,PHASE_LABEL[w.phase],weekModules.length,weekReps,countWeek(state.regBridge),countWeek(state.communicationLog),countWeek(state.livePractice),countWeek(state.momentLog)],idx%2===1);
+    });
+
+    dashSection(27,'Regulation-Tools — Nutzung und Wirksamkeit');
+    dashHeader(28,['Tool','Genutzt','Ø Wirksamkeit','','','','','']);
+    REGULATION_TOOLS.forEach(function(tool,idx){
+      var entries=state.regBridge.filter(function(e){return e.exercise===tool;});
+      var ratings=entries.map(function(e){return Number(e.rating);}).filter(function(n){return n>0;});
+      var avg=ratings.length?(ratings.reduce(function(a,b){return a+b;},0)/ratings.length).toFixed(1):'—';
+      dashDataRow(29+idx,[tool,entries.length,avg==='—'?'—':avg+' / 5','','','','',''],idx%2===1);
+    });
+
+    var commStart=30+REGULATION_TOOLS.length;
+    dashSection(commStart,'Kommunikationsmuster');
+    dashHeader(commStart+1,['Prozess','Bemerkt','Ø Wirksamkeit','Bedeutung','','','','']);
+    var processMeaning={SAFE:'Schafft Sicherheit und Verbindung',PACE:'Unterstützt Lernen und Möglichkeiten',STOP:'Macht aus Erfahrung Lernen',CANT:'Kann Lernen zurückwerfen — Wirkung und Einverständnis prüfen'};
+    ['SAFE','PACE','STOP','CANT'].forEach(function(process,idx){
+      var entries=state.communicationLog.filter(function(e){var ps=Array.isArray(e.processes)?e.processes:String(e.processes||'').split(',');return ps.indexOf(process)>=0;});
+      var ratings=entries.map(function(e){return Number(e.fit);}).filter(function(n){return n>0;});
+      var avg=ratings.length?(ratings.reduce(function(a,b){return a+b;},0)/ratings.length).toFixed(1):'—';
+      dashDataRow(commStart+2+idx,[process,entries.length,avg==='—'?'—':avg+' / 5',processMeaning[process],'','','',''],idx%2===1);
+    });
+
+    var nextStart=commStart+7;
+    dashSection(nextStart,'Letzte nächste Experimente');
+    dashHeader(nextStart+1,['Datum','Bereich','Nächste Handlung','','','','','']);
+    var nextItems=[];
+    state.moduleLog.forEach(function(e){if(e.next)nextItems.push({date:e.date,area:'Übung',text:e.next});});
+    state.learningLog.forEach(function(e){if(e.next)nextItems.push({date:e.date,area:'Learning Engine',text:e.next});});
+    state.communicationLog.forEach(function(e){if(e.next)nextItems.push({date:e.date,area:'Communication',text:e.next});});
+    state.livePractice.forEach(function(e){if(e.next||e.response)nextItems.push({date:e.date,area:'Tiefenreflexion',text:e.next||e.response});});
+    state.momentLog.forEach(function(e){if(e.response)nextItems.push({date:e.date,area:'Kurzer Moment',text:e.response});});
+    nextItems.sort(function(a,b){return String(b.date||'').localeCompare(String(a.date||''));}).slice(0,5).forEach(function(e,idx){dashDataRow(nextStart+2+idx,[e.date?new Date(e.date+'T00:00:00'):'',e.area,e.text,'','','','',''],idx%2===1);dash.getCell(nextStart+2+idx,1).numFmt='dd mmm yyyy';dash.getRow(nextStart+2+idx).height=30;});
+    if(!nextItems.length){dash.mergeCells(nextStart+2,1,nextStart+2,8);dash.getCell(nextStart+2,1).value='Noch keine nächsten Experimente festgehalten.';dash.getCell(nextStart+2,1).font={italic:true,color:{argb:XLS_INK_DIM}};}
+
+    dash.getColumn(1).width=24;dash.getColumn(2).width=18;dash.getColumn(3).width=22;dash.getColumn(4).width=34;
+    dash.getColumn(5).width=16;dash.getColumn(6).width=18;dash.getColumn(7).width=14;dash.getColumn(8).width=14;
+    dash.views=[{state:'frozen',ySplit:3,showGridLines:false}];
+    dash.pageSetup={orientation:'landscape',fitToPage:true,fitToWidth:1,fitToHeight:0,margins:{left:0.3,right:0.3,top:0.5,bottom:0.5,header:0.2,footer:0.2}};
+
+    /* --- Cover / Overview sheet --- */
+    var ov = wb.addWorksheet('Übersicht', {views:[{showGridLines:false}]});
+    ov.mergeCells(1,1,2,4);
+    var big = ov.getCell(1,1);
+    big.value = 'FACE YOUR POWER';
+    big.font = {name:'Calibri', size:20, bold:true, color:{argb:'FF2C2158'}};
+    big.fill = {type:'pattern', pattern:'solid', fgColor:{argb:XLS_TINT}};
+    big.alignment = {vertical:'middle'};
+    ov.mergeCells(3,1,3,4);
+    var sub = ov.getCell(3,1);
+    sub.value = '10-Wochen Practice Tracker — Dokumentations-Export';
+    sub.font = {name:'Calibri', size:11, italic:true, color:{argb:XLS_INK_DIM}};
+    sub.fill = {type:'pattern', pattern:'solid', fgColor:{argb:XLS_TINT_SOFT}};
+    ov.getRow(1).height = 22; ov.getRow(2).height = 22; ov.getRow(3).height = 18;
+
+    var infoRows = [
+      ['Exportiert', new Date().toLocaleDateString('de-DE',{day:'2-digit',month:'long',year:'numeric'})],
+      ['Trainings-Startdatum', state.startDate ? fmtDate(state.startDate) : 'Nicht festgelegt'],
+      ['Aktuelle Woche', currentWeek() ? ('Woche '+currentWeek()+' von 10') : '—']
+    ];
+    var r = 5;
+    infoRows.forEach(function(row){
+      ov.getCell(r,1).value = row[0];
+      ov.getCell(r,1).font = {name:'Calibri', size:10.5, bold:true, color:{argb:XLS_INK_DIM}};
+      ov.getCell(r,2).value = row[1];
+      ov.getCell(r,2).font = {name:'Calibri', size:10.5, color:{argb:XLS_INK}};
+      r++;
+    });
+
+    r += 1;
+    ov.mergeCells(r,1,r,4);
+    var mh = ov.getCell(r,1);
+    mh.value = 'Modul-Konstanz';
+    mh.font = {name:'Calibri', size:12, bold:true, color:{argb:'FF2C2158'}};
+    mh.fill = {type:'pattern', pattern:'solid', fgColor:{argb:XLS_TINT}};
+    ov.getRow(r).height = 20;
+    r += 1;
+    var tallyHeaderRow = r;
+    ['Modul','Phase','Einheiten geloggt'].forEach(function(h,i){
+      var c = ov.getCell(r,i+1);
+      c.value = h;
+      c.font = {name:'Calibri', size:10.5, bold:true, color:{argb:'FFFFFFFF'}};
+      c.fill = {type:'pattern', pattern:'solid', fgColor:{argb:XLS_VIOLET}};
+      c.border = {bottom:{style:'thin', color:{argb:XLS_VIOLET_D}}};
+    });
+    ov.getRow(r).height = 20;
+    r += 1;
+    var tallyStart = r;
+    MODULES.forEach(function(m, idx){
+      var count = state.moduleLog.filter(function(e){ return e.module===m.id; }).length;
+      ov.getCell(r,1).value = m.name;
+      ov.getCell(r,2).value = PHASE_LABEL[m.phase];
+      ov.getCell(r,3).value = count;
+      for(var c=1;c<=3;c++){
+        ov.getCell(r,c).font = {name:'Calibri', size:10.5, color:{argb:XLS_INK}};
+        ov.getCell(r,c).border = {bottom:{style:'hair', color:{argb:XLS_BORDER}}};
+        if(idx % 2 === 1) ov.getCell(r,c).fill = {type:'pattern', pattern:'solid', fgColor:{argb:XLS_ZEBRA}};
+      }
+      r++;
+    });
+    ov.getCell(r,1).value = 'Regulation Bridge';
+    ov.getCell(r,2).value = 'Core Tool';
+    ov.getCell(r,3).value = state.regBridge.length;
+    for(var c=1;c<=3;c++){
+      ov.getCell(r,c).font = {name:'Calibri', size:10.5, bold:true, color:{argb:XLS_INK}};
+      ov.getCell(r,c).border = {bottom:{style:'hair', color:{argb:XLS_BORDER}}};
+    }
+    r += 2;
+
+    ov.mergeCells(r,1,r,4);
+    var ph = ov.getCell(r,1);
+    ph.value = '10-Wochen-Plan';
+    ph.font = {name:'Calibri', size:12, bold:true, color:{argb:'FF2C2158'}};
+    ph.fill = {type:'pattern', pattern:'solid', fgColor:{argb:XLS_TINT}};
+    ov.getRow(r).height = 20;
+    r += 1;
+    ['Woche','Phase','Fokus'].forEach(function(h,i){
+      var c = ov.getCell(r,i+1);
+      c.value = h;
+      c.font = {name:'Calibri', size:10.5, bold:true, color:{argb:'FFFFFFFF'}};
+      c.fill = {type:'pattern', pattern:'solid', fgColor:{argb:XLS_VIOLET}};
+      c.border = {bottom:{style:'thin', color:{argb:XLS_VIOLET_D}}};
+    });
+    ov.getRow(r).height = 20;
+    r += 1;
+    WEEKS.forEach(function(w, idx){
+      ov.getCell(r,1).value = 'Woche '+w.n;
+      ov.getCell(r,2).value = PHASE_LABEL[w.phase];
+      ov.getCell(r,3).value = w.focus;
+      for(var c=1;c<=3;c++){
+        ov.getCell(r,c).font = {name:'Calibri', size:10.5, color:{argb:XLS_INK}};
+        ov.getCell(r,c).alignment = {wrapText:true, vertical:'top'};
+        ov.getCell(r,c).border = {bottom:{style:'hair', color:{argb:XLS_BORDER}}};
+        if(idx % 2 === 1) ov.getCell(r,c).fill = {type:'pattern', pattern:'solid', fgColor:{argb:XLS_ZEBRA}};
+      }
+      r++;
+    });
+    ov.getColumn(1).width = 22; ov.getColumn(2).width = 16;
+    ov.getColumn(3).width = 46; ov.getColumn(4).width = 18;
+    ov.views = [{state:'frozen', ySplit:3, showGridLines:false}];
+
+    /* --- Regulation Bridge --- */
+    dataSheet(wb, 'Regulation Bridge', 'FACE YOUR POWER — Regulation-Bridge-Log',
+      'Vergleiche, welches Regulation-Tool in welcher Situation am besten wirkt.',
+      ['Datum','Regulation-Tool','Situation','Wirksamkeit (1–5)','Was ich bemerkt habe'],
+      [{width:16,type:'date'},{width:26},{width:20},{width:22},{width:65,type:'wrap'}],
+      state.regBridge.map(function(e){ return [e.date||'',e.exercise||'Regulation',e.situation||'',e.rating||'',e.note||'']; })
+    );
+
+    dataSheet(wb, 'Regulation Übersicht', 'FACE YOUR POWER — Regulation-Toolbox-Übersicht',
+      'Nutze Häufigkeit und durchschnittliche Wirksamkeit als Hinweise — nicht als Bewertung der Übung oder der Athletin/des Athleten.',
+      ['Regulation-Tool','Übungen geloggt','Ø Wirksamkeit (1–5)'],
+      [{width:34},{width:18},{width:26}],
+      REGULATION_TOOLS.map(function(tool){
+        var entries=state.regBridge.filter(function(e){return e.exercise===tool;});
+        var ratings=entries.map(function(e){return Number(e.rating);}).filter(function(n){return n>0;});
+        var avg=ratings.length?(ratings.reduce(function(a,b){return a+b;},0)/ratings.length).toFixed(1):'';
+        return [tool,entries.length,avg];
+      })
+    );
+
+    /* --- Practice --- */
+    dataSheet(wb, 'Übung', 'FACE YOUR POWER — Übung',
+      'Eine Zeile pro Übungseinheit. Jeder Versuch zählt, egal wie klein.',
+      ['Datum','Modul','Situation','Wiederholungen','Welche Übung ich gemacht habe','Was ich bemerkt habe','Was ich als Nächstes teste','Genutztes Core Tool'],
+      [{width:16,type:'date'},{width:22},{width:20},{width:12},{width:36,type:'wrap'},{width:34,type:'wrap'},{width:32,type:'wrap'},{width:28}],
+      state.moduleLog.map(function(e){ return [e.date||'',moduleName(e.module),e.context||'',e.reps||'',e.attempt||'',e.observation||'',e.next||'',e.coreTool||'']; }),
+      {freezeCol:true}
+    );
+
+    /* --- Learning Engine --- */
+    dataSheet(wb, 'Learning Engine', 'FACE YOUR POWER — Learning Engine',
+      'EXPERIENCE → REFLECT → LEARN → ADAPT. Genutzt, wenn eine Einheit oder ein Modul brauchbares Lernen liefert — nicht nach jedem Eintrag.',
+      ['Datum','Bezug','Ziele','Herausforderungen','Lösungen','Überraschungen','Wie fühle ich mich?','Was möchte ich als Nächstes ausprobieren?'],
+      [{width:16,type:'date'},{width:24},{width:30,type:'wrap'},{width:32,type:'wrap'},{width:34,type:'wrap'},{width:32,type:'wrap'},{width:34,type:'wrap'},{width:36,type:'wrap'}],
+      state.learningLog.map(function(e){ return [e.date||'',learningSubject(e.module),e.goal||'',e.difficulties||'',e.solutions||'',e.surprises||'',e.feel||'',e.next||'']; }),
+      {freezeCol:true}
+    );
+
+    /* --- Communication & Learning --- */
+    dataSheet(wb, 'Communication', 'FACE YOUR POWER — Communication Loop',
+      'Eine Zeile pro Kommunikationsmoment. Wähle mehrere Prozesse, wenn SAFE, PACE, STOP oder CANT gemeinsam auftreten; speichere bei Wiederholung einen weiteren Check.',
+      ['Datum','Kontext','Moment / Runde','Bemerkte Prozesse','Wo ist es aufgetreten?','Was ist passiert / wurde gesagt?','Was hat gefehlt?','Wie hat es sich angefühlt?','Wirkung auf Lernen / Leistung','Was habe ich gebraucht?','Wirksamkeit der Kommunikation (1–5)','Was testen / kommunizieren wir als Nächstes?'],
+      [{width:16,type:'date'},{width:24},{width:20},{width:24},{width:25},{width:42,type:'wrap'},{width:36,type:'wrap'},{width:34,type:'wrap'},{width:42,type:'wrap'},{width:24},{width:26},{width:42,type:'wrap'}],
+      state.communicationLog.map(function(e){return [e.date||'',e.context||'',e.moment||'',(Array.isArray(e.processes)?e.processes.join(' · '):e.processes)||'',e.source||'',e.event||'',e.missing||'',e.feel||'',e.effect||'',e.need||'',e.fit||'',e.next||''];}),
+      {freezeCol:true}
+    );
+
+    /* --- Deep Reflection: concise learning summary --- */
+    dataSheet(wb, 'Tiefenreflexion Übersicht', 'FACE YOUR POWER — Tiefenreflexion Übersicht',
+      'Eine Zeile pro Reflexion: die Information, die am hilfreichsten ist, um Muster und nächste Experimente zu vergleichen.',
+      ['Datum','Training / Wettkampf','Bedingungen','Schlüsselmoment','Zustands-Schnappschuss','Muster / Auslöser','Was ich kontrollieren kann','Was ich loslasse','Regulation-Tool','Nächste Reaktion','Anker','Wo ich es testen werde'],
+      [{width:16,type:'date'},{width:24,type:'wrap'},{width:26,type:'wrap'},{width:38,type:'wrap'},{width:38,type:'wrap'},{width:34,type:'wrap'},{width:30,type:'wrap'},{width:30,type:'wrap'},{width:30,type:'wrap'},{width:34,type:'wrap'},{width:22,type:'wrap'},{width:32,type:'wrap'}],
+      state.livePractice.map(function(e){
+        var snapshot=[e.emotion,e.thought,e.body,e.activation].filter(Boolean).join(' · ');
+        var pattern=[e.trigger2,e.automatic,e.pattern].filter(Boolean).join(' · ');
+        return [e.date||'',e.type||'',e.where||'',e.situation||'',snapshot,pattern,e.control||'',e.release||'',e.exercise||'',e.response||'',e.cue||'',e.next||''];
+      }),
+      {freezeCol:true}
+    );
+
+    /* --- Deep Reflection: filterable question-and-answer log --- */
+    var deepDetailRows=[];
+    state.livePractice.forEach(function(e){
+      LIVE_SECTIONS.forEach(function(sec){
+        sec.fields.forEach(function(f){
+          if(f.id==='date'||!(e[f.id]||'').trim()) return;
+          deepDetailRows.push([e.date||'',sec.title,f.label,e[f.id]]);
+        });
+      });
+    });
+    dataSheet(wb, 'Tiefenreflexion Detail', 'FACE YOUR POWER — Tiefenreflexion Detail-Log',
+      'Filtere nach Datum, Reflexionsschritt oder Frage, um Lernen über mehrere Einheiten hinweg zu vergleichen.',
+      ['Datum','Reflexionsschritt','Frage','Antwort'],
+      [{width:16,type:'date'},{width:34,type:'wrap'},{width:42,type:'wrap'},{width:75,type:'wrap'}],
+      deepDetailRows,
+      {freezeCol:true}
+    );
+
+    /* --- Moment Log --- */
+    dataSheet(wb, 'Kurze Momente', 'FACE YOUR POWER — Kurze Momente',
+      'Halte in 30–60 Sekunden fest, was hilfreich ist, und trainiere weiter.',
+      ['Datum','Phase','Was ist passiert?','Was habe ich bemerkt?','Was habe ich getan?','Wirkung auf Leistung','Was brauche oder wähle ich als Nächstes?'],
+      [{width:16,type:'date'},{width:12},{width:34,type:'wrap'},{width:34,type:'wrap'},{width:24,type:'wrap'},{width:28,type:'wrap'},{width:34,type:'wrap'}],
+      state.momentLog.map(function(e){
+        return [e.date||'',e.stage||'',e.situation||'',e.notice||[e.emotion,e.thought,e.body].filter(Boolean).join(' · '),e.reaction||'',e.performance||'',e.response||''];
+      }),
+      {freezeCol:true}
+    );
+
+    return wb.xlsx.writeBuffer().then(function(buffer){
+      var blob = new Blob([buffer], {type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});
+      var url = URL.createObjectURL(blob);
+      var a = document.createElement('a');
+      a.href = url; a.download = 'face-your-power-athlete-results-'+todayStr()+'.xlsx';
+      document.body.appendChild(a); a.click(); document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    });
+  }
+
+  /* ---------------- Init ---------------- */
+  function renderAll(){
+    renderOverview();
+    renderRegBridge();
+    renderModuleLog();
+    renderLearningLog();
+    renderCommunicationLog();
+    renderLiveList();
+    renderMomentLog();
+  }
+  renderLiveAccordion();
+  renderAll();
+
+  if(!state.startDate){
+    setTimeout(function(){
+      document.getElementById('startDateInput').value = todayStr();
+      modalBg.classList.add('open');
+    }, 400);
+  }
+})();
+</script>
+</body>
+</html>

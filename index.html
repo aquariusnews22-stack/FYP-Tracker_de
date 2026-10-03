@@ -337,8 +337,8 @@
     <button class="tab-btn active" data-view="overview">Übersicht</button>
     <button class="tab-btn" data-view="momentlog">Kurzer Moment</button>
     <button class="tab-btn" data-view="modulelog">Übung</button>
-    <button class="tab-btn" data-view="regbridge">Regulation</button>
     <button class="tab-btn" data-view="coretools">Core Tools</button>
+    <button class="tab-btn" data-view="regbridge">Regulation</button>
     <button class="tab-btn" data-view="livepractice">Tiefe Reflektion</button>
   </nav>
 
@@ -352,8 +352,8 @@
         <ul class="info-list">
           <li><strong>Kurzer Moment</strong> — während oder direkt nach dem Training festhalten.</li>
           <li><strong>Übung</strong> — logge dein Wochenmodul, ein echter Versuch nach dem anderen.</li>
-          <li><strong>Regulation</strong> — Reset-Tools für dein Nervensystem, jederzeit abrufbar.</li>
           <li><strong>Core Tools</strong> — deine 8 Tools zum Denken, Planen, Lernen und Kommunizieren.</li>
+          <li><strong>Regulation</strong> — Teil der Core Tools: Reset-Tools für dein Nervensystem und deinen Körper, jederzeit abrufbar.</li>
           <li><strong>Tiefe Reflektion</strong> — für einen schwierigen Moment oder ein wiederkehrendes Muster.</li>
         </ul>
         <div class="cycle-map" aria-label="Performance Cycle">
@@ -436,9 +436,9 @@
     <!-- ========== REGULATION BRIDGE ========== -->
     <section id="regbridge" class="view">
       <div class="card">
-        <div class="eyebrow">REGULATION BRIDGE &mdash; ZWISCHEN PREPARE UND PERFORM, DURCHGEHEND ÜBER ALLE 10 WOCHEN GEÜBT</div>
-        <h3>Setze deinen Zustand zurück. Kehre zur Leistung zurück.</h3>
-        <p class="muted">Du musst dich nicht völlig ruhig fühlen. Du musst deinen Zustand bemerken, ein Tool wählen, es einsetzen und zur nächsten sinnvollen Handlung zurückkehren. Das ist Core Tool 1 von 8.</p>
+        <div class="eyebrow">REGULATION &mdash; TEIL DER CORE TOOLS</div>
+        <h3>Reset-Tools für dein Nervensystem und deinen Körper, jederzeit abrufbar.</h3>
+        <p class="muted">Es geht nicht darum, völlig ruhig zu sein. Entscheidend ist, wahrzunehmen, was gerade passiert, ein passendes Tool zu wählen, es einzusetzen – und die Aufmerksamkeit wieder auf das zu richten, was als Nächstes zählt. Das ist Core Tool 1 von 8: Regulation.</p>
         <div class="step-guide tab-guide">
           <div><strong>DU FINDEST HIER</strong>6 Reset-Tools für dein Nervensystem, jederzeit abrufbar.</div>
           <div><strong>ZIEL</strong>Zustand bemerken, regulieren, die nächste Handlung ausführen.</div>
@@ -688,7 +688,7 @@
     {n:1, phase:'prepare', title:'Prepare', focus:'SEE × Prepare', moduleId:'see-prepare'},
     {n:2, phase:'prepare', title:'Prepare', focus:'FREE × Prepare', moduleId:'free-prepare'},
     {n:3, phase:'prepare', title:'Prepare', focus:'GO × Prepare', moduleId:'go-prepare'},
-    {n:4, phase:'foundation', title:'Regulation Bridge', focus:'Regulation Bridge', moduleId:null},
+    {n:4, phase:'foundation', title:'Regulation Toolbox', focus:'Regulation Toolbox', moduleId:null},
     {n:5, phase:'perform', title:'Perform', focus:'SEE × Perform', moduleId:'see-perform'},
     {n:6, phase:'perform', title:'Perform', focus:'FREE × Perform', moduleId:'free-perform'},
     {n:7, phase:'perform', title:'Perform', focus:'GO × Perform', moduleId:'go-perform'},
@@ -770,7 +770,7 @@
       later:'Du kannst erkennen, welche Regulation-Tools und Umdeutungen dir zuverlässig helfen, dich zu erholen und die Wahl zurückzugewinnen.', fields:[
       {id:'control', label:'Was liegt jetzt in meiner Kontrolle?', type:'text', ph:'Meine Aufmerksamkeit, Atmung, Vorbereitung, Kommunikation, Entscheidung oder Handlung.', help:'Lenkt Energie auf etwas Trainierbares.'},
       {id:'release', label:'Was muss ich nicht weitertragen?', type:'text', ph:'Ein Ergebnis, ein Fehler, eine Erwartung, eine Bewertung oder ein unkontrollierbarer Faktor.', help:'Verhindert, dass der vergangene Moment den nächsten besetzt.'},
-      {id:'exercise', label:'Was hat mir geholfen — oder könnte mir helfen, mich zu regulieren?', type:'text', ph:'Ein Regulation-Bridge-Tool, Atmung, Bewegung, ein Anker, ein Reset oder eine unterstützende Person.', help:'Baut deine persönliche, erfahrungsbasierte Reset-Toolbox auf.'},
+      {id:'exercise', label:'Was hat mir geholfen — oder könnte mir helfen, mich zu regulieren?', type:'text', ph:'Ein Regulation-Toolbox-Tool, Atmung, Bewegung, ein Anker, ein Reset oder eine unterstützende Person.', help:'Baut deine persönliche, erfahrungsbasierte Reset-Toolbox auf.'},
       {id:'reframe', label:'Was ist eine hilfreichere Interpretation?', type:'text', ph:'Was könnte dieser Moment sonst noch bedeuten?', help:'Schafft Flexibilität, ohne zu leugnen, was passiert ist.'}
     ]},
     {id:'go', title:'6. GO — Das nächste Experiment gestalten', sub:'Ende mit einer Reaktion, die du üben kannst, nicht mit dem Versprechen „es besser zu machen“',
@@ -890,7 +890,7 @@
       node.style.setProperty('--phase-color', PHASE_COLOR[w.phase]);
       node.innerHTML =
         (w.n===1?'<span class="phase-tick">Prepare</span>':'') +
-        (w.n===4?'<span class="phase-tick">Bridge</span>':'') +
+        (w.n===4?'<span class="phase-tick">Toolbox</span>':'') +
         (w.n===5?'<span class="phase-tick">Perform</span>':'') +
         (w.n===8?'<span class="phase-tick">Pursue</span>':'') +
         '<div class="dot"></div><div class="wk-label">W'+w.n+'</div>';
@@ -957,7 +957,7 @@
       var count = state.moduleLog.filter(function(e){ return e.module===m.id; }).length;
       html += '<div class="tally-row"><span class="name">'+m.name+'<span class="phase-chip">'+PHASE_LABEL[m.phase]+'</span></span><span class="count">'+count+'</span></div>';
     });
-    html += '<div class="tally-row"><span class="name">Regulation Bridge<span class="phase-chip">Core tool</span></span><span class="count">'+state.regBridge.length+'</span></div>';
+    html += '<div class="tally-row"><span class="name">Regulation Toolbox<span class="phase-chip">Core Tool</span></span><span class="count">'+state.regBridge.length+'</span></div>';
     html += '<div class="tally-row"><span class="name">Learning Engine<span class="phase-chip">Core tool</span></span><span class="count">'+state.learningLog.length+'</span></div>';
     html += '<div class="tally-row"><span class="name">Communication Checks<span class="phase-chip">Core Tool</span></span><span class="count">'+state.communicationLog.length+'</span></div>';
     el.innerHTML = html;
@@ -1222,7 +1222,7 @@
   });
 
   var elModuleSelect = document.getElementById('elModule');
-  elModuleSelect.innerHTML = '<option value="">Allgemeine Reflektion</option>' + MODULES.map(function(m){ return '<option value="'+m.id+'">'+m.name+'</option>'; }).join('') + '<option value="regulation-bridge">Regulation Bridge</option>';
+  elModuleSelect.innerHTML = '<option value="">Allgemeine Reflektion</option>' + MODULES.map(function(m){ return '<option value="'+m.id+'">'+m.name+'</option>'; }).join('') + '<option value="regulation-bridge">Regulation Toolbox</option>';
   document.getElementById('learningFields').innerHTML = ENGINE_STEPS.map(function(step){
     return '<div class="loop-field"><label for="el-'+step.id+'">'+step.label+' — '+step.question+'</label><textarea id="el-'+step.id+'" placeholder="'+step.placeholder+'"></textarea></div>';
   }).join('');
@@ -1238,7 +1238,7 @@
     document.getElementById('elDate').value = todayStr();
     renderLearningLog(); renderOverview();
   });
-  function learningSubject(id){ if(!id) return 'Allgemeine Reflektion'; if(id==='regulation-bridge') return 'Regulation Bridge'; return moduleName(id); }
+  function learningSubject(id){ if(!id) return 'Allgemeine Reflektion'; if(id==='regulation-bridge') return 'Regulation Toolbox'; return moduleName(id); }
   function renderLearningLog(){
     var list = document.getElementById('elList');
     if(!state.learningLog.length){ list.innerHTML = '<div class="empty-state">Noch keine Learning-Engine-Reflektionen.</div>'; return; }
@@ -1682,7 +1682,7 @@
       }
       r++;
     });
-    ov.getCell(r,1).value = 'Regulation Bridge';
+    ov.getCell(r,1).value = 'Regulation Toolbox';
     ov.getCell(r,2).value = 'Core Tool';
     ov.getCell(r,3).value = state.regBridge.length;
     for(var c=1;c<=3;c++){
@@ -1724,7 +1724,7 @@
     ov.views = [{state:'frozen', ySplit:3, showGridLines:false}];
 
     /* --- Regulation Bridge --- */
-    dataSheet(wb, 'Regulation Bridge', 'FACE YOUR POWER — Regulation-Bridge-Log',
+    dataSheet(wb, 'Regulation Toolbox', 'FACE YOUR POWER — Regulation-Toolbox-Log',
       'Vergleiche, welches Regulation-Tool in welcher Situation am besten wirkt.',
       ['Datum','Regulation-Tool','Situation','Wirksamkeit (1–5)','Was ich bemerkt habe'],
       [{width:16,type:'date'},{width:26},{width:20},{width:22},{width:65,type:'wrap'}],

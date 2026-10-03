@@ -336,7 +336,7 @@
   <nav class="tabs" id="tabs">
     <button class="tab-btn active" data-view="overview">Übersicht</button>
     <button class="tab-btn" data-view="momentlog">Kurzer Moment</button>
-    <button class="tab-btn" data-view="modulelog">Übung</button>
+    <button class="tab-btn" data-view="modulelog">Mod Übungen</button>
     <button class="tab-btn" data-view="coretools">Core Tools</button>
     <button class="tab-btn" data-view="regbridge">Regulation</button>
     <button class="tab-btn" data-view="livepractice">Tiefe Reflektion</button>
@@ -436,7 +436,7 @@
     <!-- ========== REGULATION BRIDGE ========== -->
     <section id="regbridge" class="view">
       <div class="card">
-        <div class="eyebrow">REGULATION &mdash; TEIL DER CORE TOOLS</div>
+        <div class="eyebrow">REGULATION TOOLBOX &mdash; TEIL DER CORE TOOLS</div>
         <h3>Reset-Tools für dein Nervensystem und deinen Körper, jederzeit abrufbar.</h3>
         <p class="muted">Es geht nicht darum, völlig ruhig zu sein. Entscheidend ist, wahrzunehmen, was gerade passiert, ein passendes Tool zu wählen, es einzusetzen – und die Aufmerksamkeit wieder auf das zu richten, was als Nächstes zählt. Das ist Core Tool 1 von 8: Regulation.</p>
         <div class="step-guide tab-guide">
@@ -506,6 +506,34 @@
       <div class="card">
         <h3>Deine 8 Core Tools</h3>
         <div id="coreGuides" style="margin-top:8px;"></div>
+      </div>
+
+      <div class="card">
+        <h3>Core Tools loggen</h3>
+        <p class="muted">Für Stelle Bessere Fragen, Annahmen-Check, Entscheidungskompass, Jahresplanung und Plan den nächsten Schritt. Learning Engine und Communication Loop haben eigene Formulare weiter unten.</p>
+        <form id="formCoreTool" style="margin-top:18px;">
+          <div class="field-row">
+            <div><label for="ctDate">Datum</label><input type="date" id="ctDate" required></div>
+            <div><label for="ctTool">Welches Tool?</label><select id="ctTool" required></select></div>
+          </div>
+          <label for="ctSituation">Wann bzw. in welcher Situation hast du es eingesetzt?</label>
+          <select id="ctSituation">
+            <option value="">Situation wählen</option>
+            <option>Training</option>
+            <option>Wettkampf</option>
+            <option>Regeneration / zuhause</option>
+            <option>Alltag</option>
+            <option>Sonstiges</option>
+          </select>
+          <label for="ctRating">Wie hilfreich war es?</label>
+          <select id="ctRating" required><option value="">Bewertung wählen</option><option value="1">1 &mdash; Keine spürbare Wirkung</option><option value="2">2 &mdash; Kleine Wirkung</option><option value="3">3 &mdash; Etwas hilfreich</option><option value="4">4 &mdash; Deutlich hilfreich</option><option value="5">5 &mdash; Starke Wirkung</option></select>
+          <label for="ctNote">Was hast du bemerkt?</label><input type="text" id="ctNote" placeholder="Eine kurze Beobachtung reicht.">
+          <button class="btn" type="submit">Dieses Tool loggen</button>
+        </form>
+      </div>
+      <div class="card">
+        <h3>Deine Core-Tools-Einträge</h3>
+        <div class="entry-list" id="ctList"></div>
       </div>
 
       <div class="card">
@@ -709,15 +737,16 @@
     'Hum, Swallow & Return':{sub:'Finde deine Mitte',when:'Vor dem Wettkampf, zwischen Versuchen, oder wann immer du einen Moment zum Summen hast.',quick:'Einatmen → Summend ausatmen → Normal schlucken → Blick nach oben → Nächste Handlung.',steps:['Finde deine Position; löse Kiefer und Schultern.','Atme leicht durch die Nase ein.','Summe beim Ausatmen ein sanftes „mmm“ — ohne zu pressen.','Schlucke normal, wenn das Summen endet; ein Schluck Wasser ist optional.','Blicke zu deiner Aufgabe und wähle die nächste Handlung.']}
   };
   var CORE_TOOLS = ['Regulation Toolbox','Stelle Bessere Fragen','Annahmen-Check','Entscheidungskompass','Jahresplanung','Plan den nächsten Schritt','Learning Engine','Kommunikations-Loop'];
+  var GENERIC_CORE_TOOLS = ['Stelle Bessere Fragen','Annahmen-Check','Entscheidungskompass','Jahresplanung','Plan den nächsten Schritt'];
   var CORE_TOOL_GUIDES = [
     {name:'Regulation Toolbox',tagline:'Steuere deinen emotionalen Zustand',when:'Deine Aktivierung ist zu hoch oder zu niedrig, Anspannung beeinflusst deine Bewegung, nach einem Fehler, oder um dich wieder mit einem hilfreichen Leistungszustand zu verbinden.',what:'Bemerken → Wählen → Regulieren → Zurückkehren. Nutze das Tool, ohne ein perfektes Gefühl zu erzwingen. Das Ziel ist nicht immer Ruhe — das Ziel ist der richtige Zustand für die Aufgabe. Tools: Stress Reset, Fast Reset, Orienting Reset, Tension → Release, Reset + Anchor, Hum, Swallow & Return. Logge es im Regulation-Tab.',jump:'regbridge',jumpLabel:'Regulation-Tab öffnen'},
-    {name:'Stelle Bessere Fragen',tagline:'Lenke deine Aufmerksamkeit',when:'Du steckst in problemfokussiertem Denken fest, Reflektion wird zu Selbstkritik, du spielst einen Fehler immer wieder durch, oder du fühlst dich machtlos.',what:'Bemerke die Frage, die du dir gerade stellst, und wohin sie führt. Stelle dann eine hilfreichere — „Was liegt in meiner Kontrolle?“, „Was kann ich daraus lernen?“, „Was ist eine hilfreiche Handlung, die ich jetzt tun kann?“ — und handle nach der Antwort. Eine bessere Frage verändert, wohin deine Aufmerksamkeit geht.'},
-    {name:'Annahmen-Check',tagline:'Prüfe, was du für eine Tatsache hältst',when:'Eine Interpretation fühlt sich wie die einzige Wahrheit an, du sagst ein negatives Ergebnis voraus, oder dieselbe Überzeugung beeinflusst immer wieder deine Leistung.',what:'Benenne die Annahme. Prüfe die Belege dafür und dagegen. Frage, was sonst noch wahr sein könnte, und wähle eine neue Perspektive, die du in der Realität testest. Stelle Bessere Fragen verändert deine Aufmerksamkeit — Annahmen-Check prüft, ob deine Schlussfolgerung wahr ist.'},
-    {name:'Entscheidungskompass',tagline:'Erforsche, wie eine Entscheidung innerlich repräsentiert wird',when:'Du wählst zwischen zwei Optionen, fühlst dich in einer Entscheidung blockiert, oder eine Option wirkt logisch, fühlt sich aber nicht stimmig an.',what:'Erinnere dich an eine Entscheidung, mit der du zufrieden bist, und eine, die du bereut hast — bemerke Bild, Distanz, Helligkeit, Klarheit, Bewegung und Körperempfindungen. Erforsche dann die aktuelle Option und prüfe Fakten, Konsequenzen und Werte. Deine innere Reaktion ist Information, kein Befehl.'},
-    {name:'Jahresplanung',tagline:'Plane dein Jahr',when:'Zu Beginn einer Saison oder eines Trainingsjahres, nach einem Saisonrückblick, oder wenn deine wöchentlichen Handlungen sich nicht zu einer größeren Richtung summieren.',what:'Bewerte acht Lebensbereiche von 1–10, vervollständige „In 12 Monaten möchte ich …“, wähle zwei oder drei Schwerpunkte, benenne für jeden den nächsten Schritt, und überprüfe das vierteljährlich. Das gibt die Richtung für Plan den nächsten Schritt vor und ergänzt SEE × Pursue. Vollständige Übung in deinem Workbook.'},
-    {name:'Plan den nächsten Schritt',tagline:'Verwandle Richtung in Handlung',when:'Ein Ziel fühlt sich zu groß an, du weißt, was du willst, aber nicht, wo du anfangen sollst, oder deine wöchentlichen Handlungen passen nicht zu deinen Prioritäten.',what:'Verbinde dich wieder mit der Richtung, benenne den nächsten Meilenstein, bringe ihn in diese Woche, und wähle die kleinste hilfreiche Handlung — was, wann, wo, welche Unterstützung. Überprüfe es am Ende der Woche. Plane nicht alles — plane den nächsten hilfreichen Schritt.'},
-    {name:'Learning Engine',tagline:'Verwandle Erfahrung in Anpassung',when:'Nach einer wichtigen Einheit oder einem Wettkampf, wenn etwas funktioniert hat (oder nicht), oder wenn du ein Modul abgeschlossen hast.',what:'EXPERIENCE → REFLECT → LEARN → ADAPT. Sechs Fragen: Ziele, Herausforderungen, Lösungen, Überraschungen, Wie fühle ich mich, Nächster Schritt. Ein Ergebnis ist Information, kein Urteil. Ein kurzer Satz pro Frage reicht. Trag es weiter unten auf dieser Seite ein.'},
-    {name:'Kommunikations-Loop',tagline:'Verwandle Kommunikation in Lernen',when:'Während des Trainings, zwischen Versuchen, in einem Coach-Gespräch, oder nach einer bedeutsamen Team-Interaktion.',what:'SAFE → PACE → STOP → PACE → STOP → PACE → SAFE. Bemerke CANT, wann immer es auftaucht, und untersuche seine Wirkung. Kommunikation prägt, was im nächsten Versuch möglich wird. Logge einen Check weiter unten auf dieser Seite.'}
+    {name:'Stelle Bessere Fragen',tagline:'Lenke deine Aufmerksamkeit',when:'Du steckst in problemfokussiertem Denken fest, Reflektion wird zu Selbstkritik, du spielst einen Fehler immer wieder durch, oder du fühlst dich machtlos.',what:'Bemerke die Frage, die du dir gerade stellst, und wohin sie führt. Stelle dann eine hilfreichere — „Was liegt in meiner Kontrolle?“, „Was kann ich daraus lernen?“, „Was ist eine hilfreiche Handlung, die ich jetzt tun kann?“ — und handle nach der Antwort. Eine bessere Frage verändert, wohin deine Aufmerksamkeit geht.',logTarget:'generic'},
+    {name:'Annahmen-Check',tagline:'Prüfe, was du für eine Tatsache hältst',when:'Eine Interpretation fühlt sich wie die einzige Wahrheit an, du sagst ein negatives Ergebnis voraus, oder dieselbe Überzeugung beeinflusst immer wieder deine Leistung.',what:'Benenne die Annahme. Prüfe die Belege dafür und dagegen. Frage, was sonst noch wahr sein könnte, und wähle eine neue Perspektive, die du in der Realität testest. Stelle Bessere Fragen verändert deine Aufmerksamkeit — Annahmen-Check prüft, ob deine Schlussfolgerung wahr ist.',logTarget:'generic'},
+    {name:'Entscheidungskompass',tagline:'Erforsche, wie eine Entscheidung innerlich repräsentiert wird',when:'Du wählst zwischen zwei Optionen, fühlst dich in einer Entscheidung blockiert, oder eine Option wirkt logisch, fühlt sich aber nicht stimmig an.',what:'Erinnere dich an eine Entscheidung, mit der du zufrieden bist, und eine, die du bereut hast — bemerke Bild, Distanz, Helligkeit, Klarheit, Bewegung und Körperempfindungen. Erforsche dann die aktuelle Option und prüfe Fakten, Konsequenzen und Werte. Deine innere Reaktion ist Information, kein Befehl.',logTarget:'generic'},
+    {name:'Jahresplanung',tagline:'Plane dein Jahr',when:'Zu Beginn einer Saison oder eines Trainingsjahres, nach einem Saisonrückblick, oder wenn deine wöchentlichen Handlungen sich nicht zu einer größeren Richtung summieren.',what:'Bewerte acht Lebensbereiche von 1–10, vervollständige „In 12 Monaten möchte ich …“, wähle zwei oder drei Schwerpunkte, benenne für jeden den nächsten Schritt, und überprüfe das vierteljährlich. Das gibt die Richtung für Plan den nächsten Schritt vor und ergänzt SEE × Pursue. Vollständige Übung in deinem Workbook.',logTarget:'generic'},
+    {name:'Plan den nächsten Schritt',tagline:'Verwandle Richtung in Handlung',when:'Ein Ziel fühlt sich zu groß an, du weißt, was du willst, aber nicht, wo du anfangen sollst, oder deine wöchentlichen Handlungen passen nicht zu deinen Prioritäten.',what:'Verbinde dich wieder mit der Richtung, benenne den nächsten Meilenstein, bringe ihn in diese Woche, und wähle die kleinste hilfreiche Handlung — was, wann, wo, welche Unterstützung. Überprüfe es am Ende der Woche. Plane nicht alles — plane den nächsten hilfreichen Schritt.',logTarget:'generic'},
+    {name:'Learning Engine',tagline:'Verwandle Erfahrung in Anpassung',when:'Nach einer wichtigen Einheit oder einem Wettkampf, wenn etwas funktioniert hat (oder nicht), oder wenn du ein Modul abgeschlossen hast.',what:'EXPERIENCE → REFLECT → LEARN → ADAPT. Sechs Fragen: Ziele, Herausforderungen, Lösungen, Überraschungen, Wie fühle ich mich, Nächster Schritt. Ein Ergebnis ist Information, kein Urteil. Ein kurzer Satz pro Frage reicht. Trag es weiter unten auf dieser Seite ein.',logTarget:'learning'},
+    {name:'Kommunikations-Loop',tagline:'Verwandle Kommunikation in Lernen',when:'Während des Trainings, zwischen Versuchen, in einem Coach-Gespräch, oder nach einer bedeutsamen Team-Interaktion.',what:'SAFE → PACE → STOP → PACE → STOP → PACE → SAFE. Bemerke CANT, wann immer es auftaucht, und untersuche seine Wirkung. Kommunikation prägt, was im nächsten Versuch möglich wird. Logge einen Check weiter unten auf dieser Seite.',logTarget:'communication'}
   ];
 
   var ENGINE_STEPS = [
@@ -790,7 +819,7 @@
   var state = loadState();
 
   function defaultState(){
-    return { startDate:null, regBridge:[], moduleLog:[], communicationLog:[], learningLog:[], reflections:{}, learningModules:{}, learningTransitions:{}, livePractice:[], momentLog:[] };
+    return { startDate:null, regBridge:[], moduleLog:[], communicationLog:[], learningLog:[], coreToolLog:[], reflections:{}, learningModules:{}, learningTransitions:{}, livePractice:[], momentLog:[] };
   }
   function loadState(){
     try{
@@ -1009,6 +1038,13 @@
     {id:'performance', label:'Wie war die Wirkung auf meine Leistung?', type:'text'},
     {id:'response', label:'Was brauche oder wähle ich als Nächstes?', type:'text'}
   ];
+  var CORETOOL_FIELDS = [
+    {id:'date', label:'Datum', type:'date'},
+    {id:'tool', label:'Welches Tool?', type:'select', options:GENERIC_CORE_TOOLS},
+    {id:'situation', label:'Situation', type:'select', options:['','Training','Wettkampf','Regeneration / zuhause','Alltag','Sonstiges']},
+    {id:'rating', label:'Wie hilfreich war es? (1–5)', type:'select', options:['1','2','3','4','5']},
+    {id:'note', label:'Was du bemerkt hast', type:'text'}
+  ];
   var LIVE_FLAT_FIELDS = [];
   LIVE_SECTIONS.forEach(function(sec){
     var prefix = sec.title.replace(/^\d+\.\s*/, '');
@@ -1062,6 +1098,7 @@
     else if(bucket==='livePractice') renderLiveList();
     else if(bucket==='momentLog') renderMomentLog();
     else if(bucket==='learningLog') renderLearningLog();
+    else if(bucket==='coreToolLog') renderCoreToolLog();
   }
   function wireEntryActions(container, bucket){
     container.querySelectorAll('.entry-edit').forEach(function(btn){
@@ -1214,12 +1251,53 @@
   /* ---------------- Core Tools & Learning Engine ---------------- */
   document.getElementById('coreGuides').innerHTML = CORE_TOOL_GUIDES.map(function(t,i){
     var jumpBtn = t.jump ? '<button type="button" class="btn small" data-jump="'+t.jump+'" style="margin-top:10px;">'+esc(t.jumpLabel||'Open tab')+'</button>' : '';
-    return '<div class="acc"><button type="button" class="acc-head" aria-expanded="false"><div><div class="t">'+esc(t.name)+'</div><div class="st">'+(i+1)+'/8 · '+esc(t.tagline)+'</div></div><span class="chev">▾</span></button><div class="acc-body"><p class="hint"><strong>Wann nutzen</strong>'+esc(t.when)+'</p><p>'+esc(t.what)+'</p>'+jumpBtn+'</div></div>';
+    var logBtn = t.logTarget ? '<button type="button" class="btn small" data-logtool="'+esc(t.name)+'" data-logtarget="'+t.logTarget+'" style="margin-top:10px;">Dieses Tool loggen</button>' : '';
+    return '<div class="acc"><button type="button" class="acc-head" aria-expanded="false"><div><div class="t">'+esc(t.name)+'</div><div class="st">'+(i+1)+'/8 · '+esc(t.tagline)+'</div></div><span class="chev">▾</span></button><div class="acc-body"><p class="hint"><strong>Wann nutzen</strong>'+esc(t.when)+'</p><p>'+esc(t.what)+'</p>'+jumpBtn+logBtn+'</div></div>';
   }).join('');
   wireAccordions(document.getElementById('coreGuides'));
   document.getElementById('coreGuides').querySelectorAll('[data-jump]').forEach(function(btn){
     btn.addEventListener('click', function(ev){ ev.stopPropagation(); showView(btn.getAttribute('data-jump')); });
   });
+  document.getElementById('coreGuides').querySelectorAll('[data-logtool]').forEach(function(btn){
+    btn.addEventListener('click', function(ev){
+      ev.stopPropagation();
+      var target = btn.getAttribute('data-logtarget');
+      var targetForm = target==='learning' ? document.getElementById('formLearning') : target==='communication' ? document.getElementById('formCommunication') : document.getElementById('formCoreTool');
+      if(target==='generic'){ document.getElementById('ctTool').value = btn.getAttribute('data-logtool'); }
+      if(targetForm) targetForm.scrollIntoView({behavior:'smooth', block:'start'});
+    });
+  });
+
+  var ctToolSelect = document.getElementById('ctTool');
+  ctToolSelect.innerHTML = GENERIC_CORE_TOOLS.map(function(tool){ return '<option value="'+tool+'">'+tool+'</option>'; }).join('');
+  document.getElementById('ctDate').value = todayStr();
+  document.getElementById('formCoreTool').addEventListener('submit', function(e){
+    e.preventDefault();
+    state.coreToolLog.unshift({
+      id:uid(),
+      date:document.getElementById('ctDate').value,
+      tool:ctToolSelect.value,
+      situation:document.getElementById('ctSituation').value,
+      rating:document.getElementById('ctRating').value,
+      note:document.getElementById('ctNote').value.trim()
+    });
+    saveState();
+    document.getElementById('ctSituation').value='';
+    document.getElementById('ctRating').value='';
+    document.getElementById('ctNote').value='';
+    document.getElementById('ctDate').value = todayStr();
+    renderCoreToolLog(); renderOverview();
+  });
+  function renderCoreToolLog(){
+    var list = document.getElementById('ctList');
+    if(!state.coreToolLog.length){ list.innerHTML = '<div class="empty-state">Noch keine Einträge. Logge oben dein erstes Core Tool.</div>'; return; }
+    list.innerHTML = state.coreToolLog.map(function(e){
+      if(isEditing('coreToolLog', e.id)) return '<div class="entry">'+buildEditForm('coreToolLog', e, CORETOOL_FIELDS)+'</div>';
+      return '<div class="entry">'+entryTop('coreToolLog', e.id, fmtDate(e.date), esc(e.tool||'Core Tool')+(e.situation?' · '+esc(e.situation):'')+(e.rating?' · '+esc(e.rating)+'/5':''))+
+        entryDetail(e.note?'<div class="entry-body">'+esc(e.note)+'</div>':'') + '</div>';
+    }).join('');
+    wireEntryActions(list, 'coreToolLog');
+  }
 
   var elModuleSelect = document.getElementById('elModule');
   elModuleSelect.innerHTML = '<option value="">Allgemeine Reflektion</option>' + MODULES.map(function(m){ return '<option value="'+m.id+'">'+m.name+'</option>'; }).join('') + '<option value="regulation-bridge">Regulation Toolbox</option>';
@@ -1545,7 +1623,7 @@
     var totalReps=state.moduleLog.reduce(function(sum,e){var n=parseFloat(e.reps);return sum+(isNaN(n)?0:n);},0);
     var allRegRatings=state.regBridge.map(function(e){return Number(e.rating);}).filter(function(n){return n>0;});
     var regAverage=allRegRatings.length?(allRegRatings.reduce(function(a,b){return a+b;},0)/allRegRatings.length).toFixed(1):'—';
-    var allLogged=state.regBridge.length+state.moduleLog.length+state.communicationLog.length+state.livePractice.length+state.momentLog.length+state.learningLog.length;
+    var allLogged=state.regBridge.length+state.moduleLog.length+state.communicationLog.length+state.livePractice.length+state.momentLog.length+state.learningLog.length+state.coreToolLog.length;
     var metrics=[
       ['GELOGGTE MOMENTE GESAMT',allLogged],['ÜBUNGSEINTRÄGE',state.moduleLog.length],['WIEDERHOLUNGEN',totalReps],
       ['TIEFENREFLEXIONEN',state.livePractice.length],['COMMUNICATION CHECKS',state.communicationLog.length],['REGULATION Ø',regAverage==='—'?'—':regAverage+' / 5']
@@ -1743,6 +1821,14 @@
       })
     );
 
+    /* --- Core Tools (generic) --- */
+    dataSheet(wb, 'Core Tools', 'FACE YOUR POWER — Core Tools Log',
+      'Stelle Bessere Fragen, Annahmen-Check, Entscheidungskompass, Jahresplanung, Plan den nächsten Schritt.',
+      ['Datum','Tool','Situation','Wirksamkeit (1–5)','Was ich bemerkt habe'],
+      [{width:16,type:'date'},{width:26},{width:20},{width:22},{width:65,type:'wrap'}],
+      state.coreToolLog.map(function(e){ return [e.date||'',e.tool||'',e.situation||'',e.rating||'',e.note||'']; })
+    );
+
     /* --- Practice --- */
     dataSheet(wb, 'Übung', 'FACE YOUR POWER — Übung',
       'Eine Zeile pro Übungseinheit. Jeder Versuch zählt, egal wie klein.',
@@ -1828,6 +1914,7 @@
     renderRegBridge();
     renderModuleLog();
     renderLearningLog();
+    renderCoreToolLog();
     renderCommunicationLog();
     renderLiveList();
     renderMomentLog();

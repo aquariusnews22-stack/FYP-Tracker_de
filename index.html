@@ -418,8 +418,6 @@
           <label for="mlReps">Wiederholungen</label><input type="text" id="mlReps" placeholder="1" inputmode="numeric">
           <label for="mlObservation">Was hast du bemerkt?</label>
           <textarea id="mlObservation" placeholder="Was ist passiert? Was war hilfreich oder schwierig?"></textarea>
-          <label for="mlNext">Was testest du als Nächstes?</label>
-          <input type="text" id="mlNext" placeholder="Ein konkretes nächstes Experiment.">
           <label for="mlCoreTool">Welches Core Tool hat das unterstützt? <span style="color:var(--ink-faint);font-weight:400;">(optional)</span></label>
           <select id="mlCoreTool"></select>
           <p class="quick-note">Willst du diese Einheit vertiefen? Die Learning Engine findest du unter Core Tools. Oder geh zum Tab Tiefe Reflektion.</p>
@@ -467,6 +465,7 @@
             <option>Alltag</option>
             <option>Sonstiges</option>
           </select>
+          <input type="text" id="rbSituationOther" placeholder="Welche Situation?" style="display:none;">
           <label for="rbRating">Wie hilfreich war es heute?</label>
           <select id="rbRating" required><option value="">Bewertung wählen</option><option value="1">1 &mdash; Keine spürbare Wirkung</option><option value="2">2 &mdash; Kleine Wirkung</option><option value="3">3 &mdash; Etwas hilfreich</option><option value="4">4 &mdash; Deutlich hilfreich</option><option value="5">5 &mdash; Starke Wirkung</option></select>
           <label for="rbNote">Was hast du bemerkt?</label><input type="text" id="rbNote" placeholder="Eine kurze Beobachtung reicht.">
@@ -525,6 +524,7 @@
             <option>Alltag</option>
             <option>Sonstiges</option>
           </select>
+          <input type="text" id="ctSituationOther" placeholder="Welche Situation?" style="display:none;">
           <label for="ctRating">Wie hilfreich war es?</label>
           <select id="ctRating" required><option value="">Bewertung wählen</option><option value="1">1 &mdash; Keine spürbare Wirkung</option><option value="2">2 &mdash; Kleine Wirkung</option><option value="3">3 &mdash; Etwas hilfreich</option><option value="4">4 &mdash; Deutlich hilfreich</option><option value="5">5 &mdash; Starke Wirkung</option></select>
           <label for="ctNote">Was hast du bemerkt?</label><input type="text" id="ctNote" placeholder="Eine kurze Beobachtung reicht.">
@@ -729,7 +729,7 @@
   var PHASE_LABEL = {foundation:'Foundation', prepare:'Prepare', perform:'Perform', pursue:'Pursue'};
   var REGULATION_TOOLS = ['Stress Reset','Fast Reset','Orienting Reset','Tension → Release','Reset + Anchor','Hum, Swallow & Return'];
   var REG_GUIDES = {
-    'Stress Reset':{sub:'Langsam werden und zurücksetzen',when:'Tägliche Praxis und vor dem Wettkampf.',quick:'Stress benennen → Ruhig atmen, ca. 5 Sekunden ein und 5 Sekunden aus → Wiederholen für etwa eine Minute → Nächste Handlung wählen.',steps:['Benenne deinen Stress und bewerte ihn von 1 bis 10.','Atme 2–3 Minuten lang sanft und in einem angenehmen Tempo durch die Nase.','Übe täglich in den Wochen 1–2, dann verkürze es schrittweise.','Probiere bis Woche 4 eine 60–90-Sekunden-Version.','Lenke deine Aufmerksamkeit zurück zur nächsten Handlung.']},
+    'Stress Reset':{sub:'Langsam werden und zurücksetzen',when:'Tägliche Praxis und vor dem Wettkampf.',quick:'Stress benennen → Ruhig atmen, ca. 4 Sekunden ein und 6 Sekunden aus → Wiederholen für etwa eine Minute → Nächste Handlung wählen.',steps:['Benenne deinen Stress und bewerte ihn von 1 bis 10.','Atme 1–2 Minuten lang sanft und in einem angenehmen Tempo durch die Nase.','Übe täglich.','Lenke deine Aufmerksamkeit zurück zur nächsten Handlung.']},
     'Fast Reset':{sub:'Ein Atemzug nach dem anderen — Physiologischer Seufzer',when:'Nach einem Fehler, zwischen Versuchen oder während einer Pause.',quick:'Einatmen → Kleinen zusätzlichen Atemzug einatmen → Langsam ausatmen → 2–3 Mal wiederholen → Nächste Handlung.',steps:['Atme angenehm durch die Nase ein.','Füge einen zweiten, kleineren Atemzug hinzu.','Atme in einem angenehmen, längeren Zug aus.','Wiederhole 2–3 Mal; kehre bei Schwindel zur normalen Atmung zurück.','Frage dich, was deine nächste Handlung ist, und tue sie.']},
     'Orienting Reset':{sub:'Zurück in die Gegenwart',when:'Grübeln oder Tunnelblick.',quick:'Schauen → Hören → Fühlen → Zurückkehren.',steps:['Halte für ein paar Sekunden inne.','Nimm drei Dinge wahr, die du sehen kannst.','Nimm zwei Geräusche wahr.','Spüre deine Füße auf dem Boden.','Atme einmal angenehm und kehre zur Aufgabe zurück.']},
     'Tension → Release':{sub:'Lass los, was du nicht brauchst',when:'Unnötige Anspannung vor der Leistung oder während einer Pause.',quick:'Scannen → Loslassen → Behalten, was du brauchst → Los.',steps:['Scanne Kiefer, Schultern, Hände, Bauch und Beine.','Lass die Anspannung los, die der nächsten Aufgabe nicht hilft.','Behalte die Energie und Muskelspannung, die du für deinen Sport brauchst.','Atme angenehm und kehre zur nächsten Handlung zurück.']},
@@ -987,7 +987,8 @@
       html += '<div class="tally-row"><span class="name">'+m.name+'<span class="phase-chip">'+PHASE_LABEL[m.phase]+'</span></span><span class="count">'+count+'</span></div>';
     });
     html += '<div class="tally-row"><span class="name">Regulation Toolbox<span class="phase-chip">Core Tool</span></span><span class="count">'+state.regBridge.length+'</span></div>';
-    html += '<div class="tally-row"><span class="name">Learning Engine<span class="phase-chip">Core tool</span></span><span class="count">'+state.learningLog.length+'</span></div>';
+    html += '<div class="tally-row"><span class="name">Learning Engine<span class="phase-chip">Core Tool</span></span><span class="count">'+state.learningLog.length+'</span></div>';
+    html += '<div class="tally-row"><span class="name">Core Tools<span class="phase-chip">Core Tool</span></span><span class="count">'+state.coreToolLog.length+'</span></div>';
     html += '<div class="tally-row"><span class="name">Communication Checks<span class="phase-chip">Core Tool</span></span><span class="count">'+state.communicationLog.length+'</span></div>';
     el.innerHTML = html;
   }
@@ -1009,11 +1010,11 @@
     {id:'attempt', label:'Welche Übung hast du gemacht?', type:'textarea'},
     {id:'reps', label:'Wiederholungen', type:'text'},
     {id:'observation', label:'Was hast du bemerkt?', type:'textarea'},
-    {id:'next', label:'Was testest du als Nächstes?', type:'text'},
     {id:'coreTool', label:'Genutztes Core Tool', type:'select', options:[''].concat(CORE_TOOLS)}
   ];
   var LEARNINGLOG_FIELDS = [
-    {id:'date', label:'Datum', type:'date'}
+    {id:'date', label:'Datum', type:'date'},
+    {id:'module', label:'Worum geht es dabei?', type:'select', options:[{id:'',name:'Allgemeine Reflektion'}].concat(MODULES).concat([{id:'regulation-bridge',name:'Regulation Toolbox'}])}
   ].concat(ENGINE_STEPS.map(function(s){return {id:s.id,label:s.label+' — '+s.question,type:'textarea'};}));
   var COMMLOG_FIELDS = [
     {id:'date', label:'Datum', type:'date'},
@@ -1170,16 +1171,35 @@
       document.getElementById('rbExercise').scrollIntoView({behavior:'smooth'});
     });
   });
+  function wireSituationOther(selectId, otherId){
+    var sel = document.getElementById(selectId);
+    var other = document.getElementById(otherId);
+    sel.addEventListener('change', function(){
+      other.style.display = sel.value === 'Sonstiges' ? 'block' : 'none';
+      if(sel.value !== 'Sonstiges') other.value = '';
+    });
+  }
+  function situationValue(selectId, otherId){
+    var sel = document.getElementById(selectId);
+    var other = document.getElementById(otherId);
+    if(sel.value === 'Sonstiges' && other.value.trim()) return 'Sonstiges: ' + other.value.trim();
+    return sel.value;
+  }
+  wireSituationOther('rbSituation','rbSituationOther');
+  wireSituationOther('ctSituation','ctSituationOther');
+
   var formRB = document.getElementById('formRegBridge');
   document.getElementById('rbExercise').innerHTML=REGULATION_TOOLS.map(function(tool){return '<option value="'+tool+'">'+tool+'</option>';}).join('');
   document.getElementById('rbDate').value = todayStr();
   formRB.addEventListener('submit', function(e){
     e.preventDefault();
-    state.regBridge.unshift({id:uid(),date:document.getElementById('rbDate').value,exercise:document.getElementById('rbExercise').value,situation:document.getElementById('rbSituation').value,rating:document.getElementById('rbRating').value,note:document.getElementById('rbNote').value.trim()});
+    state.regBridge.unshift({id:uid(),date:document.getElementById('rbDate').value,exercise:document.getElementById('rbExercise').value,situation:situationValue('rbSituation','rbSituationOther'),rating:document.getElementById('rbRating').value,note:document.getElementById('rbNote').value.trim()});
     saveState();
     document.getElementById('rbNote').value='';
     document.getElementById('rbRating').value='';
     document.getElementById('rbSituation').value='';
+    document.getElementById('rbSituationOther').value='';
+    document.getElementById('rbSituationOther').style.display='none';
     document.getElementById('rbDate').value = todayStr();
     renderRegBridge(); renderOverview();
   });
@@ -1190,7 +1210,7 @@
       list.innerHTML = state.regBridge.map(function(e){
         if(isEditing('regBridge', e.id)) return '<div class="entry">'+buildEditForm('regBridge', e, REGBRIDGE_FIELDS)+'</div>';
         return '<div class="entry">'+entryTop('regBridge', e.id, fmtDate(e.date), esc(e.exercise||'Regulation')+(e.situation?' · '+esc(e.situation):'')+(e.rating?' · '+esc(e.rating)+'/5':''))+
-          entryDetail(e.note?'<div class="entry-body">'+esc(e.note)+'</div>':'') + '</div>';
+          entryDetail('<div class="mlog-grid">'+field('Situation',e.situation)+field('Wie hilfreich',e.rating?e.rating+'/5':'')+field('Was du bemerkt hast',e.note)+'</div>') + '</div>';
       }).join('');
       wireEntryActions(list, 'regBridge');
     }
@@ -1219,7 +1239,6 @@
       attempt:document.getElementById('mlAttempt').value.trim(),
       reps:document.getElementById('mlReps').value.trim() || '1',
       observation:document.getElementById('mlObservation').value.trim(),
-      next:document.getElementById('mlNext').value.trim(),
       coreTool:document.getElementById('mlCoreTool').value
     };
     state.moduleLog.unshift(entry);
@@ -1228,7 +1247,6 @@
     document.getElementById('mlAttempt').value='';
     document.getElementById('mlReps').value='';
     document.getElementById('mlObservation').value='';
-    document.getElementById('mlNext').value='';
     document.getElementById('mlCoreTool').value='';
     document.getElementById('mlDate').value = todayStr();
     renderModuleLog(); renderOverview();
@@ -1242,7 +1260,7 @@
       return '<div class="entry">'+entryTop('moduleLog', e.id, fmtDate(e.date), moduleName(e.module)+(e.context?' · '+esc(e.context):'')+' · '+esc(e.reps)+' Wdh.'+(e.coreTool?' · '+esc(e.coreTool):''))+
         entryDetail(
           (e.attempt?'<div class="entry-body">'+esc(e.attempt)+'</div>':'') +
-          '<div class="mlog-grid">'+field('Was ich bemerkt habe',e.observation)+field('Nächstes Experiment',e.next)+'</div>'
+          '<div class="mlog-grid">'+field('Was ich bemerkt habe',e.observation)+'</div>'
         ) + '</div>';
     }).join('');
     wireEntryActions(list, 'moduleLog');
@@ -1277,12 +1295,14 @@
       id:uid(),
       date:document.getElementById('ctDate').value,
       tool:ctToolSelect.value,
-      situation:document.getElementById('ctSituation').value,
+      situation:situationValue('ctSituation','ctSituationOther'),
       rating:document.getElementById('ctRating').value,
       note:document.getElementById('ctNote').value.trim()
     });
     saveState();
     document.getElementById('ctSituation').value='';
+    document.getElementById('ctSituationOther').value='';
+    document.getElementById('ctSituationOther').style.display='none';
     document.getElementById('ctRating').value='';
     document.getElementById('ctNote').value='';
     document.getElementById('ctDate').value = todayStr();
@@ -1294,7 +1314,7 @@
     list.innerHTML = state.coreToolLog.map(function(e){
       if(isEditing('coreToolLog', e.id)) return '<div class="entry">'+buildEditForm('coreToolLog', e, CORETOOL_FIELDS)+'</div>';
       return '<div class="entry">'+entryTop('coreToolLog', e.id, fmtDate(e.date), esc(e.tool||'Core Tool')+(e.situation?' · '+esc(e.situation):'')+(e.rating?' · '+esc(e.rating)+'/5':''))+
-        entryDetail(e.note?'<div class="entry-body">'+esc(e.note)+'</div>':'') + '</div>';
+        entryDetail('<div class="mlog-grid">'+field('Situation',e.situation)+field('Wie hilfreich',e.rating?e.rating+'/5':'')+field('Was du bemerkt hast',e.note)+'</div>') + '</div>';
     }).join('');
     wireEntryActions(list, 'coreToolLog');
   }
@@ -1654,13 +1674,13 @@
       values.forEach(function(v,i){var c=dash.getCell(row,i+1);c.value=v;c.font={name:'Calibri',size:10,color:{argb:XLS_INK}};c.border={bottom:{style:'hair',color:{argb:XLS_BORDER}}};c.alignment={vertical:'top',wrapText:i===values.length-1};if(zebra)c.fill={type:'pattern',pattern:'solid',fgColor:{argb:XLS_ZEBRA}};});
     }
 
-    dashSection(11,'Wochenaktivität');
-    dashHeader(12,['Woche','Phase','Übung','Wdh.','Regulation','Communication','Tiefe','Kurz']);
+    dashSection(11,'Wochenaktivität',10);
+    dashHeader(12,['Woche','Phase','Übung','Wdh.','Regulation','Learning Eng.','Core Tools','Communication','Tiefe','Kurz']);
     WEEKS.forEach(function(w,idx){
       function countWeek(entries){return entries.filter(function(e){return weekOfDate(e.date)===w.n;}).length;}
       var weekModules=state.moduleLog.filter(function(e){return weekOfDate(e.date)===w.n;});
       var weekReps=weekModules.reduce(function(sum,e){var n=parseFloat(e.reps);return sum+(isNaN(n)?0:n);},0);
-      dashDataRow(13+idx,['Woche '+w.n,PHASE_LABEL[w.phase],weekModules.length,weekReps,countWeek(state.regBridge),countWeek(state.communicationLog),countWeek(state.livePractice),countWeek(state.momentLog)],idx%2===1);
+      dashDataRow(13+idx,['Woche '+w.n,PHASE_LABEL[w.phase],weekModules.length,weekReps,countWeek(state.regBridge),countWeek(state.learningLog),countWeek(state.coreToolLog),countWeek(state.communicationLog),countWeek(state.livePractice),countWeek(state.momentLog)],idx%2===1);
     });
 
     dashSection(27,'Regulation-Tools — Nutzung und Wirksamkeit');
@@ -1687,7 +1707,6 @@
     dashSection(nextStart,'Letzte nächste Experimente');
     dashHeader(nextStart+1,['Datum','Bereich','Nächste Handlung','','','','','']);
     var nextItems=[];
-    state.moduleLog.forEach(function(e){if(e.next)nextItems.push({date:e.date,area:'Übung',text:e.next});});
     state.learningLog.forEach(function(e){if(e.next)nextItems.push({date:e.date,area:'Learning Engine',text:e.next});});
     state.communicationLog.forEach(function(e){if(e.next)nextItems.push({date:e.date,area:'Communication',text:e.next});});
     state.livePractice.forEach(function(e){if(e.next||e.response)nextItems.push({date:e.date,area:'Tiefe Reflektion',text:e.next||e.response});});
@@ -1697,6 +1716,7 @@
 
     dash.getColumn(1).width=24;dash.getColumn(2).width=18;dash.getColumn(3).width=22;dash.getColumn(4).width=34;
     dash.getColumn(5).width=16;dash.getColumn(6).width=18;dash.getColumn(7).width=14;dash.getColumn(8).width=14;
+    dash.getColumn(9).width=14;dash.getColumn(10).width=14;
     dash.views=[{state:'frozen',ySplit:3,showGridLines:false}];
     dash.pageSetup={orientation:'landscape',fitToPage:true,fitToWidth:1,fitToHeight:0,margins:{left:0.3,right:0.3,top:0.5,bottom:0.5,header:0.2,footer:0.2}};
 
@@ -1760,14 +1780,17 @@
       }
       r++;
     });
-    ov.getCell(r,1).value = 'Regulation Toolbox';
-    ov.getCell(r,2).value = 'Core Tool';
-    ov.getCell(r,3).value = state.regBridge.length;
-    for(var c=1;c<=3;c++){
-      ov.getCell(r,c).font = {name:'Calibri', size:10.5, bold:true, color:{argb:XLS_INK}};
-      ov.getCell(r,c).border = {bottom:{style:'hair', color:{argb:XLS_BORDER}}};
-    }
-    r += 2;
+    [['Regulation Toolbox',state.regBridge.length],['Learning Engine',state.learningLog.length],['Core Tools',state.coreToolLog.length],['Communication Checks',state.communicationLog.length]].forEach(function(row){
+      ov.getCell(r,1).value = row[0];
+      ov.getCell(r,2).value = 'Core Tool';
+      ov.getCell(r,3).value = row[1];
+      for(var c=1;c<=3;c++){
+        ov.getCell(r,c).font = {name:'Calibri', size:10.5, bold:true, color:{argb:XLS_INK}};
+        ov.getCell(r,c).border = {bottom:{style:'hair', color:{argb:XLS_BORDER}}};
+      }
+      r++;
+    });
+    r += 1;
 
     ov.mergeCells(r,1,r,4);
     var ph = ov.getCell(r,1);
@@ -1832,9 +1855,9 @@
     /* --- Practice --- */
     dataSheet(wb, 'Übung', 'FACE YOUR POWER — Übung',
       'Eine Zeile pro Übungseinheit. Jeder Versuch zählt, egal wie klein.',
-      ['Datum','Modul','Situation','Wiederholungen','Welche Übung ich gemacht habe','Was ich bemerkt habe','Was ich als Nächstes teste','Genutztes Core Tool'],
-      [{width:16,type:'date'},{width:22},{width:20},{width:12},{width:36,type:'wrap'},{width:34,type:'wrap'},{width:32,type:'wrap'},{width:28}],
-      state.moduleLog.map(function(e){ return [e.date||'',moduleName(e.module),e.context||'',e.reps||'',e.attempt||'',e.observation||'',e.next||'',e.coreTool||'']; }),
+      ['Datum','Modul','Situation','Wiederholungen','Welche Übung ich gemacht habe','Was ich bemerkt habe','Genutztes Core Tool'],
+      [{width:16,type:'date'},{width:22},{width:20},{width:12},{width:36,type:'wrap'},{width:34,type:'wrap'},{width:28}],
+      state.moduleLog.map(function(e){ return [e.date||'',moduleName(e.module),e.context||'',e.reps||'',e.attempt||'',e.observation||'',e.coreTool||'']; }),
       {freezeCol:true}
     );
 

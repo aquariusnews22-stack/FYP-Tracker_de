@@ -264,6 +264,19 @@
   .completion.done{color:#D9D0FF;border-color:var(--violet);background:rgba(140,108,234,.14);}
   .engine-acc{background:var(--panel-solid);border-color:var(--border-soft);margin-bottom:12px;}
   .engine-acc .acc-body{padding-top:2px;}
+  .scale{margin:16px 0 4px;padding:12px;background:var(--panel-alt);border:1px solid var(--border);border-radius:12px;}
+  .scale .scale-q{display:block;font-size:12.5px;color:var(--ink);font-weight:600;margin:0 0 9px;}
+  .scale-row{display:grid;grid-template-columns:repeat(10,1fr);gap:4px;}
+  .scale-chip{padding:9px 0;border-radius:8px;border:1px solid var(--field-border);background:var(--field-bg);color:var(--field-text);font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;}
+  .scale-chip.on{background:var(--violet);border-color:var(--violet);color:#fff;}
+  .scale-ends{display:flex;justify-content:space-between;gap:8px;margin-top:7px;font-size:11.5px;color:var(--ink-faint);}
+  .journal-split{display:grid;gap:0;}
+  .j-head{display:flex;align-items:center;gap:10px;}
+  .j-ico{font-size:26px;line-height:1;}
+  .j-list{margin:0;padding-left:20px;font-size:13.5px;line-height:1.5;color:var(--ink);}
+  .j-num{display:flex;gap:8px;align-items:flex-start;}
+  .j-num > span{flex:none;color:var(--ink-faint);font-weight:600;padding-top:11px;font-size:13px;}
+  .j-num input{flex:1;}
   .quick-note{font-size:13px;color:var(--ink-faint);margin-top:8px;line-height:1.4;}
   .step-guide{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:2px 0 16px;padding:12px;border-radius:10px;background:rgba(140,108,234,.08);border:1px solid var(--border);}
   .step-guide div{font-size:11.5px;color:var(--ink-dim);}
@@ -340,6 +353,7 @@
     <button class="tab-btn" data-view="coretools">Core Tools</button>
     <button class="tab-btn" data-view="regbridge">Regulation</button>
     <button class="tab-btn" data-view="livepractice">Tiefe Reflektion</button>
+    <button class="tab-btn" data-view="journal">Dankbarkeits Journal</button>
   </nav>
 
   <main>
@@ -355,6 +369,7 @@
           <li><strong>Core Tools</strong> — deine 8 Tools zum Denken, Planen, Lernen und Kommunizieren.</li>
           <li><strong>Regulation</strong> — Teil der Core Tools: Reset-Tools für dein Nervensystem und deinen Körper, jederzeit abrufbar.</li>
           <li><strong>Tiefe Reflektion</strong> — für einen schwierigen Moment oder ein wiederkehrendes Muster.</li>
+          <li><strong>Dankbarkeits Journal</strong> — morgens ausrichten, abends auswerten: dein tägliches Fokus-Training.</li>
         </ul>
         <div class="cycle-map" aria-label="Performance Cycle">
           <div class="cycle-step"><strong>Bewusstsein</strong><span>Wahrnehmen</span></div>
@@ -404,6 +419,7 @@
               <select id="mlModule" required></select>
             </div>
           </div>
+          <div class="scale" id="mlBefore" data-q="Vor der Übung: Wie gut geht es mir gerade?"></div>
           <label for="mlContext">Wann bzw. in welcher Situation hast du die Übung eingesetzt?</label>
           <select id="mlContext">
             <option value="">Situation wählen</option>
@@ -418,6 +434,7 @@
           <label for="mlReps">Wiederholungen</label><input type="text" id="mlReps" placeholder="1" inputmode="numeric">
           <label for="mlObservation">Was hast du bemerkt?</label>
           <textarea id="mlObservation" placeholder="Was ist passiert? Was war hilfreich oder schwierig?"></textarea>
+          <div class="scale" id="mlAfter" data-q="Nach der Übung: Wie gut geht es mir gerade?"></div>
           <label for="mlCoreTool">Welches Core Tool hat das unterstützt? <span style="color:var(--ink-faint);font-weight:400;">(optional)</span></label>
           <select id="mlCoreTool"></select>
           <p class="quick-note">Willst du diese Einheit vertiefen? Die Learning Engine findest du unter Core Tools. Oder geh zum Tab Tiefe Reflektion.</p>
@@ -428,6 +445,55 @@
         <h3>Deine Übungseinheiten</h3>
         <p class="muted">Jede gespeicherte Übung zählt, egal wie klein.</p>
         <div class="entry-list" id="mlList"></div>
+      </div>
+    </section>
+
+
+    <!-- ========== DANKBARKEITS JOURNAL ========== -->
+    <section id="journal" class="view">
+      <div class="card">
+        <div class="eyebrow">DANKBARKEITS JOURNAL &mdash; TÄGLICHES FOKUS-TRAINING</div>
+        <h3>Morgens ausrichten. Abends auswerten.</h3>
+        <p class="muted">Du trainierst deine Aufmerksamkeit auf das, was funktioniert und was du beeinflussen kannst. Zwei Minuten am Tag reichen &mdash; kurze Stichworte genügen.</p>
+        <div class="step-guide tab-guide">
+          <div><strong>DU FINDEST HIER</strong>Einen Morgen- und einen Abend-Eintrag, jeweils mit drei Punkten.</div>
+          <div><strong>ZIEL</strong>Den Tag bewusst starten und mit einem klaren Blick auf Gutes und nächste Schritte beenden.</div>
+          <div><strong>WIE OFT</strong>Täglich &mdash; morgens und abends.</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="j-head"><span class="j-ico" aria-hidden="true">&#9728;&#65039;</span><h3 style="margin:0;">Morgens</h3></div>
+        <form id="formJournalAm" style="margin-top:14px;">
+          <label for="jaDate">Datum</label><input type="date" id="jaDate" required>
+          <label>Ich bin dankbar für &hellip;</label>
+          <div class="j-num"><span>1)</span><input type="text" id="jaG1" placeholder="Ich bin dankbar für …"></div>
+          <div class="j-num"><span>2)</span><input type="text" id="jaG2"></div>
+          <div class="j-num"><span>3)</span><input type="text" id="jaG3"></div>
+          <button class="btn" type="submit" style="margin-top:12px;">Morgen-Eintrag speichern</button>
+        </form>
+      </div>
+
+      <div class="card">
+        <div class="j-head"><span class="j-ico" aria-hidden="true">&#127769;</span><h3 style="margin:0;">Abends</h3></div>
+        <form id="formJournalPm" style="margin-top:14px;">
+          <label for="jpDate">Datum</label><input type="date" id="jpDate" required>
+          <label for="jpGood">Was habe ich heute Gutes für jemand getan?</label>
+          <textarea id="jpGood" placeholder="Eine kurze Beschreibung reicht."></textarea>
+          <label for="jpBetter">Was werde ich morgen besser machen?</label>
+          <textarea id="jpBetter" placeholder="Eine konkrete Sache."></textarea>
+          <label>Tolle Dinge, die ich heute erlebt habe &hellip;</label>
+          <div class="j-num"><span>1)</span><input type="text" id="jpW1"></div>
+          <div class="j-num"><span>2)</span><input type="text" id="jpW2"></div>
+          <div class="j-num"><span>3)</span><input type="text" id="jpW3"></div>
+          <button class="btn" type="submit" style="margin-top:12px;">Abend-Eintrag speichern</button>
+        </form>
+      </div>
+
+      <div class="card">
+        <h3>Deine Journal-Einträge</h3>
+        <p class="muted">Jeder Eintrag zählt, auch ein einziger Punkt.</p>
+        <div class="entry-list" id="jList"></div>
       </div>
     </section>
 
@@ -456,6 +522,7 @@
             <div><label for="rbDate">Datum</label><input type="date" id="rbDate" required></div>
             <div><label for="rbExercise">Regulation-Tool</label><select id="rbExercise" required></select></div>
           </div>
+          <div class="scale" id="rbBefore" data-q="Vor der Übung: Wie gut geht es mir gerade?"></div>
           <label for="rbSituation">Wann bzw. in welcher Situation hast du es eingesetzt?</label>
           <select id="rbSituation">
             <option value="">Situation wählen</option>
@@ -466,6 +533,7 @@
             <option>Sonstiges</option>
           </select>
           <input type="text" id="rbSituationOther" placeholder="Welche Situation?" style="display:none;">
+          <div class="scale" id="rbAfter" data-q="Nach der Übung: Wie gut geht es mir gerade?"></div>
           <label for="rbRating">Wie hilfreich war es heute?</label>
           <select id="rbRating" required><option value="">Bewertung wählen</option><option value="1">1 &mdash; Keine spürbare Wirkung</option><option value="2">2 &mdash; Kleine Wirkung</option><option value="3">3 &mdash; Etwas hilfreich</option><option value="4">4 &mdash; Deutlich hilfreich</option><option value="5">5 &mdash; Starke Wirkung</option></select>
           <label for="rbNote">Was hast du bemerkt?</label><input type="text" id="rbNote" placeholder="Eine kurze Beobachtung reicht.">
@@ -515,6 +583,7 @@
             <div><label for="ctDate">Datum</label><input type="date" id="ctDate" required></div>
             <div><label for="ctTool">Welches Tool?</label><select id="ctTool" required></select></div>
           </div>
+          <div class="scale" id="ctBefore" data-q="Vor der Übung: Wie gut geht es mir gerade?"></div>
           <label for="ctSituation">Wann bzw. in welcher Situation hast du es eingesetzt?</label>
           <select id="ctSituation">
             <option value="">Situation wählen</option>
@@ -525,6 +594,7 @@
             <option>Sonstiges</option>
           </select>
           <input type="text" id="ctSituationOther" placeholder="Welche Situation?" style="display:none;">
+          <div class="scale" id="ctAfter" data-q="Nach der Übung: Wie gut geht es mir gerade?"></div>
           <label for="ctRating">Wie hilfreich war es?</label>
           <select id="ctRating" required><option value="">Bewertung wählen</option><option value="1">1 &mdash; Keine spürbare Wirkung</option><option value="2">2 &mdash; Kleine Wirkung</option><option value="3">3 &mdash; Etwas hilfreich</option><option value="4">4 &mdash; Deutlich hilfreich</option><option value="5">5 &mdash; Starke Wirkung</option></select>
           <label for="ctNote">Was hast du bemerkt?</label><input type="text" id="ctNote" placeholder="Eine kurze Beobachtung reicht.">
@@ -819,7 +889,7 @@
   var state = loadState();
 
   function defaultState(){
-    return { startDate:null, regBridge:[], moduleLog:[], communicationLog:[], learningLog:[], coreToolLog:[], reflections:{}, learningModules:{}, learningTransitions:{}, livePractice:[], momentLog:[] };
+    return { startDate:null, regBridge:[], moduleLog:[], communicationLog:[], learningLog:[], coreToolLog:[], reflections:{}, learningModules:{}, learningTransitions:{}, livePractice:[], momentLog:[], journalLog:[] };
   }
   function loadState(){
     try{
@@ -870,7 +940,8 @@
       .concat(state.moduleLog.map(function(e){return e.date;}))
       .concat(state.communicationLog.map(function(e){return e.date;}))
       .concat(state.livePractice.map(function(e){return e.date;}))
-      .concat(state.momentLog.map(function(e){return e.date;}));
+      .concat(state.momentLog.map(function(e){return e.date;}))
+      .concat(state.journalLog.map(function(e){return e.date;}));
     for(var i=0;i<all.length;i++){ if(weekOfDate(all[i])===n) return true; }
     return false;
   }
@@ -990,6 +1061,7 @@
     html += '<div class="tally-row"><span class="name">Learning Engine<span class="phase-chip">Core Tool</span></span><span class="count">'+state.learningLog.length+'</span></div>';
     html += '<div class="tally-row"><span class="name">Core Tools<span class="phase-chip">Core Tool</span></span><span class="count">'+state.coreToolLog.length+'</span></div>';
     html += '<div class="tally-row"><span class="name">Communication Checks<span class="phase-chip">Core Tool</span></span><span class="count">'+state.communicationLog.length+'</span></div>';
+    html += '<div class="tally-row"><span class="name">Dankbarkeits Journal<span class="phase-chip">Täglich</span></span><span class="count">'+state.journalLog.length+'</span></div>';
     el.innerHTML = html;
   }
 
@@ -1000,8 +1072,10 @@
     {id:'date', label:'Datum', type:'date'},
     {id:'exercise', label:'Regulation-Tool', type:'select', options:REGULATION_TOOLS},
     {id:'situation', label:'Situation', type:'select', options:['','Training','Wettkampf','Regeneration / zuhause','Alltag','Sonstiges']},
+    {id:'scoreBefore', label:'Vor der Übung: Wie gut geht es mir gerade? (1–10)', type:'select', options:['','1','2','3','4','5','6','7','8','9','10']},
     {id:'rating', label:'Wie hilfreich war es heute? (1–5)', type:'select', options:['1','2','3','4','5']},
-    {id:'note', label:'Wie es lief', type:'text'}
+    {id:'note', label:'Wie es lief', type:'text'},
+    {id:'scoreAfter', label:'Nach der Übung: Wie gut geht es mir gerade? (1–10)', type:'select', options:['','1','2','3','4','5','6','7','8','9','10']}
   ];
   var MODULELOG_FIELDS = [
     {id:'date', label:'Datum', type:'date'},
@@ -1009,7 +1083,9 @@
     {id:'context', label:'Situation', type:'select', options:['','Training','Wettkampf','Regeneration / zuhause','Alltag','Sonstiges']},
     {id:'attempt', label:'Welche Übung hast du gemacht?', type:'textarea'},
     {id:'reps', label:'Wiederholungen', type:'text'},
+    {id:'scoreBefore', label:'Vor der Übung: Wie gut geht es mir gerade? (1–10)', type:'select', options:['','1','2','3','4','5','6','7','8','9','10']},
     {id:'observation', label:'Was hast du bemerkt?', type:'textarea'},
+    {id:'scoreAfter', label:'Nach der Übung: Wie gut geht es mir gerade? (1–10)', type:'select', options:['','1','2','3','4','5','6','7','8','9','10']},
     {id:'coreTool', label:'Genutztes Core Tool', type:'select', options:[''].concat(CORE_TOOLS)}
   ];
   var LEARNINGLOG_FIELDS = [
@@ -1043,8 +1119,24 @@
     {id:'date', label:'Datum', type:'date'},
     {id:'tool', label:'Welches Tool?', type:'select', options:GENERIC_CORE_TOOLS},
     {id:'situation', label:'Situation', type:'select', options:['','Training','Wettkampf','Regeneration / zuhause','Alltag','Sonstiges']},
+    {id:'scoreBefore', label:'Vor der Übung: Wie gut geht es mir gerade? (1–10)', type:'select', options:['','1','2','3','4','5','6','7','8','9','10']},
     {id:'rating', label:'Wie hilfreich war es? (1–5)', type:'select', options:['1','2','3','4','5']},
-    {id:'note', label:'Was du bemerkt hast', type:'text'}
+    {id:'note', label:'Was du bemerkt hast', type:'text'},
+    {id:'scoreAfter', label:'Nach der Übung: Wie gut geht es mir gerade? (1–10)', type:'select', options:['','1','2','3','4','5','6','7','8','9','10']}
+  ];
+  var JOURNAL_AM_FIELDS = [
+    {id:'date', label:'Datum', type:'date'},
+    {id:'g1', label:'Ich bin dankbar für … 1)', type:'text'},
+    {id:'g2', label:'2)', type:'text'},
+    {id:'g3', label:'3)', type:'text'}
+  ];
+  var JOURNAL_PM_FIELDS = [
+    {id:'date', label:'Datum', type:'date'},
+    {id:'good', label:'Was habe ich heute Gutes für jemand getan?', type:'textarea'},
+    {id:'better', label:'Was werde ich morgen besser machen?', type:'textarea'},
+    {id:'w1', label:'Tolle Dinge, die ich heute erlebt habe … 1)', type:'text'},
+    {id:'w2', label:'2)', type:'text'},
+    {id:'w3', label:'3)', type:'text'}
   ];
   var LIVE_FLAT_FIELDS = [];
   LIVE_SECTIONS.forEach(function(sec){
@@ -1100,6 +1192,7 @@
     else if(bucket==='momentLog') renderMomentLog();
     else if(bucket==='learningLog') renderLearningLog();
     else if(bucket==='coreToolLog') renderCoreToolLog();
+    else if(bucket==='journalLog') renderJournal();
   }
   function wireEntryActions(container, bucket){
     container.querySelectorAll('.entry-edit').forEach(function(btn){
@@ -1188,15 +1281,44 @@
   wireSituationOther('rbSituation','rbSituationOther');
   wireSituationOther('ctSituation','ctSituationOther');
 
+  /* ---------------- 1–10 scales (vor / nach der Übung) ---------------- */
+  function initScale(el){
+    var chips='';
+    for(var i=1;i<=10;i++) chips+='<button type="button" class="scale-chip" data-v="'+i+'" aria-label="'+i+' von 10">'+i+'</button>';
+    el.innerHTML='<span class="scale-q">'+el.getAttribute('data-q')+'</span><div class="scale-row">'+chips+'</div><div class="scale-ends"><span>1 = nicht gut</span><span>10 = sehr gut</span></div>';
+    el.setAttribute('data-value','');
+    el.querySelectorAll('.scale-chip').forEach(function(b){
+      b.addEventListener('click', function(){
+        var already = b.classList.contains('on');
+        el.querySelectorAll('.scale-chip').forEach(function(x){ x.classList.remove('on'); });
+        if(already){ el.setAttribute('data-value',''); }
+        else{ b.classList.add('on'); el.setAttribute('data-value', b.getAttribute('data-v')); }
+      });
+    });
+  }
+  document.querySelectorAll('.scale').forEach(initScale);
+  function scaleVal(id){ return document.getElementById(id).getAttribute('data-value') || ''; }
+  function scaleReset(id){ var el=document.getElementById(id); el.setAttribute('data-value',''); el.querySelectorAll('.scale-chip').forEach(function(x){x.classList.remove('on');}); }
+  function scaleTag(e){ return (e.scoreBefore||e.scoreAfter) ? ' · '+(e.scoreBefore||'–')+' → '+(e.scoreAfter||'–') : ''; }
+  function scaleDetail(e){
+    if(!e.scoreBefore && !e.scoreAfter) return '';
+    var d = (e.scoreBefore && e.scoreAfter) ? (Number(e.scoreAfter)-Number(e.scoreBefore)) : null;
+    return field('Wie gut geht es mir? (1–10)', 'Vorher '+(e.scoreBefore||'–')+' · Nachher '+(e.scoreAfter||'–')+(d===null?'':' ('+(d>0?'+':'')+d+')'));
+  }
+  function scaleChange(e){
+    return (e.scoreBefore && e.scoreAfter) ? Number(e.scoreAfter)-Number(e.scoreBefore) : '';
+  }
+
   var formRB = document.getElementById('formRegBridge');
   document.getElementById('rbExercise').innerHTML=REGULATION_TOOLS.map(function(tool){return '<option value="'+tool+'">'+tool+'</option>';}).join('');
   document.getElementById('rbDate').value = todayStr();
   formRB.addEventListener('submit', function(e){
     e.preventDefault();
-    state.regBridge.unshift({id:uid(),date:document.getElementById('rbDate').value,exercise:document.getElementById('rbExercise').value,situation:situationValue('rbSituation','rbSituationOther'),rating:document.getElementById('rbRating').value,note:document.getElementById('rbNote').value.trim()});
+    state.regBridge.unshift({id:uid(),date:document.getElementById('rbDate').value,exercise:document.getElementById('rbExercise').value,situation:situationValue('rbSituation','rbSituationOther'),scoreBefore:scaleVal('rbBefore'),rating:document.getElementById('rbRating').value,note:document.getElementById('rbNote').value.trim(),scoreAfter:scaleVal('rbAfter')});
     saveState();
     document.getElementById('rbNote').value='';
     document.getElementById('rbRating').value='';
+    scaleReset('rbBefore'); scaleReset('rbAfter');
     document.getElementById('rbSituation').value='';
     document.getElementById('rbSituationOther').value='';
     document.getElementById('rbSituationOther').style.display='none';
@@ -1209,8 +1331,8 @@
     else{
       list.innerHTML = state.regBridge.map(function(e){
         if(isEditing('regBridge', e.id)) return '<div class="entry">'+buildEditForm('regBridge', e, REGBRIDGE_FIELDS)+'</div>';
-        return '<div class="entry">'+entryTop('regBridge', e.id, fmtDate(e.date), esc(e.exercise||'Regulation')+(e.situation?' · '+esc(e.situation):'')+(e.rating?' · '+esc(e.rating)+'/5':''))+
-          entryDetail('<div class="mlog-grid">'+field('Situation',e.situation)+field('Wie hilfreich',e.rating?e.rating+'/5':'')+field('Was du bemerkt hast',e.note)+'</div>') + '</div>';
+        return '<div class="entry">'+entryTop('regBridge', e.id, fmtDate(e.date), esc(e.exercise||'Regulation')+(e.situation?' · '+esc(e.situation):'')+(e.rating?' · '+esc(e.rating)+'/5':'')+scaleTag(e))+
+          entryDetail('<div class="mlog-grid">'+field('Situation',e.situation)+field('Wie hilfreich',e.rating?e.rating+'/5':'')+scaleDetail(e)+field('Was du bemerkt hast',e.note)+'</div>') + '</div>';
       }).join('');
       wireEntryActions(list, 'regBridge');
     }
@@ -1219,7 +1341,10 @@
       var entries=state.regBridge.filter(function(e){return e.exercise===tool;});
       var ratings=entries.map(function(e){return Number(e.rating);}).filter(function(n){return n>0;});
       var avg=ratings.length?(ratings.reduce(function(a,b){return a+b;},0)/ratings.length).toFixed(1):'—';
-      return '<div class="tally-row"><span class="name">'+esc(tool)+'</span><span class="count">'+entries.length+'× · '+avg+'/5</span></div>';
+      var ch=entries.map(scaleChange).filter(function(n){return n!=='';});
+      var chAvg=ch.length?(ch.reduce(function(a,b){return a+b;},0)/ch.length):null;
+      var chTxt=chAvg===null?'':' · Ø '+(chAvg>0?'+':'')+chAvg.toFixed(1)+' Wohlbefinden';
+      return '<div class="tally-row"><span class="name">'+esc(tool)+'</span><span class="count">'+entries.length+'× · '+avg+'/5'+chTxt+'</span></div>';
     }).join('');
   }
 
@@ -1239,7 +1364,9 @@
       attempt:document.getElementById('mlAttempt').value.trim(),
       reps:document.getElementById('mlReps').value.trim() || '1',
       observation:document.getElementById('mlObservation').value.trim(),
-      coreTool:document.getElementById('mlCoreTool').value
+      coreTool:document.getElementById('mlCoreTool').value,
+      scoreBefore:scaleVal('mlBefore'),
+      scoreAfter:scaleVal('mlAfter')
     };
     state.moduleLog.unshift(entry);
     saveState();
@@ -1248,6 +1375,7 @@
     document.getElementById('mlReps').value='';
     document.getElementById('mlObservation').value='';
     document.getElementById('mlCoreTool').value='';
+    scaleReset('mlBefore'); scaleReset('mlAfter');
     document.getElementById('mlDate').value = todayStr();
     renderModuleLog(); renderOverview();
   });
@@ -1257,13 +1385,56 @@
     if(!state.moduleLog.length){ list.innerHTML = '<div class="empty-state">Noch keine Einträge. Logge oben deine erste Übung.</div>'; return; }
     list.innerHTML = state.moduleLog.map(function(e){
       if(isEditing('moduleLog', e.id)) return '<div class="entry">'+buildEditForm('moduleLog', e, MODULELOG_FIELDS)+'</div>';
-      return '<div class="entry">'+entryTop('moduleLog', e.id, fmtDate(e.date), moduleName(e.module)+(e.context?' · '+esc(e.context):'')+' · '+esc(e.reps)+' Wdh.'+(e.coreTool?' · '+esc(e.coreTool):''))+
+      return '<div class="entry">'+entryTop('moduleLog', e.id, fmtDate(e.date), moduleName(e.module)+(e.context?' · '+esc(e.context):'')+' · '+esc(e.reps)+' Wdh.'+(e.coreTool?' · '+esc(e.coreTool):'')+scaleTag(e))+
         entryDetail(
           (e.attempt?'<div class="entry-body">'+esc(e.attempt)+'</div>':'') +
-          '<div class="mlog-grid">'+field('Was ich bemerkt habe',e.observation)+'</div>'
+          '<div class="mlog-grid">'+scaleDetail(e)+field('Was ich bemerkt habe',e.observation)+'</div>'
         ) + '</div>';
     }).join('');
     wireEntryActions(list, 'moduleLog');
+  }
+
+  /* ---------------- Dankbarkeits Journal ---------------- */
+  document.getElementById('jaDate').value = todayStr();
+  document.getElementById('jpDate').value = todayStr();
+  function val(id){ return document.getElementById(id).value.trim(); }
+  document.getElementById('formJournalAm').addEventListener('submit', function(e){
+    e.preventDefault();
+    var g=[val('jaG1'),val('jaG2'),val('jaG3')];
+    if(!g[0] && !g[1] && !g[2]){ alert('Bitte trage mindestens einen Punkt ein.'); return; }
+    state.journalLog.unshift({id:uid(),type:'am',date:document.getElementById('jaDate').value,g1:g[0],g2:g[1],g3:g[2]});
+    saveState();
+    ['jaG1','jaG2','jaG3'].forEach(function(id){ document.getElementById(id).value=''; });
+    document.getElementById('jaDate').value = todayStr();
+    renderJournal(); renderOverview();
+  });
+  document.getElementById('formJournalPm').addEventListener('submit', function(e){
+    e.preventDefault();
+    var f=[val('jpGood'),val('jpBetter'),val('jpW1'),val('jpW2'),val('jpW3')];
+    if(!f.some(Boolean)){ alert('Bitte trage mindestens ein Feld ein.'); return; }
+    state.journalLog.unshift({id:uid(),type:'pm',date:document.getElementById('jpDate').value,good:f[0],better:f[1],w1:f[2],w2:f[3],w3:f[4]});
+    saveState();
+    ['jpGood','jpBetter','jpW1','jpW2','jpW3'].forEach(function(id){ document.getElementById(id).value=''; });
+    document.getElementById('jpDate').value = todayStr();
+    renderJournal(); renderOverview();
+  });
+  function numList(items){
+    var arr=items.filter(Boolean);
+    return arr.length?'<ol class="j-list">'+arr.map(function(t){return '<li>'+esc(t)+'</li>';}).join('')+'</ol>':'';
+  }
+  function renderJournal(){
+    var list = document.getElementById('jList');
+    if(!state.journalLog.length){ list.innerHTML = '<div class="empty-state">Noch keine Einträge. Starte oben mit deinem ersten Morgen- oder Abend-Eintrag.</div>'; return; }
+    var sorted = state.journalLog.slice().sort(function(a,b){ return (b.date||'').localeCompare(a.date||''); });
+    list.innerHTML = sorted.map(function(e){
+      var am = e.type==='am';
+      if(isEditing('journalLog', e.id)) return '<div class="entry">'+buildEditForm('journalLog', e, am?JOURNAL_AM_FIELDS:JOURNAL_PM_FIELDS)+'</div>';
+      var detail = am
+        ? '<div class="mlog-grid"><div><span>Ich bin dankbar für …</span>'+numList([e.g1,e.g2,e.g3])+'</div></div>'
+        : '<div class="mlog-grid">'+field('Gutes für jemand getan',e.good)+field('Morgen besser',e.better)+'<div><span>Tolle Dinge heute</span>'+numList([e.w1,e.w2,e.w3])+'</div></div>';
+      return '<div class="entry">'+entryTop('journalLog', e.id, fmtDate(e.date), (am?'☀️ Morgens':'🌙 Abends'))+entryDetail(detail)+'</div>';
+    }).join('');
+    wireEntryActions(list, 'journalLog');
   }
 
   /* ---------------- Core Tools & Learning Engine ---------------- */
@@ -1296,14 +1467,17 @@
       date:document.getElementById('ctDate').value,
       tool:ctToolSelect.value,
       situation:situationValue('ctSituation','ctSituationOther'),
+      scoreBefore:scaleVal('ctBefore'),
       rating:document.getElementById('ctRating').value,
-      note:document.getElementById('ctNote').value.trim()
+      note:document.getElementById('ctNote').value.trim(),
+      scoreAfter:scaleVal('ctAfter')
     });
     saveState();
     document.getElementById('ctSituation').value='';
     document.getElementById('ctSituationOther').value='';
     document.getElementById('ctSituationOther').style.display='none';
     document.getElementById('ctRating').value='';
+    scaleReset('ctBefore'); scaleReset('ctAfter');
     document.getElementById('ctNote').value='';
     document.getElementById('ctDate').value = todayStr();
     renderCoreToolLog(); renderOverview();
@@ -1313,8 +1487,8 @@
     if(!state.coreToolLog.length){ list.innerHTML = '<div class="empty-state">Noch keine Einträge. Logge oben dein erstes Core Tool.</div>'; return; }
     list.innerHTML = state.coreToolLog.map(function(e){
       if(isEditing('coreToolLog', e.id)) return '<div class="entry">'+buildEditForm('coreToolLog', e, CORETOOL_FIELDS)+'</div>';
-      return '<div class="entry">'+entryTop('coreToolLog', e.id, fmtDate(e.date), esc(e.tool||'Core Tool')+(e.situation?' · '+esc(e.situation):'')+(e.rating?' · '+esc(e.rating)+'/5':''))+
-        entryDetail('<div class="mlog-grid">'+field('Situation',e.situation)+field('Wie hilfreich',e.rating?e.rating+'/5':'')+field('Was du bemerkt hast',e.note)+'</div>') + '</div>';
+      return '<div class="entry">'+entryTop('coreToolLog', e.id, fmtDate(e.date), esc(e.tool||'Core Tool')+(e.situation?' · '+esc(e.situation):'')+(e.rating?' · '+esc(e.rating)+'/5':'')+scaleTag(e))+
+        entryDetail('<div class="mlog-grid">'+field('Situation',e.situation)+field('Wie hilfreich',e.rating?e.rating+'/5':'')+scaleDetail(e)+field('Was du bemerkt hast',e.note)+'</div>') + '</div>';
     }).join('');
     wireEntryActions(list, 'coreToolLog');
   }
@@ -1643,7 +1817,7 @@
     var totalReps=state.moduleLog.reduce(function(sum,e){var n=parseFloat(e.reps);return sum+(isNaN(n)?0:n);},0);
     var allRegRatings=state.regBridge.map(function(e){return Number(e.rating);}).filter(function(n){return n>0;});
     var regAverage=allRegRatings.length?(allRegRatings.reduce(function(a,b){return a+b;},0)/allRegRatings.length).toFixed(1):'—';
-    var allLogged=state.regBridge.length+state.moduleLog.length+state.communicationLog.length+state.livePractice.length+state.momentLog.length+state.learningLog.length+state.coreToolLog.length;
+    var allLogged=state.regBridge.length+state.moduleLog.length+state.communicationLog.length+state.livePractice.length+state.momentLog.length+state.learningLog.length+state.coreToolLog.length+state.journalLog.length;
     var metrics=[
       ['GELOGGTE MOMENTE GESAMT',allLogged],['ÜBUNGSEINTRÄGE',state.moduleLog.length],['WIEDERHOLUNGEN',totalReps],
       ['TIEFENREFLEXIONEN',state.livePractice.length],['COMMUNICATION CHECKS',state.communicationLog.length],['REGULATION Ø',regAverage==='—'?'—':regAverage+' / 5']
@@ -1674,13 +1848,13 @@
       values.forEach(function(v,i){var c=dash.getCell(row,i+1);c.value=v;c.font={name:'Calibri',size:10,color:{argb:XLS_INK}};c.border={bottom:{style:'hair',color:{argb:XLS_BORDER}}};c.alignment={vertical:'top',wrapText:i===values.length-1};if(zebra)c.fill={type:'pattern',pattern:'solid',fgColor:{argb:XLS_ZEBRA}};});
     }
 
-    dashSection(11,'Wochenaktivität',10);
-    dashHeader(12,['Woche','Phase','Übung','Wdh.','Regulation','Learning Eng.','Core Tools','Communication','Tiefe','Kurz']);
+    dashSection(11,'Wochenaktivität',11);
+    dashHeader(12,['Woche','Phase','Übung','Wdh.','Regulation','Learning Eng.','Core Tools','Communication','Tiefe','Kurz','Journal']);
     WEEKS.forEach(function(w,idx){
       function countWeek(entries){return entries.filter(function(e){return weekOfDate(e.date)===w.n;}).length;}
       var weekModules=state.moduleLog.filter(function(e){return weekOfDate(e.date)===w.n;});
       var weekReps=weekModules.reduce(function(sum,e){var n=parseFloat(e.reps);return sum+(isNaN(n)?0:n);},0);
-      dashDataRow(13+idx,['Woche '+w.n,PHASE_LABEL[w.phase],weekModules.length,weekReps,countWeek(state.regBridge),countWeek(state.learningLog),countWeek(state.coreToolLog),countWeek(state.communicationLog),countWeek(state.livePractice),countWeek(state.momentLog)],idx%2===1);
+      dashDataRow(13+idx,['Woche '+w.n,PHASE_LABEL[w.phase],weekModules.length,weekReps,countWeek(state.regBridge),countWeek(state.learningLog),countWeek(state.coreToolLog),countWeek(state.communicationLog),countWeek(state.livePractice),countWeek(state.momentLog),countWeek(state.journalLog)],idx%2===1);
     });
 
     dashSection(27,'Regulation-Tools — Nutzung und Wirksamkeit');
@@ -1714,9 +1888,19 @@
     nextItems.sort(function(a,b){return String(b.date||'').localeCompare(String(a.date||''));}).slice(0,5).forEach(function(e,idx){dashDataRow(nextStart+2+idx,[e.date?new Date(e.date+'T00:00:00'):'',e.area,e.text,'','','','',''],idx%2===1);dash.getCell(nextStart+2+idx,1).numFmt='dd mmm yyyy';dash.getRow(nextStart+2+idx).height=30;});
     if(!nextItems.length){dash.mergeCells(nextStart+2,1,nextStart+2,8);dash.getCell(nextStart+2,1).value='Noch keine nächsten Experimente festgehalten.';dash.getCell(nextStart+2,1).font={italic:true,color:{argb:XLS_INK_DIM}};}
 
+    var wbStart=nextStart+9;
+    dashSection(wbStart,'Wohlbefinden vor und nach der Übung (1–10)');
+    dashHeader(wbStart+1,['Bereich','Einträge mit Skala','Ø Vorher','Ø Nachher','Ø Veränderung','','','']);
+    [['Modul Übung',state.moduleLog],['Regulation Toolbox',state.regBridge],['Core Tools',state.coreToolLog]].forEach(function(g,idx){
+      var both=g[1].filter(function(e){return e.scoreBefore&&e.scoreAfter;});
+      function avgOf(k){return both.length?(both.reduce(function(a,e){return a+Number(e[k]);},0)/both.length).toFixed(1):'—';}
+      var ch=both.length?(both.reduce(function(a,e){return a+scaleChange(e);},0)/both.length):null;
+      dashDataRow(wbStart+2+idx,[g[0],both.length,avgOf('scoreBefore'),avgOf('scoreAfter'),ch===null?'—':(ch>0?'+':'')+ch.toFixed(1),'','',''],idx%2===1);
+    });
+
     dash.getColumn(1).width=24;dash.getColumn(2).width=18;dash.getColumn(3).width=22;dash.getColumn(4).width=34;
     dash.getColumn(5).width=16;dash.getColumn(6).width=18;dash.getColumn(7).width=14;dash.getColumn(8).width=14;
-    dash.getColumn(9).width=14;dash.getColumn(10).width=14;
+    dash.getColumn(9).width=14;dash.getColumn(10).width=14;dash.getColumn(11).width=14;
     dash.views=[{state:'frozen',ySplit:3,showGridLines:false}];
     dash.pageSetup={orientation:'landscape',fitToPage:true,fitToWidth:1,fitToHeight:0,margins:{left:0.3,right:0.3,top:0.5,bottom:0.5,header:0.2,footer:0.2}};
 
@@ -1780,9 +1964,9 @@
       }
       r++;
     });
-    [['Regulation Toolbox',state.regBridge.length],['Learning Engine',state.learningLog.length],['Core Tools',state.coreToolLog.length],['Communication Checks',state.communicationLog.length]].forEach(function(row){
+    [['Regulation Toolbox',state.regBridge.length],['Learning Engine',state.learningLog.length],['Core Tools',state.coreToolLog.length],['Communication Checks',state.communicationLog.length],['Dankbarkeits Journal',state.journalLog.length]].forEach(function(row){
       ov.getCell(r,1).value = row[0];
-      ov.getCell(r,2).value = 'Core Tool';
+      ov.getCell(r,2).value = (row[0]==='Dankbarkeits Journal'?'Täglich':'Core Tool');
       ov.getCell(r,3).value = row[1];
       for(var c=1;c<=3;c++){
         ov.getCell(r,c).font = {name:'Calibri', size:10.5, bold:true, color:{argb:XLS_INK}};
@@ -1827,37 +2011,39 @@
     /* --- Regulation Bridge --- */
     dataSheet(wb, 'Regulation Toolbox', 'FACE YOUR POWER — Regulation-Toolbox-Log',
       'Vergleiche, welches Regulation-Tool in welcher Situation am besten wirkt.',
-      ['Datum','Regulation-Tool','Situation','Wirksamkeit (1–5)','Was ich bemerkt habe'],
-      [{width:16,type:'date'},{width:26},{width:20},{width:22},{width:65,type:'wrap'}],
-      state.regBridge.map(function(e){ return [e.date||'',e.exercise||'Regulation',e.situation||'',e.rating||'',e.note||'']; })
+      ['Datum','Regulation-Tool','Situation','Vorher (1–10)','Wirksamkeit (1–5)','Was ich bemerkt habe','Nachher (1–10)','Veränderung'],
+      [{width:16,type:'date'},{width:26},{width:20},{width:14},{width:22},{width:55,type:'wrap'},{width:14},{width:14}],
+      state.regBridge.map(function(e){ return [e.date||'',e.exercise||'Regulation',e.situation||'',e.scoreBefore||'',e.rating||'',e.note||'',e.scoreAfter||'',scaleChange(e)]; })
     );
 
     dataSheet(wb, 'Regulation Übersicht', 'FACE YOUR POWER — Regulation-Toolbox-Übersicht',
       'Nutze Häufigkeit und durchschnittliche Wirksamkeit als Hinweise — nicht als Bewertung der Übung oder der Athletin/des Athleten.',
-      ['Regulation-Tool','Übungen geloggt','Ø Wirksamkeit (1–5)'],
-      [{width:34},{width:18},{width:26}],
+      ['Regulation-Tool','Übungen geloggt','Ø Wirksamkeit (1–5)','Ø Veränderung Wohlbefinden (1–10)'],
+      [{width:34},{width:18},{width:26},{width:32}],
       REGULATION_TOOLS.map(function(tool){
         var entries=state.regBridge.filter(function(e){return e.exercise===tool;});
         var ratings=entries.map(function(e){return Number(e.rating);}).filter(function(n){return n>0;});
         var avg=ratings.length?(ratings.reduce(function(a,b){return a+b;},0)/ratings.length).toFixed(1):'';
-        return [tool,entries.length,avg];
+        var ch=entries.map(scaleChange).filter(function(n){return n!=='';});
+        var chAvg=ch.length?(ch.reduce(function(a,b){return a+b;},0)/ch.length).toFixed(1):'';
+        return [tool,entries.length,avg,chAvg];
       })
     );
 
     /* --- Core Tools (generic) --- */
     dataSheet(wb, 'Core Tools', 'FACE YOUR POWER — Core Tools Log',
       'Stelle Bessere Fragen, Annahmen-Check, Entscheidungskompass, Jahresplanung, Plan den nächsten Schritt.',
-      ['Datum','Tool','Situation','Wirksamkeit (1–5)','Was ich bemerkt habe'],
-      [{width:16,type:'date'},{width:26},{width:20},{width:22},{width:65,type:'wrap'}],
-      state.coreToolLog.map(function(e){ return [e.date||'',e.tool||'',e.situation||'',e.rating||'',e.note||'']; })
+      ['Datum','Tool','Situation','Vorher (1–10)','Wirksamkeit (1–5)','Was ich bemerkt habe','Nachher (1–10)','Veränderung'],
+      [{width:16,type:'date'},{width:26},{width:20},{width:14},{width:22},{width:55,type:'wrap'},{width:14},{width:14}],
+      state.coreToolLog.map(function(e){ return [e.date||'',e.tool||'',e.situation||'',e.scoreBefore||'',e.rating||'',e.note||'',e.scoreAfter||'',scaleChange(e)]; })
     );
 
     /* --- Practice --- */
     dataSheet(wb, 'Übung', 'FACE YOUR POWER — Übung',
       'Eine Zeile pro Übungseinheit. Jeder Versuch zählt, egal wie klein.',
-      ['Datum','Modul','Situation','Wiederholungen','Welche Übung ich gemacht habe','Was ich bemerkt habe','Genutztes Core Tool'],
-      [{width:16,type:'date'},{width:22},{width:20},{width:12},{width:36,type:'wrap'},{width:34,type:'wrap'},{width:28}],
-      state.moduleLog.map(function(e){ return [e.date||'',moduleName(e.module),e.context||'',e.reps||'',e.attempt||'',e.observation||'',e.coreTool||'']; }),
+      ['Datum','Modul','Situation','Wiederholungen','Vorher (1–10)','Welche Übung ich gemacht habe','Was ich bemerkt habe','Nachher (1–10)','Veränderung','Genutztes Core Tool'],
+      [{width:16,type:'date'},{width:22},{width:20},{width:12},{width:14},{width:36,type:'wrap'},{width:34,type:'wrap'},{width:14},{width:14},{width:28}],
+      state.moduleLog.map(function(e){ return [e.date||'',moduleName(e.module),e.context||'',e.reps||'',e.scoreBefore||'',e.attempt||'',e.observation||'',e.scoreAfter||'',scaleChange(e),e.coreTool||'']; }),
       {freezeCol:true}
     );
 
@@ -1921,6 +2107,16 @@
       {freezeCol:true}
     );
 
+    /* --- Dankbarkeits Journal --- */
+    var jSorted = state.journalLog.slice().sort(function(a,b){ return (a.date||'').localeCompare(b.date||'') || (a.type==='am'?-1:1); });
+    dataSheet(wb, 'Dankbarkeits Journal', 'FACE YOUR POWER — Dankbarkeits Journal',
+      'Morgens ausrichten, abends auswerten — dein tägliches Fokus-Training.',
+      ['Datum','Tageszeit','Dankbar für 1','Dankbar für 2','Dankbar für 3','Gutes für jemand getan','Morgen besser','Tolle Dinge 1','Tolle Dinge 2','Tolle Dinge 3'],
+      [{width:16,type:'date'},{width:12},{width:30,type:'wrap'},{width:30,type:'wrap'},{width:30,type:'wrap'},{width:34,type:'wrap'},{width:34,type:'wrap'},{width:30,type:'wrap'},{width:30,type:'wrap'},{width:30,type:'wrap'}],
+      jSorted.map(function(e){ return [e.date||'',e.type==='am'?'Morgens':'Abends',e.g1||'',e.g2||'',e.g3||'',e.good||'',e.better||'',e.w1||'',e.w2||'',e.w3||'']; }),
+      {freezeCol:true}
+    );
+
     return wb.xlsx.writeBuffer().then(function(buffer){
       var blob = new Blob([buffer], {type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});
       var url = URL.createObjectURL(blob);
@@ -1941,6 +2137,7 @@
     renderCommunicationLog();
     renderLiveList();
     renderMomentLog();
+    renderJournal();
   }
   renderLiveAccordion();
   renderAll();

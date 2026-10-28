@@ -456,7 +456,7 @@
         <h3>Morgens ausrichten. Abends auswerten.</h3>
         <p class="muted">Du trainierst deine Aufmerksamkeit auf das, was funktioniert und was du beeinflussen kannst. Zwei Minuten am Tag reichen &mdash; kurze Stichworte genügen.</p>
         <div class="step-guide tab-guide">
-          <div><strong>DU FINDEST HIER</strong>Einen Morgen- und einen Abend-Eintrag, jeweils mit drei Punkten.</div>
+          <div><strong>DU FINDEST HIER</strong>Einen Morgen- und einen Abend-Eintrag, jeweils mit drei Punkten pro Frage.</div>
           <div><strong>ZIEL</strong>Den Tag bewusst starten und mit einem klaren Blick auf Gutes und nächste Schritte beenden.</div>
           <div><strong>WIE OFT</strong>Täglich &mdash; morgens und abends.</div>
         </div>
@@ -470,6 +470,10 @@
           <div class="j-num"><span>1)</span><input type="text" id="jaG1" placeholder="Ich bin dankbar für …"></div>
           <div class="j-num"><span>2)</span><input type="text" id="jaG2"></div>
           <div class="j-num"><span>3)</span><input type="text" id="jaG3"></div>
+          <label>Drei Dinge, die ich heute für mich tun möchte &hellip;</label>
+          <div class="j-num"><span>1)</span><input type="text" id="jaT1"></div>
+          <div class="j-num"><span>2)</span><input type="text" id="jaT2"></div>
+          <div class="j-num"><span>3)</span><input type="text" id="jaT3"></div>
           <button class="btn" type="submit" style="margin-top:12px;">Morgen-Eintrag speichern</button>
         </form>
       </div>
@@ -1128,7 +1132,10 @@
     {id:'date', label:'Datum', type:'date'},
     {id:'g1', label:'Ich bin dankbar für … 1)', type:'text'},
     {id:'g2', label:'2)', type:'text'},
-    {id:'g3', label:'3)', type:'text'}
+    {id:'g3', label:'3)', type:'text'},
+    {id:'t1', label:'Drei Dinge, die ich heute für mich tun möchte … 1)', type:'text'},
+    {id:'t2', label:'2)', type:'text'},
+    {id:'t3', label:'3)', type:'text'}
   ];
   var JOURNAL_PM_FIELDS = [
     {id:'date', label:'Datum', type:'date'},
@@ -1400,11 +1407,11 @@
   function val(id){ return document.getElementById(id).value.trim(); }
   document.getElementById('formJournalAm').addEventListener('submit', function(e){
     e.preventDefault();
-    var g=[val('jaG1'),val('jaG2'),val('jaG3')];
-    if(!g[0] && !g[1] && !g[2]){ alert('Bitte trage mindestens einen Punkt ein.'); return; }
-    state.journalLog.unshift({id:uid(),type:'am',date:document.getElementById('jaDate').value,g1:g[0],g2:g[1],g3:g[2]});
+    var g=[val('jaG1'),val('jaG2'),val('jaG3')], t=[val('jaT1'),val('jaT2'),val('jaT3')];
+    if(!g.concat(t).some(Boolean)){ alert('Bitte trage mindestens einen Punkt ein.'); return; }
+    state.journalLog.unshift({id:uid(),type:'am',date:document.getElementById('jaDate').value,g1:g[0],g2:g[1],g3:g[2],t1:t[0],t2:t[1],t3:t[2]});
     saveState();
-    ['jaG1','jaG2','jaG3'].forEach(function(id){ document.getElementById(id).value=''; });
+    ['jaG1','jaG2','jaG3','jaT1','jaT2','jaT3'].forEach(function(id){ document.getElementById(id).value=''; });
     document.getElementById('jaDate').value = todayStr();
     renderJournal(); renderOverview();
   });
@@ -1430,7 +1437,7 @@
       var am = e.type==='am';
       if(isEditing('journalLog', e.id)) return '<div class="entry">'+buildEditForm('journalLog', e, am?JOURNAL_AM_FIELDS:JOURNAL_PM_FIELDS)+'</div>';
       var detail = am
-        ? '<div class="mlog-grid"><div><span>Ich bin dankbar für …</span>'+numList([e.g1,e.g2,e.g3])+'</div></div>'
+        ? '<div class="mlog-grid"><div><span>Ich bin dankbar für …</span>'+numList([e.g1,e.g2,e.g3])+'</div><div><span>Das möchte ich heute für mich tun</span>'+numList([e.t1,e.t2,e.t3])+'</div></div>'
         : '<div class="mlog-grid">'+field('Gutes für jemand getan',e.good)+field('Morgen besser',e.better)+'<div><span>Tolle Dinge heute</span>'+numList([e.w1,e.w2,e.w3])+'</div></div>';
       return '<div class="entry">'+entryTop('journalLog', e.id, fmtDate(e.date), (am?'☀️ Morgens':'🌙 Abends'))+entryDetail(detail)+'</div>';
     }).join('');
@@ -2111,9 +2118,9 @@
     var jSorted = state.journalLog.slice().sort(function(a,b){ return (a.date||'').localeCompare(b.date||'') || (a.type==='am'?-1:1); });
     dataSheet(wb, 'Dankbarkeits Journal', 'FACE YOUR POWER — Dankbarkeits Journal',
       'Morgens ausrichten, abends auswerten — dein tägliches Fokus-Training.',
-      ['Datum','Tageszeit','Dankbar für 1','Dankbar für 2','Dankbar für 3','Gutes für jemand getan','Morgen besser','Tolle Dinge 1','Tolle Dinge 2','Tolle Dinge 3'],
-      [{width:16,type:'date'},{width:12},{width:30,type:'wrap'},{width:30,type:'wrap'},{width:30,type:'wrap'},{width:34,type:'wrap'},{width:34,type:'wrap'},{width:30,type:'wrap'},{width:30,type:'wrap'},{width:30,type:'wrap'}],
-      jSorted.map(function(e){ return [e.date||'',e.type==='am'?'Morgens':'Abends',e.g1||'',e.g2||'',e.g3||'',e.good||'',e.better||'',e.w1||'',e.w2||'',e.w3||'']; }),
+      ['Datum','Tageszeit','Dankbar für 1','Dankbar für 2','Dankbar für 3','Heute für mich 1','Heute für mich 2','Heute für mich 3','Gutes für jemand getan','Morgen besser','Tolle Dinge 1','Tolle Dinge 2','Tolle Dinge 3'],
+      [{width:16,type:'date'},{width:12},{width:30,type:'wrap'},{width:30,type:'wrap'},{width:30,type:'wrap'},{width:30,type:'wrap'},{width:30,type:'wrap'},{width:30,type:'wrap'},{width:34,type:'wrap'},{width:34,type:'wrap'},{width:30,type:'wrap'},{width:30,type:'wrap'},{width:30,type:'wrap'}],
+      jSorted.map(function(e){ return [e.date||'',e.type==='am'?'Morgens':'Abends',e.g1||'',e.g2||'',e.g3||'',e.t1||'',e.t2||'',e.t3||'',e.good||'',e.better||'',e.w1||'',e.w2||'',e.w3||'']; }),
       {freezeCol:true}
     );
 
